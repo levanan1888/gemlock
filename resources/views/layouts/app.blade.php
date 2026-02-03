@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -23,6 +22,7 @@
     <link href="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c2/css/mindoor.webflow.shared.f865d2c40.css"
         rel="stylesheet" type="text/css"
         integrity="sha384-+GXSxATrBRDgHMgupxwjl/Vb+2/UUh6/71XnS2lkuGL6q4vTcftcIOhfMRhfJyPS" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             /* Brand Yellow Overrides */

@@ -56,7 +56,7 @@
                     <div class="p-5 flex flex-col flex-1 gap-2 border-t border-gray-100 dark:border-white/5 text-center">
                         <h3
                             class="text-[#1c190d] dark:text-white text-sm font-bold leading-snug uppercase group-hover:text-primary transition-colors min-h-[2.5rem] flex items-center justify-center line-clamp-2">
-                            KHÓA THÔNG MINH CAO CẤP GEM - N81B</h3>
+                            <a href="{{ route('product.detail') }}" style="color: inherit; text-decoration: none;">KHÓA THÔNG MINH CAO CẤP GEM - N81B</a></h3>
                         <div class="flex justify-center text-primary text-xs gap-0.5 mb-1">
                             @for($j = 0; $j < 5; $j++)
                                 <span class="material-symbols-outlined text-[16px]">star</span>

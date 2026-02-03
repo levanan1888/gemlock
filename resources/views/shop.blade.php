@@ -59,7 +59,8 @@
                                 LOCK</span>
                             <h3
                                 class="text-lg font-black text-[#1c190d] dark:text-white group-hover:text-white transition-colors uppercase leading-tight">
-                                KHÓA THÔNG MINH CAO CẤP G-N81B</h3>
+                                <a href="{{ route('product.detail') }}" style="color: inherit; text-decoration: none;">KHÓA THÔNG MINH CAO CẤP G-N81B</a>
+                            </h3>
                         </div>
                         <p class="text-2xl font-black text-primary font-mono tracking-tighter">9,900,000đ</p>
                         <div class="mt-auto flex flex-col gap-0 border border-primary/30">

@@ -6,22 +6,6 @@
     <link href="{{ asset('furni/css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('furni/css/style.css') }}" rel="stylesheet">
     <style>
-        /* Fix menu styling conflicts */
-        .navbar-brand {
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-
-        .nav-link {
-            color: inherit !important;
-            padding: 0.5rem 1rem !important;
-        }
-
-        .menu-button {
-            background: transparent !important;
-            border: none !important;
-        }
-
         .before-footer-section {
             padding-top: 100px;
         }

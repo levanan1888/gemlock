@@ -310,18 +310,12 @@
                             <img alt="{{ $product['name'] }}"
                                 class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
                                 src="{{ $product['image'] }}" />
-                            @if($product['tag'])
-                                <div
-                                    class="absolute top-4 left-4 {{ $product['tag_color'] ?? 'bg-primary' }} text-[#1c190d] text-xs font-bold px-3 py-1 rounded-full uppercase">
-                                    {{ $product['tag'] }}
-                                </div>
-                            @endif
                         </div>
                         <div class="p-6">
                             <div class="text-xs text-[#1c190d]/50 dark:text-[#f4f1e7]/50 uppercase font-bold mb-2">
                                 {{ $product['brand'] }}</div>
                             <h3 class="text-lg font-bold text-[#1c190d] dark:text-white mb-2 line-clamp-1">
-                                {{ $product['name'] }}</h3>
+                                <a href="{{ route('product.detail', $product['slug']) }}" style="color: inherit; text-decoration: none;">{{ $product['name'] }}</a></h3>
                             <div class="flex items-center gap-1 mb-4">
                                 @for($i = 0; $i < 5; $i++)
                                     <span class="material-symbols-outlined text-sm text-yellow-400">star</span>

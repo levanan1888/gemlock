@@ -6,22 +6,6 @@
     <link href="{{ asset('furni/css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('furni/css/style.css') }}" rel="stylesheet">
     <style>
-        /* Fix menu styling conflicts */
-        .navbar-brand {
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-
-        .nav-link {
-            color: inherit !important;
-            padding: 0.5rem 1rem !important;
-        }
-
-        .menu-button {
-            background: transparent !important;
-            border: none !important;
-        }
-
         .product-section {
             padding-top: 120px;
             /* Increased to prevent header overlap */
@@ -193,20 +177,13 @@
                 <div class="col-lg-9">
                     <div class="row">
                         @php
-                            $products = [
-                                ['name' => 'KHÓA THÔNG MINH GEM - N88B', 'price' => 'Liên hệ', 'image' => 'https://gemcorp.vn/images/N88B.png'],
-                                ['name' => 'KHÓA THÔNG MINH GEM - N86', 'price' => 'Liên hệ', 'image' => 'https://gemcorp.vn/images/N86.png'],
-                                ['name' => 'KHÓA THÔNG MINH GEM - N282', 'price' => 'Liên hệ', 'image' => 'https://gemcorp.vn/images/N282.png'],
-                                ['name' => 'KHÓA THÔNG MINH GEM - N68', 'price' => 'Liên hệ', 'image' => 'https://gemcorp.vn/images/N68.png'],
-                                ['name' => 'KHÓA THÔNG MINH GEM - N81B', 'price' => 'Liên hệ', 'image' => 'https://gemcorp.vn/images/N81B.png'], // Assuming this follows pattern
-                                ['name' => 'KHÓA THÔNG MINH GEM - N88B', 'price' => 'Liên hệ', 'image' => 'https://gemcorp.vn/images/N88B.png'], // Repeated for grid filling
-                            ];
+                            // $products is passed from the route
                         @endphp
 
                         @foreach($products as $product)
                             <!-- Start Column -->
                             <div class="col-12 col-md-6 col-lg-4 mb-5">
-                                <a class="product-item" href="#" onclick="event.preventDefault();">
+                                <a class="product-item" href="{{ route('product.detail', $product['slug']) }}">
                                     <img src="{{ $product['image'] }}" class="img-fluid product-thumbnail"
                                         onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
                                     <h3 class="product-title">{{ $product['name'] }}</h3>
