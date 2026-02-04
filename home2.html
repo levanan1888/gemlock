@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gemlock - An Toàn Tuyệt Đối</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D4AF37", // Luxury Gold
+                        secondary: "#B8860B", // Darker Gold for hover
+                        "background-light": "#F3F4F6", // Light Gray
+                        "background-dark": "#0f1115", // Deep Charcoal/Black
+                        "card-dark": "#18181b", // Slightly lighter for cards
+                        "surface-dark": "#27272a",
+                    },
+                    fontFamily: {
+                        display: ["Montserrat", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #18181b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37; 
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-header {
+            background: rgba(15, 17, 21, 0.7);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 font-body antialiased transition-colors duration-300">
+<nav class="fixed w-full z-50 glass-header border-b border-gray-200 dark:border-white/10 transition-all duration-300">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+<span class="material-icons text-primary text-3xl">security</span>
+<span class="font-display font-bold text-2xl tracking-widest text-gray-900 dark:text-white">GEMLOCK</span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-sm font-medium uppercase tracking-wide hover:text-primary transition-colors" href="#">Trang chủ</a>
+<a class="text-sm font-medium uppercase tracking-wide hover:text-primary transition-colors" href="#">Sản phẩm</a>
+<a class="text-sm font-medium uppercase tracking-wide hover:text-primary transition-colors" href="#">Giải pháp</a>
+<a class="text-sm font-medium uppercase tracking-wide hover:text-primary transition-colors" href="#">Tin tức</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons dark:text-primary">light_mode</span>
+</button>
+<a class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-bold uppercase rounded-sm text-black bg-primary hover:bg-white hover:text-primary transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.4)]" href="#">
+                        Mua ngay
+                    </a>
+</div>
+</div>
+</div>
+</nav>
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Smart Lock Background Abstract" class="w-full h-full object-cover opacity-20 dark:opacity-40 filter grayscale hover:scale-105 transition-transform duration-[20s]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWWL-nS61PRcirBxa7sX4ps83-31VeWZuwH8M7nelJj91Kcz0rW9c7ezdJa4ehRR_QirI0iZx8QYyb9SpAA1SKB08ZB_e7QtIMqxrXi8GnU7huInNpiq-dJK25V4cbnx_wx5PRAnGWkHVcvAafnSDheiRboWXE3zCL80VuRpTsMXtg0ButANEuWaRhii0wXmaOTcY2jg0-_JOipseHiBWQlHrA6r9Gtp2At2CGwofJyB_fqlZl3280J6QBl9iFCwWA1ztAMDk3Wy8n"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-light via-transparent to-background-light dark:from-background-dark dark:via-black/60 dark:to-background-dark"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-4 text-center">
+<h2 class="text-primary font-display font-medium tracking-[0.5em] text-sm md:text-base mb-4 animate-pulse">CÔNG NGHỆ TƯƠNG LAI</h2>
+<h1 class="text-5xl md:text-7xl lg:text-9xl font-display font-black text-gray-900 dark:text-white mb-6 leading-tight text-glow">
+                GEMLOCK<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-200">AN TOÀN TUYỆT ĐỐI</span>
+</h1>
+<p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 text-lg mb-10 font-light">
+                Trải nghiệm sự sang trọng và bảo mật tối thượng với dòng khóa thông minh thế hệ mới. 
+                Kết hợp tinh hoa công nghệ và thiết kế đẳng cấp.
+            </p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<a class="px-8 py-4 bg-primary text-black font-bold uppercase tracking-wider hover:bg-white transition-all shadow-lg rounded-sm" href="#products">
+                    Khám phá ngay
+                </a>
+<a class="px-8 py-4 border border-gray-400 dark:border-gray-600 text-gray-900 dark:text-white font-bold uppercase tracking-wider hover:border-primary hover:text-primary transition-all rounded-sm flex items-center justify-center gap-2 group" href="#">
+<span class="material-icons group-hover:translate-x-1 transition-transform">play_circle</span> Xem Video
+                </a>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-400 dark:text-gray-600">
+<span class="material-icons text-3xl">keyboard_arrow_down</span>
+</div>
+</section>
+<main class="py-20 space-y-24 bg-background-light dark:bg-background-dark relative">
+<div class="hidden dark:block absolute left-0 top-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+<span class="material-icons text-primary text-3xl">villa</span>
+<h2 class="text-2xl font-display font-bold text-gray-900 dark:text-white uppercase tracking-wide">Giải Pháp Biệt Thự Cao Cấp</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<div class="lg:col-span-1 bg-white dark:bg-card-dark rounded-lg overflow-hidden shadow-xl border border-gray-100 dark:border-white/5 flex flex-col group">
+<div class="relative h-48 lg:h-56 overflow-hidden">
+<img alt="Villa Solution" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrumd5Y-qG4yxu3qF_ClpLyRM2oq7AoNKxW4RGpX8R_tcYVy8edwj77vZFd0066K9GvWNHiZM4_zwBVL3erNVs6I_OHX8L59kdLlSrxJwvGe9Ro1BukBdR-pa1pa8EPkJdDXqIlmCBqHA8t3YSuTY6_Y9Op5geBma05dVofVmuf5xqiDPEvA6F06STDZq0Ug8a45F1BHhZ48TfwB47yvHaFJGHWCeS7b90stqLcGsrY5wjBic4FE1DmVYQs9Cwad34W-UePe3teL-E"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<button class="w-12 h-12 bg-primary/90 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+<span class="material-icons">play_arrow</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
+<span class="text-xs font-bold text-primary uppercase">Gemlock Villa Series</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">An Ninh Đa Lớp</h3>
+<ul class="space-y-3 mb-6 text-sm text-gray-600 dark:text-gray-400">
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">verified_user</span>
+                                Nhận diện khuôn mặt 3D
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">fingerprint</span>
+                                Cảm biến vân tay FPC Thụy Điển
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">notifications_active</span>
+                                Cảnh báo đột nhập thời gian thực
+                            </li>
+</ul>
+<button class="mt-auto w-full py-2 border border-primary text-primary text-sm font-bold uppercase hover:bg-primary hover:text-black transition-colors rounded-sm">
+                            Xem chi tiết
+                        </button>
+</div>
+</div>
+<div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="absolute top-4 right-4 z-10">
+<span class="px-2 py-1 bg-primary text-black text-xs font-bold rounded-sm">MỚI</span>
+</div>
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Elite X1" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGQIeF_BW_M7bgf7ZRe4HFO_iXqQKFMG3z3XWfdJuwje7fzPSa8YP0MPqBGvkIAl54BZO5ab1tZuhRUz4RxEWfr_HSuBQie4r8qrQanGpUlVnL8MNnVbEWXY5gxPTJJd1693urqmASd5X7aahxdOpj1GJuAOCu0_UbhingO9mvvsH-MMr5tNFkOAnje2hoVV0wkMIUAwCiuU158BBIJrH6GsQMN4394T-CipCzA4r_JR79w9zoraJknvSkhTic-4gLw9jNQS2XcXCg"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock Elite X1</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Khóa vân tay cao cấp dành cho cửa gỗ đại sảnh.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">12.500.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock FaceID Pro" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md filter grayscale group-hover:grayscale-0 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArckgBeaCFeEtpSV2XeD25OEka61kK5i1NdZ_yzSA-WN-NSGdFvJ-uYIhH8Gb5FoTMtZz6PpqvOrCMI0WyQl8sERpINBcr0Vk_MS-4sKTsutpnVPNXU5Ims09qwIaotnRD3vdUpLaZhDCXVNVvF7LiIeszyKh8lKJIzQWcH2v0BHiVqCurWzYs79it-SnVqkT_InOOtRbnPJc3scHuydM-8k04-mdtcK8iZ0eh9FTgwBlp6Kn-pF06UiMxmu6KSjrgZE1669ukhPwM"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock FaceID Pro</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Nhận diện khuôn mặt hồng ngoại, hoạt động tốt trong bóng tối.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">15.900.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Vision S" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsBsudadxrxuYOkZQkA51nR3zCW-YyanXBNhH_eQ5JNGFfxE7BT_35t28o0b_WnlIJS3ykJoVdXIbjWb-zlPEYXnjAkfbSoShW1Qa9qkFYwA8mmSW0SpbBFZkrH11ux5KlKl6mkoiWVNb3kcB0Z56FgMQOxTORCEDXNOzL7EXWlETzX-3QjVoV29Fb4dr43ecYMDLMWHxpm3jDD9ttnqEabydvemmbf4h_ACifvTp4H1bzHgBW1td0feBtbDTxcwA6zqhp2l3hoh6F"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock Vision S</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Tích hợp chuông hình và màn hình hiển thị bên trong.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">18.200.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+<span class="material-icons text-primary text-3xl">apartment</span>
+<h2 class="text-2xl font-display font-bold text-gray-900 dark:text-white uppercase tracking-wide">Giải Pháp Căn Hộ Hiện Đại</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<div class="lg:col-span-1 bg-white dark:bg-card-dark rounded-lg overflow-hidden shadow-xl border border-gray-100 dark:border-white/5 flex flex-col group">
+<div class="relative h-48 lg:h-56 overflow-hidden">
+<img alt="Apartment Solution" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7Gfwy4xK5Z0iu0pM9uNQdSpRVb5nMGd-QAEztuWY0IYfncPxhm0sq8-Zfq6fVHNQcgxUHsP6qML90UxgfnOnqEXm9ygx__mtOfIEznzLdFul4FEWvq7osDTyi3_qYMmuW_UuIl2_QrriyEMpPnYMH9aE-tD9BhP9u1Yn1RD6dYKXUsXYKtKqyDBWWadyBaPYKRJkxTIu9WlKotvtg0QoCOGaQe5Od7dgoQVhd--2ix04v0fiEq1eRlC3dGk2SarHnad9zhaEKxwA-"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<button class="w-12 h-12 bg-primary/90 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+<span class="material-icons">play_arrow</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
+<span class="text-xs font-bold text-primary uppercase">Gemlock Smart Home</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Kết Nối Thông Minh</h3>
+<ul class="space-y-3 mb-6 text-sm text-gray-600 dark:text-gray-400">
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">wifi</span>
+                                Quản lý từ xa qua App
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">schedule</span>
+                                Tạo mã khóa dùng 1 lần
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">link</span>
+                                Liên kết hệ sinh thái SmartHome
+                            </li>
+</ul>
+<button class="mt-auto w-full py-2 border border-primary text-primary text-sm font-bold uppercase hover:bg-primary hover:text-black transition-colors rounded-sm">
+                            Xem chi tiết
+                        </button>
+</div>
+</div>
+<div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Push Pull" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOloeK3gFf9Eqy1IRFFhVC1RZOedxLp-tqdIFprIQ_7bD1_J_6HkNA5YFwUKtTQFnfwZSlEOcMnnEyC-DErnXXjUvUkRu81zIJJlSHkDJZcdg9r1Z1E1FgcPA-pLrhvPvA_nYkZY1jgE2qJIT0-7vHxhLTll7u9oFBOVROTxgY1KTr7Tue5sXx7rKQ28xU1Dj2QW8ukhJgB9N3evRU2Ue1XlzZFwMGntCi-1ZOGFVr1YvVmwZ_lxIAnvYoJJkXde-ix9EPL4Yl3hPt"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock Push Pull S</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Thiết kế Push-Pull hiện đại, mở cửa chỉ bằng 1 bước đẩy.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">8.500.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="absolute top-4 right-4 z-10">
+<span class="px-2 py-1 bg-red-600 text-white text-xs font-bold rounded-sm">-15%</span>
+</div>
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Compact" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md filter grayscale group-hover:grayscale-0 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPy_p_O93o0PBPwznZYBoWiRAMXDhP7Kp0sV9Ho01g8KAmKwV_7OUQz6Nl9osepr0RsGvZIf2iH348lDCfvQcG6_26Ppgjz0MvVttTe2k9cTBBaYJmhnnFOz_cL6U01D9l1Z7ktBNNPFiGywr-iO743S_DyJrCPx3VFguKaFo9KR2ZtRt49LCA_VjjpIc7JhzLL-sEzX45PauRrYJ1tGgQqvd_2sqpiyTtXQ0gkLXlX2R4s0UTlnZZh_H0E8IW-LJoShqehkCtRr6Z"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock Compact C2</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Nhỏ gọn, phù hợp cửa phòng ngủ và căn hộ dịch vụ.</p>
+<div class="flex items-end justify-between">
+<div>
+<span class="text-sm line-through text-gray-500">6.000.000₫</span>
+<span class="block text-lg font-bold text-primary">5.100.000₫</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Wifi Gateway" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgJuvlUMyYjtT2wLv7hZORhxzQDl6jZEnlLwJWCamJhnJO6mdQCKsYtjgi0WGZamuzYaRodwU8oETyMl1cA8p8XOG-v7EfTc_SkplecELBC0XXdL26-HTqiK2VCLYED7TD_bQ11k46wECHp7m7lN4da_ffva6-juadt0fWIFgbWErcCyhjyZT8v7UVxMFGz3WS9Gixcpko92lX3icNg2SMtDaGjbX_gC4oPzpMfVCcRDEaJ2Ev09TXw6cFxgQJp9id8w2NILMXRd7e"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock Wifi Hub</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Cổng kết nối Wifi cho các dòng khóa Bluetooth.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">1.200.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+<span class="material-icons text-primary text-3xl">business</span>
+<h2 class="text-2xl font-display font-bold text-gray-900 dark:text-white uppercase tracking-wide">Giải Pháp Văn Phòng - Kính</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<div class="lg:col-span-1 bg-white dark:bg-card-dark rounded-lg overflow-hidden shadow-xl border border-gray-100 dark:border-white/5 flex flex-col group">
+<div class="relative h-48 lg:h-56 overflow-hidden">
+<img alt="Office Solution" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-i7o2wSTxNqBK6Vco_3TpP2q4o9SseKwoSyFnyHum_XJh0_8WUJ9UH4vS68hSf4Sl2S7Vse8C_KGD99ef5hoZf6fOWE2AUFEiB9Txyez_VYFDSAkVOjslZYYEOzESdNYwx_QIHUfou_dA7IrMNlSSsoBk0Tjqjdo5cWu1Eq7axFnNeFAuSHGu5oDvTfd4ZV3VxPquJkFPzZ0qJsnET4xiUgWa5pK6MscAG2qpbV4RKQYhu8XRxeG6UaWLpcWfsvbzPspUpySj9GnG"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<button class="w-12 h-12 bg-primary/90 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+<span class="material-icons">play_arrow</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
+<span class="text-xs font-bold text-primary uppercase">Gemlock Office Security</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Chuyên Dụng Cửa Kính</h3>
+<ul class="space-y-3 mb-6 text-sm text-gray-600 dark:text-gray-400">
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">install_mobile</span>
+                                Lắp đặt không cần khoan kính
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">badge</span>
+                                Tích hợp chấm công vân tay
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-icons text-primary text-base mt-0.5">group</span>
+                                Lưu trữ 1000 ID người dùng
+                            </li>
+</ul>
+<button class="mt-auto w-full py-2 border border-primary text-primary text-sm font-bold uppercase hover:bg-primary hover:text-black transition-colors rounded-sm">
+                            Xem chi tiết
+                        </button>
+</div>
+</div>
+<div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Glass Pro" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBspYvwBgDw5CNTyyO3bp2pVzOgXpuIZJEtcaNTZ5ES4LN8stUevh4Z0CnqQSCTYJKn3yQKLsvSMYCFgqoBMuW7AKU6m4jQ9R-LU3BOiRKQEeYw6rEHpDfb0l2Ufuk00mVYRJTp3RpAl05fVztJDIrTq11merdVHozhIcp2EHybmZNjS3L6pL9G8O2O-Qh3u7p_OX7HxIQ7fy8H-WRApH629UkjvDUO4Emo15poGVc3iWrP8zI8al5HwdBBR0DREpkUzSqzGGf4e6o"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock Glass Pro</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Khóa cửa kính cường lực, tích hợp chuông cửa.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">4.500.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Attendance" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md filter grayscale group-hover:grayscale-0 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-tUem5XpfnFCZU9Mj-5U7fRkg41ZIHfuEWLoHWBJJ9YaslIw-2D9j-YaTAnRmWSu501wvoLOX9R3MZW4UnzQzRajeOJvtosoAIrd4I3uvE4nSLWWcY4d6UAK2XHK9K-UdU1DQUCgw3h3RqLy_Rp9T4lk0MPjcn4jE7rbce36TifCM7sDSuDSXR6C3O7kmDAb9-wFW-sk4DWt1ZkgTl2KNlN1U2KG6hg3O8WuUMLMNRsMFUUgjrZI6s29ZK7c9CUJ88ozM3xz84DrQ"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Gemlock WorkTime</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Khóa cửa kính kết hợp máy chấm công xuất dữ liệu Excel.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">6.200.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 relative group border border-transparent dark:border-white/5 hover:border-primary/50 transition-all duration-300">
+<div class="h-48 flex items-center justify-center mb-4 relative">
+<div class="absolute w-24 h-24 bg-primary/20 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<img alt="Gemlock Remote" class="h-full object-contain mix-blend-multiply dark:mix-blend-normal rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDfFt2dV7FWv-nDeT6xiHQxP-x3ewKIUiGm2WGEFw3gneJcfKRTKG_3hfvo4aXMRlPflXGntJSE-CU576cLFeAjCvrlr41oHSbqUoDH_rS6fdl9ThbNM6_G7P_aQnm5FLh1XFt22neYVpgFXkH7iU50tDk5cRbUatt1X4hOyIdkmRnP9AHYLoTnGsM8jGwG_GHhP_kGhDCx-Jf1R0JKhHHNLW0uqtepNaYL20Dg9-67W2h_l0XObM1kx9wS_52RyBXEF332tiptkf"/>
+</div>
+<h3 class="text-base font-bold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Remote Control</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">Điều khiển mở cửa kính từ xa cho lễ tân.</p>
+<div class="flex items-end justify-between">
+<span class="text-lg font-bold text-primary">550.000₫</span>
+<button class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-primary hover:text-black transition-colors">
+<span class="material-icons text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-gray-100 dark:bg-black text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-icons text-primary text-3xl">security</span>
+<span class="font-display font-bold text-2xl tracking-widest text-gray-900 dark:text-white">GEMLOCK</span>
+</div>
+<p class="text-sm leading-relaxed mb-6">
+                        Tiên phong trong lĩnh vực khóa thông minh và giải pháp an ninh cao cấp. Bảo vệ ngôi nhà của bạn với công nghệ đỉnh cao.
+                    </p>
+<div class="flex space-x-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons">facebook</i></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons">smart_display</i></a> 
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons">camera_alt</i></a> 
+</div>
+</div>
+<div>
+<h4 class="text-gray-900 dark:text-white font-bold uppercase tracking-wider mb-6">Sản phẩm</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Khóa Vân Tay</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Khóa Nhận Diện Khuôn Mặt</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Khóa Cửa Kính</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Phụ Kiện</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-gray-900 dark:text-white font-bold uppercase tracking-wider mb-6">Hỗ Trợ</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Hướng dẫn sử dụng</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Chính sách bảo hành</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Đăng ký đại lý</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Liên hệ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-gray-900 dark:text-white font-bold uppercase tracking-wider mb-6">Liên Hệ</h4>
+<ul class="space-y-4 text-sm">
+<li class="flex items-start gap-3">
+<span class="material-icons text-primary text-sm mt-1">location_on</span>
+<span>Tầng 12, Landmark 81, TP. Hồ Chí Minh</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons text-primary text-sm">phone</span>
+<span>1900 888 999</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons text-primary text-sm">email</span>
+<span>support@gemlock.vn</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-800 mt-16 pt-8 text-center text-xs">
+<p>© 2023 Gemlock Vietnam. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+</body></html>

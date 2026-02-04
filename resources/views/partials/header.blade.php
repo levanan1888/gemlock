@@ -11,45 +11,10 @@
                     <div class="menu-content-wrapper">
                         <div class="menu-item-wrapper">
                             <div class="menu-items">
-                                <div data-delay="300" data-hover="true" data-w-id="6a16e1d0-8739-c2cc-c577-7203b6ab2db8"
-                                    class="all-pages w-dropdown">
-                                    <div class="dropdown-toggle w-dropdown-toggle">
-                                        <div>Tất cả trang</div>
-                                        <div class="dropdown-icon w-icon-dropdown-toggle"></div>
-                                    </div>
-                                    <nav class="dropdown-list w-dropdown-list">
-                                        <div class="megamenu-wrapper">
-                                            <div class="innerpages-wrapper">
-                                                <div class="nav-list-wrapper">
-                                                    <div class="nav-list">
-                                                        <div class="single-nav-wrapper"><a href="/" aria-current="page"
-                                                                class="menu-link w--current">Trang chủ</a></div>
-                                                        <div class="single-nav-wrapper"><a href="/about"
-                                                                class="menu-link">Giới thiệu</a></div>
-                                                        <div class="single-nav-wrapper"><a href="/service"
-                                                                class="menu-link">Dịch vụ</a></div>
-                                                        <div class="single-nav-wrapper"><a href="/blog"
-                                                                class="menu-link">Tin tức</a></div>
-                                                    </div>
-                                                    <div class="nav-list">
-                                                        <div class="single-nav-wrapper"><a href="/contact"
-                                                                class="menu-link">Đặt lịch</a></div>
-                                                        <div class="single-nav-wrapper"><a href="/product"
-                                                                class="menu-link">Sản phẩm</a></div>
-                                                        <div class="single-nav-wrapper"><a href="/contact"
-                                                                class="menu-link">Liên hệ</a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </nav>
-                                </div>
-                                <div class="single-nav-wrapper"><a href="/about" class="menu-link">Giới thiệu</a></div>
+                                <div class="single-nav-wrapper"><a href="/" class="menu-link">Trang chủ</a></div>
                                 <div class="single-nav-wrapper"><a href="/product" class="menu-link">Sản phẩm</a></div>
-                                <div class="single-nav-wrapper"><a href="/service" class="menu-link">Dịch vụ</a>
-                                </div>
-                                <div class="single-nav-wrapper"><a href="/contact" class="menu-link">Liên hệ</a>
-                                </div>
+                                <div class="single-nav-wrapper"><a href="/blog" class="menu-link">Bài viết</a></div>
+                                <div class="single-nav-wrapper"><a href="/contact" class="menu-link">Liên hệ</a></div>
                             </div>
                         </div>
                         <div class="nav-button-wrapper desktop-only">

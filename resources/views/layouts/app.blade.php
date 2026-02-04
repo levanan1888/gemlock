@@ -23,60 +23,93 @@
         rel="stylesheet" type="text/css"
         integrity="sha384-+GXSxATrBRDgHMgupxwjl/Vb+2/UUh6/71XnS2lkuGL6q4vTcftcIOhfMRhfJyPS" crossorigin="anonymous" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <style>
+        /* Bảng màu thương hiệu GemLock (bóc từ logo) */
         :root {
-            /* Brand Yellow Overrides */
-            --theme--color-01: #ffcf00;
-            /* Rich Golden Yellow from logo */
-            --theme--color-02: #b89600;
-            /* Darker golden for text/accents */
+            --brand-yellow: #D4A800;
+            --brand-yellow-dark: #B8860B;
+            --brand-yellow-alt: #E6B800;
+            --brand-text-on-yellow: #1a1000;
+            --brand-bg-tint: #fffef5;
+            /* Tương thích theme cũ */
+            --theme--color-01: #D4A800;
+            --theme--color-02: #B8860B;
             --theme--color-03: #000;
-            /* Background theme color 3 should be dark for contrast if needed */
             --others--color-01: #e0e0e0;
-            /* Gray for rings/borders */
             --others--color-02: #fafafa;
-            /* Very light neutral for cards */
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
         body {
-            /* Reverted global background */
             background-color: #fff;
             color: #333;
         }
 
-        /* Ensure heading spans and buttons use brand yellow */
         .text-span,
         .menu-link:hover,
         .menu-link.w--current {
-            color: var(--theme--color-01) !important;
+            color: var(--brand-yellow) !important;
             font-weight: 600;
         }
 
         .primary-button {
-            background-color: var(--theme--color-01) !important;
-            color: #2e1a00 !important;
-            /* Dark brown for best contrast on yellow */
+            background-color: var(--brand-yellow) !important;
+            color: var(--brand-text-on-yellow) !important;
+            box-shadow: 0 4px 14px rgba(212, 168, 0, 0.4);
+            transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+        }
+        .primary-button:hover {
+            background-color: var(--brand-yellow-dark) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.45);
         }
 
         .primary-button-white {
             background-color: #fff !important;
-            color: #2e1a00 !important;
-
+            color: var(--brand-text-on-yellow) !important;
+            border: 2px solid var(--brand-yellow);
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
         }
-
         .primary-button-white:hover {
-            background-color: var(--theme--color-01) !important;
-            color: #fff !important;
+            background-color: var(--brand-yellow) !important;
+            color: var(--brand-text-on-yellow) !important;
+            transform: translateY(-1px);
         }
 
         .secondary-button,
         .secondary-button-white {
-            border-color: var(--theme--color-01) !important;
+            border-color: var(--brand-yellow) !important;
+            color: var(--brand-yellow-dark) !important;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        }
+        .secondary-button:hover,
+        .secondary-button-white:hover {
+            background-color: var(--brand-yellow) !important;
+            color: var(--brand-text-on-yellow) !important;
+            transform: translateY(-1px);
         }
 
         .cta-subtitle {
-            color: #fff !important;
-            opacity: 0.9;
+            color: var(--brand-text-on-yellow) !important;
+            opacity: 0.95;
+        }
+        /* Footer: phủ màu thương hiệu */
+        .footer {
+            border-top: 4px solid var(--brand-yellow) !important;
+            background-color: var(--brand-bg-tint) !important;
+        }
+        .footer .footer-link:hover p,
+        .footer .social-icon:hover {
+            color: var(--brand-yellow-dark) !important;
+        }
+        .footer .footer-bottom {
+            border-top: 1px solid rgba(212, 168, 0, 0.25);
+        }
+        .main-with-fixed-header {
+            padding-top: 96px;
         }
     </style>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -108,7 +141,7 @@
 
 <body>
 
-    <main>
+    <main class="main-with-fixed-header">
         @yield('content')
     </main>
 

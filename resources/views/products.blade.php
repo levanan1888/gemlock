@@ -8,6 +8,7 @@
 
 @section('content')
     @include('partials.header')
+    @include('partials.section_category_video', ['videoTitle' => 'Danh mục sản phẩm GemLock', 'youtubeId' => null])
     <div class="px-4 md:px-10 lg:px-40 py-8 max-w-[1440px] mx-auto min-h-screen">
         <div class="reveal mb-8">
             <nav class="flex text-sm text-[#1c190d]/50 dark:text-[#f4f1e7]/50 mb-4" aria-label="Breadcrumb">

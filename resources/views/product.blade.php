@@ -7,8 +7,8 @@
     <link href="{{ asset('furni/css/style.css') }}" rel="stylesheet">
     <style>
         .product-section {
-            padding-top: 120px;
-            /* Increased to prevent header overlap */
+            padding-top: 2rem;
+            /* Header fixed đã có main-with-fixed-header padding */
         }
 
         .product-item {
@@ -140,6 +140,7 @@
 
 @section('content')
     @include('partials.header')
+    @include('partials.section_category_video', ['videoTitle' => 'Khóa thông minh & Giải pháp GemLock', 'youtubeId' => null])
 
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">

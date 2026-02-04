@@ -8,6 +8,7 @@
 
 @section('content')
     @include('partials.header')
+    @include('partials.section_category_video', ['videoTitle' => 'Sản phẩm Hệ Sinh Thái Gemcorp', 'youtubeId' => null])
     <main class="py-8 px-4 md:px-10 lg:px-40">
         <div class="max-w-[1440px] mx-auto">
             <div class="flex items-center gap-2 mb-6 px-1">

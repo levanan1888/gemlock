@@ -6,7 +6,15 @@ use App\Services\ProductService;
 
 Route::get('/', function () {
     $products = ProductService::getAllProducts();
-    return view('home', compact('products'));
+    $groupedProducts = ProductService::getProductsGroupedByCategory();
+    return view('home', compact('products', 'groupedProducts'));
+});
+
+// Trang Gemlock Home mới (kết hợp từ home1.html và home2.html)
+Route::get('/home-gemlock', function () {
+    $products = ProductService::getAllProducts();
+    $groupedProducts = ProductService::getProductsGroupedByCategory();
+    return view('home_gemlock', compact('products', 'groupedProducts'));
 });
 
 Route::get('/product', function () {

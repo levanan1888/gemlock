@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gemlock Premium Smart Locks</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #181711; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #393628; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f2cc0d; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181711] dark:text-white font-display overflow-x-hidden antialiased selection:bg-primary selection:text-black">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 transition-all duration-300 bg-[#181711]/80 backdrop-blur-md border-b border-[#393628]">
+<div class="layout-container flex justify-center w-full">
+<div class="flex items-center justify-between w-full max-w-[1280px] px-6 py-4">
+<div class="flex items-center gap-2 text-white group cursor-pointer">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-3xl">lock</span>
+</div>
+<h2 class="text-white text-xl font-black tracking-tight uppercase">Gemlock</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="#">Products</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="#">Technology</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="#">Support</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary hover:bg-[#d9b70b] text-[#181711] text-sm font-bold transition-colors">
+<span class="truncate">Buy Now</span>
+</button>
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+<!-- Background Image with Gradient Overlay -->
+<div class="absolute inset-0 bg-cover bg-center z-0" data-alt="Close up of a luxury black smart lock handle with gold accents on a dark wooden door" style='background-image: linear-gradient(to bottom, rgba(34, 31, 16, 0.3) 0%, rgba(34, 31, 16, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBr1zvy5WyFtGTRiHbCiOIHFh7D_vL8IyLg5qK67ERMzR9shnIoml8_o-_Jo6WmRdfGYoME3xmZuIPHO7BJXhXAhrcB09nsM2RVJuks0wLSHIRwEHlnLx-CN-4gap-LaIQQbOB6EH43Z8iG_GkTRJEpO4TJPNXEsleWLhEWGvEMcM0FTRxbqqthPFHaC2gLtGh4Vwx2bM9XWg44LMqyRM90b2nHjOfv-aunzoa7nh73EsO1YJ5qFfuFf4gmoSTn24d3As_KMauqKdqW");'>
+</div>
+<div class="relative z-10 container mx-auto px-6 pt-20 text-center">
+<div class="flex flex-col items-center gap-6 max-w-4xl mx-auto animate-fade-in-up">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-primary text-xs font-bold uppercase tracking-wider">New Release 2024</span>
+</div>
+<h1 class="text-white text-5xl md:text-7xl font-black leading-tight tracking-tighter drop-shadow-2xl">
+                        Gemlock <br class="md:hidden"/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">Chạm là mở</span><br/>
+<span class="text-primary">Đẳng cấp là đây</span>
+</h1>
+<p class="text-white/80 text-lg md:text-xl font-light max-w-2xl leading-relaxed">
+                        Experience the pinnacle of home security. Where state-of-the-art biometrics meets uncompromising luxury design.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<button class="flex items-center justify-center h-14 px-8 bg-primary hover:bg-[#d9b70b] text-black text-base font-bold rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(242,204,13,0.3)]">
+                            Explore Collection
+                        </button>
+<button class="flex items-center justify-center h-14 px-8 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-white text-base font-bold rounded-full transition-all">
+                            View Tech Specs
+                        </button>
+</div>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 animate-bounce">
+<span class="text-xs font-medium text-white uppercase tracking-widest">Scroll</span>
+<span class="material-symbols-outlined text-white">keyboard_arrow_down</span>
+</div>
+</section>
+<!-- Brand Values -->
+<section class="py-24 bg-background-dark border-b border-[#393628]">
+<div class="container mx-auto px-6 max-w-[1280px]">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose Gemlock?</h2>
+<p class="text-white/60">Security, convenience, and design in perfect harmony.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Value 1 -->
+<div class="group p-8 rounded-2xl bg-[#27251b]/50 border border-[#393628] hover:border-primary/50 transition-all hover:-translate-y-1 duration-300">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-black text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3">Maximum Security</h3>
+<p class="text-[#bab59c] leading-relaxed">Bank-grade encryption, anti-peep keypads, and durable zinc alloy construction designed to withstand forced entry.</p>
+</div>
+<!-- Value 2 -->
+<div class="group p-8 rounded-2xl bg-[#27251b]/50 border border-[#393628] hover:border-primary/50 transition-all hover:-translate-y-1 duration-300">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-black text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">touch_app</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3">Convenience</h3>
+<p class="text-[#bab59c] leading-relaxed">Unlock in 0.3s with 3D fingerprint recognition. Manage access remotely via our dedicated smartphone app.</p>
+</div>
+<!-- Value 3 -->
+<div class="group p-8 rounded-2xl bg-[#27251b]/50 border border-[#393628] hover:border-primary/50 transition-all hover:-translate-y-1 duration-300">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-black text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">diamond</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-3">Luxury Design</h3>
+<p class="text-[#bab59c] leading-relaxed">Award-winning aesthetics. Sleek, minimal lines and premium finishes that elevate the entrance of any modern home.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Showcase (Apple-style) -->
+<section class="py-32 bg-black overflow-hidden relative">
+<!-- Background Glow -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="container mx-auto px-6 max-w-[1280px] relative z-10">
+<div class="flex flex-col md:flex-row items-center gap-16 md:gap-24">
+<div class="w-full md:w-1/2 flex flex-col gap-8">
+<div>
+<span class="text-primary font-bold tracking-widest uppercase text-sm mb-2 block">The Flagship Series</span>
+<h2 class="text-4xl md:text-6xl font-black text-white leading-tight mb-6">
+                                G-Pro Series X<br/>
+<span class="text-white/40">Beyond Security.</span>
+</h2>
+<p class="text-lg text-gray-400 max-w-md">
+                                The most advanced smart lock we've ever built. Featuring Face ID recognition, built-in doorbell camera, and a 12-month battery life.
+                            </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">fingerprint</span>
+<div>
+<h4 class="text-white font-bold text-lg">0.3s Unlock</h4>
+<p class="text-sm text-gray-500">Fastest sensor in class</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">battery_charging_full</span>
+<div>
+<h4 class="text-white font-bold text-lg">1 Year Battery</h4>
+<p class="text-sm text-gray-500">Lithium-ion rechargeable</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">wifi</span>
+<div>
+<h4 class="text-white font-bold text-lg">WiFi Built-in</h4>
+<p class="text-sm text-gray-500">No bridge required</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">videocam</span>
+<div>
+<h4 class="text-white font-bold text-lg">HD Camera</h4>
+<p class="text-sm text-gray-500">Two-way audio talk</p>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<a class="inline-flex items-center text-primary font-bold hover:underline underline-offset-4" href="#">
+                                View Technical Specifications
+                                <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="w-full md:w-1/2 relative">
+<!-- Floating Image Effect -->
+<div class="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/5 bg-[#181711]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Futuristic sleek smart lock floating in a dark void with rim lighting highlighting its curves" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAEhU-H82qfouXnqvBOHI3pRmv0q7_EwIx52cw2O6nCgHCyUN1b70DG724YDgXzLV202eN5yUGs_ONTOmztwNaMiW3ivZKlo4KfirLvwsz-5Dp_ZlDIRMvnHrXLosogwxiBHzjZsGZuFqG4Hz3P-OEPFWO7bJkKhKHsGn00OqNdfuZKihypl18NUo9VmiDC17n4_GxHtdeeWpBN6wkzbJKjTHVOlE23UeBN5580fovu0j1UEDbs7LTR32lPMgQhXL9J7-tW8P3Zw5aJ");'>
+</div>
+<!-- Gradient overlay for text readability if needed -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6">
+<div class="bg-black/80 backdrop-blur-md p-4 rounded-xl border border-white/10 flex items-center justify-between">
+<div>
+<p class="text-white text-sm font-bold">G-Pro Series X</p>
+<p class="text-xs text-gray-400">Black Obsidian Edition</p>
+</div>
+<span class="text-primary font-bold">$599</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Category Grid -->
+<section class="py-24 bg-background-light dark:bg-background-dark">
+<div class="container mx-auto px-6 max-w-[1280px]">
+<div class="flex items-end justify-between mb-12">
+<h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight">Explore Categories</h2>
+<a class="hidden md:flex items-center text-white/60 hover:text-primary transition-colors" href="#">
+                        View all products <span class="material-symbols-outlined ml-1">arrow_right_alt</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+<!-- Large Card: Smart Door Locks -->
+<div class="lg:col-span-2 lg:row-span-2 relative group overflow-hidden rounded-2xl bg-gray-900 cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Modern residential front door with a high-end digital smart lock installed" style='background-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDECDRis0x_0lJiUr0xhv69I0maR_Fzw9CyYlmNNFSa7gpHp3YCd9Pcngxb1Oo9n51qQAO8UR7hjknczMu8UlKUmL4DCWYXOOQvjfq3e1vOC49SRSub-UITIw2hZlOLoIypQCiYGO96uTJSwuwRMcD3pa2Vs1SRE_ckmwDsj8y-5S3icLZeTJiGiya43dEwx9k6L-RlkOGxm5Hg-xSwjBnPbiEdaSaGeOu1WvRXySm8xkI6idu0aSgYqhbVwvEtT6HFr8Xjo_WBCrl1");'>
+</div>
+<div class="absolute bottom-0 left-0 p-8 w-full z-10">
+<h3 class="text-2xl font-bold text-white mb-2">Smart Door Locks</h3>
+<p class="text-gray-300 text-sm max-w-sm mb-4">Complete protection for your main entrance. Features multiple unlock methods including fingerprint, PIN, and app control.</p>
+<span class="inline-block px-4 py-2 bg-white/10 backdrop-blur-md text-white text-xs font-bold rounded-full border border-white/20 group-hover:bg-primary group-hover:text-black group-hover:border-primary transition-colors">Shop Now</span>
+</div>
+</div>
+<!-- Medium Card: Fingerprint Padlocks -->
+<div class="lg:col-span-1 lg:row-span-1 relative group overflow-hidden rounded-2xl bg-gray-800 cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Compact fingerprint padlock on a gym locker" style='background-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDiLQiD8qCua1K9rYeRYR6GLFFeOJ55yp3uEP4ke9i3wv2pG-4q64PumPm0aLVQVyAcXznb-GPu_Br9gnWdsLtGyff_l8ro3eMp7DkfXM-mdJ7xjT8GXDR62DDXMhhWJPFRuBAVBatCwhNGUykvZHd_J_51gEsgWrRNZF7ER8-ZSNJdhgX3iSExoIqJqBW8YIKvRodz9gXpI5sJaiSwgICMD-nHjVeV7Cj_OE9CMtKzp-b5MRgiytX7tXOej5Pjsnv8GMUfodE4r3iH");'>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full z-10">
+<h3 class="text-xl font-bold text-white mb-1">Fingerprint Padlocks</h3>
+<p class="text-gray-400 text-xs">Portable security for gym &amp; travel.</p>
+</div>
+</div>
+<!-- Medium Card: Accessories -->
+<div class="lg:col-span-1 lg:row-span-1 relative group overflow-hidden rounded-2xl bg-gray-800 cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Smart home hub device and key fobs on a table" style='background-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVcgR9LksZp7F-7KpsmDD1qdRGkXtobD6bfL5dKU4bUQ35-gXDPXrSN2FW-1zF_3Ta_EFT55pYY18UjPz1EvkgvyeTbHiHrMXThV87alUQUkfQHbrIjJyBSdD_msu6ya1WEhmlA_mh6YtMUqu43lmb7jeq5g_uUQ8JBW1ni3U87XX_BIMeiIavyRwTVCaqXHVNRGeA4YYPbt2uwJL9ObEKSIPV5e_7xfHl7remwfkBgVmxyhafb3DlokyXl2Bj8zDnHCpZrsrjnX9s");'>
+</div>
+<div class="absolute bottom-0 left-0 p-6 w-full z-10">
+<h3 class="text-xl font-bold text-white mb-1">Smart Accessories</h3>
+<p class="text-gray-400 text-xs">Hubs, cards, and key fobs.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Section -->
+<section class="py-16 bg-[#181711] border-t border-[#393628]">
+<div class="container mx-auto px-6 max-w-[1280px]">
+<div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl text-primary">workspace_premium</span>
+<div class="flex flex-col">
+<span class="text-white font-bold text-sm uppercase">2 Year Warranty</span>
+<span class="text-xs text-gray-400">On all mechanical parts</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl text-primary">support_agent</span>
+<div class="flex flex-col">
+<span class="text-white font-bold text-sm uppercase">24/7 Support</span>
+<span class="text-xs text-gray-400">Lifetime technical assistance</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl text-primary">local_shipping</span>
+<div class="flex flex-col">
+<span class="text-white font-bold text-sm uppercase">Free Shipping</span>
+<span class="text-xs text-gray-400">Nationwide delivery</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl text-primary">published_with_changes</span>
+<div class="flex flex-col">
+<span class="text-white font-bold text-sm uppercase">30 Days Return</span>
+<span class="text-xs text-gray-400">Money back guarantee</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-black text-white pt-20 pb-10 border-t border-[#393628]">
+<div class="container mx-auto px-6 max-w-[1280px]">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl text-primary">lock</span>
+<span class="text-xl font-black tracking-tight uppercase">Gemlock</span>
+</div>
+<p class="text-gray-400 text-sm leading-relaxed">
+                            Redefining home access with cutting-edge technology and premium design. Secure your world with a touch.
+                        </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-[#181711] border border-[#393628] flex items-center justify-center hover:bg-primary hover:text-black transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-[#181711] border border-[#393628] flex items-center justify-center hover:bg-primary hover:text-black transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">mail</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-white mb-6">Products</h4>
+<ul class="flex flex-col gap-4 text-sm text-gray-400">
+<li><a class="hover:text-primary transition-colors" href="#">Smart Door Locks</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Fingerprint Padlocks</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Glass Door Locks</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Accessories</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white mb-6">Support</h4>
+<ul class="flex flex-col gap-4 text-sm text-gray-400">
+<li><a class="hover:text-primary transition-colors" href="#">Installation Guide</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">App Download</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Warranty Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white mb-6">Stay Connected</h4>
+<p class="text-sm text-gray-400 mb-4">Subscribe for latest updates and exclusive offers.</p>
+<form class="flex flex-col gap-3">
+<input class="bg-[#181711] border border-[#393628] rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors" placeholder="Your email address" type="email"/>
+<button class="bg-primary text-black font-bold py-3 px-4 rounded-lg hover:bg-[#d9b70b] transition-colors" type="button">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="border-t border-[#393628] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+<p>© 2024 Gemlock. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-white" href="#">Privacy Policy</a>
+<a class="hover:text-white" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

@@ -18,11 +18,20 @@
 
     .header {
         font-family: 'IBM Plex Sans', sans-serif !important;
-        color: #333 !important;
-        background-color: #fff !important; /* Ensure solid white if intended */
+        color: #1a1000 !important;
+        background-color: #D4A800 !important;
+        border-bottom: 3px solid #B8860B !important;
         width: 100% !important;
         z-index: 1000 !important;
-        position: relative !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease !important;
+        box-shadow: 0 2px 12px rgba(212, 168, 0, 0.12) !important;
+    }
+    .header.header--scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(212, 168, 0, 0.1) !important;
     }
 
     /* Force font loading fallback */
@@ -37,6 +46,10 @@
 
     .header .main-container {
         padding: 15px 0 !important;
+        transition: padding 0.35s ease !important;
+    }
+    .header.header--scrolled .main-container {
+        padding: 10px 0 !important;
     }
 
     /* Navbar Brand / Logo */
@@ -54,10 +67,15 @@
     }
     
     .header .site-logo {
-        max-height: 50px !important;
-        height: 50px !important;
+        max-height: 64px !important;
+        height: 64px !important;
         width: auto !important;
         display: block !important;
+        transition: max-height 0.35s ease, height 0.35s ease !important;
+    }
+    .header.header--scrolled .site-logo {
+        max-height: 54px !important;
+        height: 54px !important;
     }
 
     /* Navigation Menu Wrapper */
@@ -83,8 +101,8 @@
 
     /* Navigation Links */
     .header .menu-link {
-        color: #333 !important;
-        font-weight: 500 !important;
+        color: #1a1000 !important;
+        font-weight: 600 !important;
         font-size: 16px !important;
         padding: 10px 0 !important;
         transition: color 0.3s ease !important;
@@ -95,8 +113,10 @@
     .header .menu-link:hover,
     .header .menu-link.w--current,
     .header .menu-link.active-link {
-        color: #ffcf00 !important; /* Brand Yellow */
-        font-weight: 600 !important;
+        color: #1a1000 !important;
+        font-weight: 700 !important;
+        text-decoration: underline !important;
+        text-underline-offset: 4px !important;
     }
 
     /* Dropdown Menus */
@@ -117,16 +137,23 @@
         content: none !important;
     }
 
-    /* Primary Button Fix */
+    /* Primary Button Fix - Brand yellow */
     .header .primary-button {
-        background-color: #ffd700 !important;
-        color: #5d4037 !important;
+        background-color: #1a1000 !important;
+        color: #E6B800 !important;
         padding: 12px 28px !important;
         border-radius: 50px !important;
         font-weight: 600 !important;
         display: flex !important;
         align-items: center !important;
         gap: 10px !important;
+        box-shadow: 0 4px 14px rgba(212, 168, 0, 0.4) !important;
+        transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease !important;
+    }
+    .header .primary-button:hover {
+        background-color: #2e1a00 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 20px rgba(184, 134, 11, 0.45) !important;
     }
 
     /* Header Right Actions */
@@ -175,16 +202,16 @@
         }
 
         .header .menu-wrapper {
-            display: none; 
+            display: none;
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
-            background: #ffffff !important;
+            background: #fffef5 !important;
             padding: 10px 20px 30px !important;
             border: none !important;
-            box-shadow: none !important;
-            border-bottom: 2px solid #f9f9f9 !important;
+            box-shadow: 0 8px 24px rgba(212, 168, 0, 0.12) !important;
+            border-bottom: 3px solid #D4A800 !important;
             max-height: 85vh;
             overflow-y: auto;
             z-index: 9999 !important;
@@ -210,8 +237,8 @@
         }
 
         .header .site-logo {
-            max-height: 40px !important;
-            height: 40px !important;
+            max-height: 52px !important;
+            height: 52px !important;
         }
 
         .header .menu-wrapper.w--nav-menu-open {
@@ -337,8 +364,8 @@
         position: absolute !important;
         top: 0 !important;
         right: 0 !important;
-        background-color: #ffcf00 !important;
-        color: #000 !important;
+        background-color: #1a1000 !important;
+        color: #E6B800 !important;
         font-family: sans-serif !important;
         padding: 2px 5px !important;
         border-radius: 50px !important;
@@ -349,11 +376,23 @@
         line-height: 1 !important;
     }
 
-    /* Top Bar Reset */
-    body { padding-top: 0 !important; margin-top: 0 !important; }
 </style>
 
 <script>
+    // Header smooth scroll effect (kiểu FPT Smart Home)
+    (function() {
+        var header = document.querySelector('.header');
+        if (!header) return;
+        function updateHeader() {
+            if (window.scrollY > 50) {
+                header.classList.add('header--scrolled');
+            } else {
+                header.classList.remove('header--scrolled');
+            }
+        }
+        window.addEventListener('scroll', function() { requestAnimationFrame(updateHeader); }, { passive: true });
+        updateHeader();
+    })();
     // Simple script to add active class based on URL
     document.addEventListener('DOMContentLoaded', function() {
         const currentPath = window.location.pathname;
