@@ -11,6 +11,36 @@
             /* Header fixed đã có main-with-fixed-header padding */
         }
 
+        /* Full-width banner styling (giống màn giỏ hàng) */
+        .hero-product {
+            background-image: url('https://gemcorp.vn/images/BN02.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .hero-product::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .hero-product .container {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-product h1,
+        .hero-product p {
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
         .product-item {
             text-decoration: none;
             display: block;
@@ -140,7 +170,20 @@
 
 @section('content')
     @include('partials.header')
-    @include('partials.section_category_video', ['videoTitle' => 'Khóa thông minh & Giải pháp GemLock', 'youtubeId' => null])
+    <!-- Start Hero Section -->
+    <div class="hero hero-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="intro-excerpt">
+                        <h1>Danh mục sản phẩm</h1>
+                        <p class="mb-4">Khám phá các dòng sản phẩm GemLock</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Hero Section -->
 
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
@@ -234,10 +277,12 @@
                 
                 // Update cart count from server response
                 const cartCount = document.querySelector('.cart-quantity');
-                if (cartCount && data.cart_count) {
+                if (cartCount) {
                     // Update after a slight delay to match animation arrival
                      setTimeout(() => {
-                        cartCount.textContent = data.cart_count;
+                        const countValue = data.cart_count || 0;
+                        cartCount.textContent = countValue;
+                        cartCount.classList.toggle('is-empty', countValue < 1);
                     }, 1000);
                 }
             })

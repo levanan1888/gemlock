@@ -18,6 +18,17 @@
             background: #fff;
         }
 
+        .product-section .product-item .product-thumbnail {
+            height: 250px;
+            object-fit: contain;
+            width: 100%;
+        }
+
+        .related-products-section {
+            margin-top: 20px;
+            padding-top: 10px;
+        }
+
         /* Image Gallery & Slider */
         .slider-wrapper {
             position: relative;
@@ -459,7 +470,7 @@
             </div>
 
             <!-- Tabs Section -->
-            <div class="mt-5 pt-5">
+            <div class="product-section related-products-section">
                 <ul class="nav nav-tabs justify-content-center border-0 mb-5" id="productTab">
                     <li class="nav-item">
                         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-desc" type="button">MÔ TẢ CHI TIẾT</button>
@@ -509,11 +520,17 @@
                 <div class="row">
                     @foreach($relatedProducts as $p)
                         @if($p['slug'] !== $product['slug'])
-                        <div class="col-12 col-md-6 col-lg-3 mb-4">
+                        <div class="col-12 col-md-6 col-lg-4 mb-5">
                             <a class="product-item" href="{{ route('product.detail', $p['slug']) }}">
-                                <img src="{{ $p['image'] }}" class="product-thumbnail">
+                                <img src="{{ $p['image'] }}" class="img-fluid product-thumbnail"
+                                    onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
                                 <h3 class="product-title">{{ $p['name'] }}</h3>
                                 <strong class="product-price">{{ $p['price'] }}</strong>
+                                <span class="icon-cross add-to-cart-btn" data-name="{{ $p['name'] }}"
+                                    data-price="{{ $p['price'] }}" data-image="{{ $p['image'] }}"
+                                    onclick="event.preventDefault(); addToCart(this);">
+                                    <img src="{{ asset('furni/images/cross.svg') }}" class="img-fluid" alt="Thêm vào giỏ">
+                                </span>
                             </a>
                         </div>
                         @endif
@@ -625,6 +642,35 @@
                 alert('Đã thêm ' + qty + ' sản phẩm vào giỏ hàng!');
                 location.reload();
             });
+        }
+
+        function addToCart(element) {
+            const name = element.getAttribute('data-name');
+            const price = element.getAttribute('data-price');
+            const image = element.getAttribute('data-image');
+
+            fetch('{{ route('cart.add') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    price: price,
+                    image: image
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                const cartCount = document.querySelector('.cart-quantity');
+                if (cartCount) {
+                    const countValue = data.cart_count || 0;
+                    cartCount.textContent = countValue;
+                    cartCount.classList.toggle('is-empty', countValue < 1);
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
     </script>
 @endpush

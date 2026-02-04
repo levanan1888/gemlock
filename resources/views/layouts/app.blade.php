@@ -109,7 +109,7 @@
             border-top: 1px solid rgba(212, 168, 0, 0.25);
         }
         .main-with-fixed-header {
-            padding-top: 96px;
+            padding-top: var(--header-height, 104px);
         }
     </style>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -139,7 +139,7 @@
     @stack('styles')
 </head>
 
-<body>
+<body class="@yield('body_class')">
 
     <main class="main-with-fixed-header">
         @yield('content')

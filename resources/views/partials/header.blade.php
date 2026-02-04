@@ -1,54 +1,104 @@
 @include('partials.header_styles')
-<div data-animation="default" class="header w-nav" data-easing2="ease" data-easing="ease" data-collapse="medium"
-    data-w-id="6a16e1d0-8739-c2cc-c577-7203b6ab2dae" role="banner" data-duration="400" data-doc-height="1">
-    <div class="container">
-        <div class="main-container w-container">
-            <div class="nav-wrapper">
-                <a href="/" aria-current="page" class="nav-logo w-nav-brand w--current">
-                    <img loading="lazy" src="{{ asset('image/Logo Tách Nền.png') }}" alt="GemLock Logo" class="site-logo" />
-                </a>
-                <nav role="navigation" class="menu-wrapper w-nav-menu">
-                    <div class="menu-content-wrapper">
-                        <div class="menu-item-wrapper">
-                            <div class="menu-items">
-                                <div class="single-nav-wrapper"><a href="/" class="menu-link">Trang chủ</a></div>
-                                <div class="single-nav-wrapper"><a href="/product" class="menu-link">Sản phẩm</a></div>
-                                <div class="single-nav-wrapper"><a href="/blog" class="menu-link">Bài viết</a></div>
-                                <div class="single-nav-wrapper"><a href="/contact" class="menu-link">Liên hệ</a></div>
-                            </div>
+@php($headerCategories = \App\Services\ProductService::getCategories())
+@php($cartCount = collect(session('cart', []))->sum('quantity'))
+<header class="site-header glass-header">
+    <div class="header-container">
+        <div class="header-inner">
+            <a href="/" class="header-logo">
+                <img loading="lazy" src="{{ asset('image/Logo Tách Nền.png') }}" alt="GemLock Logo" class="site-logo" />
+            </a>
+            <nav class="header-nav" aria-label="Main">
+                <a href="/" class="header-link">Trang chủ</a>
+                <div class="header-dropdown">
+                    <a href="/product" class="header-link header-dropdown-toggle">
+                        Sản phẩm
+                        <span class="material-icons">expand_more</span>
+                    </a>
+                    <div class="header-dropdown-menu mega-menu">
+                        <div class="mega-sidebar">
+                            @foreach($headerCategories as $category)
+                                <button type="button"
+                                    class="mega-category {{ $loop->first ? 'is-active' : '' }}"
+                                    data-target="mega-{{ $category['slug'] }}">
+                                    <span class="material-icons">{{ $category['icon'] }}</span>
+                                    <span>{{ $category['name'] }}</span>
+                                </button>
+                            @endforeach
                         </div>
-                        <div class="nav-button-wrapper desktop-only">
-                            <div class="single-nav-wrapper">
-                                <a href="/booking" class="menu-link">Liên hệ ngay</a>
-                            </div>
-                            <a href="tel:0967263944" class="primary-button w-inline-block">
-                                <img src="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c2/69420cbdd4e2e39b5eb77abb_phone.svg"
-                                    loading="lazy" alt="Phone Icon" />
-                                <p style="color: inherit; margin: 0;">0967 263 944</p>
-                            </a>
+                        <div class="mega-content">
+                            @foreach($headerCategories as $category)
+                                @php($categoryProducts = \App\Services\ProductService::getProductsByCategory($category['slug']))
+                                <div class="mega-panel {{ $loop->first ? 'is-active' : '' }}"
+                                    data-panel="mega-{{ $category['slug'] }}">
+                                    <div class="mega-panel-head">
+                                        <div class="mega-panel-title">{{ $category['name'] }}</div>
+                                        <div class="mega-panel-sub">{{ $category['series'] }}</div>
+                                    </div>
+                                    <div class="mega-grid">
+                                        @foreach($categoryProducts as $product)
+                                            <a href="{{ route('product.detail', $product['slug']) }}"
+                                                class="mega-card mega-card--product">
+                                                <div class="mega-card-image"
+                                                    style="background-image: url('{{ $product['image'] }}');">
+                                                </div>
+                                                <div class="mega-card-title">{{ $product['name'] }}</div>
+                                                <div class="mega-card-price">{{ $product['price'] }}</div>
+                                            </a>
+                                        @endforeach
+                                        @foreach($category['features'] as $feature)
+                                            <a href="{{ url('/product?category=' . $category['slug']) }}"
+                                                class="mega-card mega-card--feature">
+                                                <span class="material-icons">{{ $feature['icon'] }}</span>
+                                                <div class="mega-card-title">{{ $feature['text'] }}</div>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    </div>
-                </nav>
-
-                <div class="header-right-actions">
-                    <div class="cart-wrapper">
-                        <div data-open-product="" data-wf-cart-type="modal" class="w-commerce-commercecartwrapper"
-                            data-node-type="commerce-cart-wrapper">
-                            <a class="w-commerce-commercecartopenlink cart-button w-inline-block" role="button"
-                                aria-haspopup="dialog" aria-label="Open cart" data-node-type="commerce-cart-open-link"
-                                href="/cart">
-                                <img src="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c2/69633d5aac8ccf5c6ca37a52_image%201.svg"
-                                    loading="lazy" alt="Cart Icon" class="cart-icon-img" />
-                                <div class="w-commerce-commercecartopenlinkcount cart-quantity">0</div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="nav-trigger w-nav-button">
-                        <!-- FontAwesome icon handled via CSS ::before -->
                     </div>
                 </div>
+                <a href="/blog" class="header-link">Bài viết</a>
+                <a href="/contact" class="header-link">Liên hệ</a>
+            </nav>
+            <div class="header-actions">
+                <a href="{{ route('cart.index') }}" class="header-cart" aria-label="Giỏ hàng">
+                    <span class="material-icons">shopping_cart</span>
+                    <span class="cart-quantity {{ $cartCount ? '' : 'is-empty' }}">{{ $cartCount }}</span>
+                </a>
+                <a href="tel:0967263944" class="btn-primary header-phone">
+                    <span class="material-icons">phone</span>
+                    0967 263 944
+                </a>
+                <button type="button" class="header-menu-toggle" aria-label="Mở menu">
+                    <span class="material-icons">menu</span>
+                </button>
             </div>
         </div>
+        <div class="header-mobile">
+            <a href="/" class="header-link">Trang chủ</a>
+            <div class="header-mobile-group">
+                <button type="button" class="header-mobile-toggle" aria-expanded="false">
+                    Sản phẩm
+                    <span class="material-icons">expand_more</span>
+                </button>
+                <div class="header-submenu">
+                    <a href="/product" class="header-link">Tất cả sản phẩm</a>
+                    @foreach($headerCategories as $category)
+                        <a href="{{ url('/product?category=' . $category['slug']) }}" class="header-link">
+                            <span class="material-icons">{{ $category['icon'] }}</span>
+                            {{ $category['name'] }}
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+            <a href="/blog" class="header-link">Bài viết</a>
+            <a href="/contact" class="header-link">Liên hệ</a>
+            <a href="{{ route('cart.index') }}" class="header-link">Giỏ hàng</a>
+            <a href="tel:0967263944" class="btn-primary header-phone-mobile">
+                <span class="material-icons">phone</span>
+                0967 263 944
+            </a>
+        </div>
     </div>
-</div>
+</header>

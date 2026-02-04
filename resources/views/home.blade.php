@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('title', 'GemLock - Trang chủ')
+@section('body_class', 'gemlock-page')
 
 @section('content')
+    @include('partials.gemlock_topbar')
     @include('partials.header')
 
     {{-- Hero Slider - Giống ảnh FPT Style --}}
@@ -130,24 +132,20 @@
                 {{-- Products Slider bên phải --}}
                 <div class="category-slider-container" data-category="{{ $group['category']['slug'] }}">
                     <div class="category-slider-track" data-category="{{ $group['category']['slug'] }}">
-                        @foreach($group['products'] as $index => $product)
+                        @foreach($group['products'] as $product)
                         <div class="product-slide">
-                            <a href="{{ route('product.detail', $product['slug']) }}" class="product-card">
-                                @if($index === 0)
-                                <span class="product-badge">HOT</span>
-                                @endif
-                                <div class="product-image">
-                                    <div class="product-glow"></div>
-                                    <img alt="{{ $product['name'] }}" src="{{ $product['image'] }}"/>
-                                </div>
-                                <h3 class="product-name">{{ $product['name'] }}</h3>
-                                <p class="product-desc">{{ $product['description'] }}</p>
-                                <div class="product-footer">
-                                    <span class="product-price">{{ $product['price'] }}</span>
-                                    <span class="product-add">
-                                        <span class="material-icons">add</span>
-                                    </span>
-                                </div>
+                            <a href="{{ route('product.detail', $product['slug']) }}" class="product-item home-product-item">
+                                <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="product-thumbnail"
+                                    onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                <h3 class="product-title">{{ $product['name'] }}</h3>
+                                <strong class="product-price">{{ $product['price'] }}</strong>
+                                <span class="icon-cross home-add-to-cart"
+                                    data-name="{{ $product['name'] }}"
+                                    data-price="{{ $product['price'] }}"
+                                    data-image="{{ $product['image'] }}"
+                                    onclick="event.preventDefault(); event.stopPropagation(); addToCart(this);">
+                                    <img src="{{ asset('furni/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
+                                </span>
                             </a>
                         </div>
                         @endforeach
@@ -495,21 +493,45 @@
         /* Hero Slider - FPT Style (giống ảnh) */
         .hero-slider-section {
             position: relative;
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 50%, #fafafa 100%);
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8f4fc 50%, #f5f7fa 100%);
             padding: 0;
+            overflow: hidden;
+            margin-top: calc(-1 * var(--header-height, 104px));
+            padding-top: var(--header-height, 104px);
+        }
+        .hero-slider-section::before {
+            content: "";
+            position: absolute;
+            inset: -25%;
+            background: radial-gradient(circle at 30% 30%, rgba(212, 168, 0, 0.25), transparent 55%);
+            opacity: 0.55;
+            animation: heroPulse 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-slider-section::after {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.45) 48%, transparent 100%);
+            opacity: 0.25;
+            animation: heroSweep 7s linear infinite;
+            pointer-events: none;
+            z-index: 0;
         }
         .hero-slider-wrapper {
             position: relative;
             width: 100%;
-            min-height: calc(100vh - 80px);
+            min-height: calc(100vh - var(--header-height, 104px));
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1;
         }
         .hero-slides {
             position: relative;
             width: 100%;
-            height: calc(100vh - 80px);
+            height: calc(100vh - var(--header-height, 104px));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -522,30 +544,49 @@
             bottom: 0;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.6s ease;
             z-index: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 100px;
+            padding: 0 60px;
+            transform: translateY(22px) scale(0.98);
+            overflow: hidden;
         }
         .hero-slide.active {
             opacity: 1;
             visibility: visible;
             z-index: 1;
+            transform: translateY(0) scale(1);
         }
         .hero-slide img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border-radius: 0;
+            box-shadow: none;
+            transition: transform 0.6s ease;
+        }
+        .hero-slide.active img {
+            animation: heroFloat 5.5s ease-in-out infinite;
+        }
+        .hero-slide::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+            opacity: 0;
+            transform: translateX(-140%);
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+        .hero-slide.active::after {
+            opacity: 0.5;
+            animation: heroSweep 4.5s ease-in-out infinite;
         }
         @media (max-width: 768px) {
             .hero-slide {
-                padding: 20px 60px;
+                padding: 0 20px;
             }
         }
         
@@ -622,6 +663,44 @@
         .hero-dot.active {
             background: #D4A800;
             width: 52px;
+        }
+
+        /* Button text clarity & consistency */
+        .primary-button,
+        .primary-button-white,
+        .secondary-button,
+        .secondary-button-white,
+        .cta-button-secondary,
+        .btn-primary,
+        .btn-outline,
+        .btn-view-all {
+            font-weight: 700 !important;
+            letter-spacing: 0.2px;
+        }
+        .secondary-button,
+        .secondary-button-white {
+            color: #1a1000 !important;
+        }
+        .primary-button p,
+        .secondary-button p,
+        .cta-button-secondary p {
+            font-weight: 700 !important;
+            color: inherit !important;
+            margin: 0 !important;
+        }
+
+        @keyframes heroPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.03); }
+        }
+        @keyframes heroSweep {
+            0% { transform: translateX(-140%); }
+            50% { transform: translateX(10%); }
+            100% { transform: translateX(140%); }
+        }
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
         }
         .hero-brand .heading-h1 { color: #1a1000 !important; }
         .hero-brand .text-span { color: #1a1000 !important; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
@@ -799,6 +878,7 @@
             display: grid;
             grid-template-columns: 280px 1fr;
             gap: 24px;
+            align-items: stretch;
         }
         @media (max-width: 992px) {
             .category-grid {
@@ -839,6 +919,7 @@
             display: flex;
             flex-direction: column;
             transition: all 0.4s ease;
+            height: 100%;
         }
         .video-card:hover {
             box-shadow: 0 20px 60px rgba(212,168,0,0.2);
@@ -960,6 +1041,8 @@
         .category-slider-container {
             overflow: hidden;
             cursor: grab;
+            height: 100%;
+            display: flex;
         }
         .category-slider-container:active {
             cursor: grabbing;
@@ -968,127 +1051,120 @@
             display: flex;
             gap: 20px;
             transition: transform 0.4s ease;
+            align-items: stretch;
+            height: 100%;
         }
         .product-slide {
             flex-shrink: 0;
-            width: 240px;
-        }
-        .product-card {
-            display: block;
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid #f0f0f0;
-            text-decoration: none;
-            transition: all 0.35s ease;
+            width: 280px;
             height: 100%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+        .home-product-item {
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
             position: relative;
-        }
-        .product-card:hover {
-            border-color: rgba(212,168,0,0.4);
-            box-shadow: 0 15px 40px rgba(212,168,0,0.18);
-            transform: translateY(-6px);
-        }
-        .product-badge {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            padding: 5px 12px;
-            background: linear-gradient(135deg, #D4A800 0%, #E6B800 100%);
-            color: #1a1000;
-            font-size: 10px;
-            font-weight: 700;
+            padding: 30px;
+            background: #ffffff;
             border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(212,168,0,0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) all;
+            perspective: 1000px;
+            height: 100%;
         }
-        .product-image {
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
+        .home-product-item:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .home-product-item .product-thumbnail {
+            margin-bottom: 30px;
             position: relative;
-        }
-        .product-glow {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(212,168,0,0.15);
-            border-radius: 50%;
-            filter: blur(30px);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        .product-card:hover .product-glow {
-            opacity: 1;
-        }
-        .product-image img {
-            max-height: 100%;
-            max-width: 100%;
+            top: 0;
+            transition: 0.3s all ease;
+            height: 200px;
             object-fit: contain;
-            transition: transform 0.4s ease;
+            width: 100%;
         }
-        .product-card:hover .product-image img {
-            transform: scale(1.08);
-        }
-        .product-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin: 0 0 8px 0;
+        .home-product-item h3 {
+            font-weight: 600;
+            font-size: 16px;
             line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            transition: color 0.3s ease;
+            min-height: 2.6rem;
         }
-        .product-card:hover .product-name {
-            color: #D4A800;
+        .home-product-item strong {
+            font-weight: 800 !important;
+            font-size: 18px !important;
         }
-        .product-desc {
-            font-size: 12px;
-            color: #888;
-            margin: 0 0 14px 0;
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        .home-product-item h3,
+        .home-product-item strong {
+            color: #2f2f2f;
+            text-decoration: none;
         }
-        .product-footer {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-        }
-        .product-price {
-            font-size: 17px;
-            font-weight: 700;
-            color: #D4A800;
-        }
-        .product-add {
-            width: 34px;
-            height: 34px;
-            background: #f5f5f5;
+        .home-product-item .icon-cross {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            display: inline-block;
+            background: #2f2f2f;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: -17.5px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s all ease;
         }
-        .product-add .material-icons {
-            font-size: 18px;
-            color: #666;
-            transition: color 0.3s ease;
+        .home-product-item .icon-cross img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
-        .product-card:hover .product-add {
-            background: #D4A800;
+        .home-product-item:before {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+            content: "";
+            background: #fdf2cc;
+            height: 0%;
+            z-index: -1;
+            border-radius: 10px;
+            transition: 0.3s all ease;
         }
-        .product-card:hover .product-add .material-icons {
-            color: #1a1000;
+        .home-product-item:hover .product-thumbnail {
+            top: -25px;
+        }
+        .home-product-item:hover .icon-cross {
+            bottom: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+        .home-product-item:hover:before {
+            height: 70%;
+        }
+        @keyframes flyToCart {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(var(--tx), var(--ty)) scale(0.5);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.1);
+                opacity: 0;
+            }
+        }
+        .flying-image {
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            animation: flyToCart 1.2s ease-in-out forwards;
         }
 
         /* News Section Styles */
@@ -1311,5 +1387,75 @@
                 });
             });
         });
+
+        function addToCart(element) {
+            var name = element.getAttribute('data-name');
+            var price = element.getAttribute('data-price');
+            var image = element.getAttribute('data-image');
+
+            fetch('{{ route('cart.add') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    price: price,
+                    image: image
+                })
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                flyToCart(element);
+
+                var cartCount = document.querySelector('.cart-quantity');
+                if (cartCount) {
+                    setTimeout(function() {
+                        var countValue = data.cart_count || 0;
+                        cartCount.textContent = countValue;
+                        cartCount.classList.toggle('is-empty', countValue < 1);
+                    }, 1000);
+                }
+            })
+            .catch(function(error) { console.error('Error:', error); });
+        }
+
+        function flyToCart(element) {
+            var productItem = element.closest('.product-item');
+            var productImage = productItem ? productItem.querySelector('.product-thumbnail') : null;
+            var cartIcon = document.querySelector('.header-cart') || document.querySelector('.w-commerce-commercecartopenlink');
+
+            if (!cartIcon || !productImage) return;
+
+            var flyingImg = productImage.cloneNode(true);
+            flyingImg.classList.add('flying-image');
+
+            var imgRect = productImage.getBoundingClientRect();
+            var cartRect = cartIcon.getBoundingClientRect();
+
+            flyingImg.style.position = 'fixed';
+            flyingImg.style.left = imgRect.left + 'px';
+            flyingImg.style.top = imgRect.top + 'px';
+            flyingImg.style.width = imgRect.width + 'px';
+            flyingImg.style.height = imgRect.height + 'px';
+
+            var imgCenterX = imgRect.left + imgRect.width / 2;
+            var imgCenterY = imgRect.top + imgRect.height / 2;
+            var cartCenterX = cartRect.left + cartRect.width / 2;
+            var cartCenterY = cartRect.top + cartRect.height / 2;
+
+            var deltaX = cartCenterX - imgCenterX;
+            var deltaY = cartCenterY - imgCenterY;
+
+            flyingImg.style.setProperty('--tx', deltaX + 'px');
+            flyingImg.style.setProperty('--ty', deltaY + 'px');
+
+            document.body.appendChild(flyingImg);
+
+            setTimeout(function() {
+                flyingImg.remove();
+            }, 1200);
+        }
     </script>
 @endsection
