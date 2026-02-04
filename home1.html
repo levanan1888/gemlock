@@ -535,12 +535,12 @@
     </script>
     <style type="text/css">
       :root {
-        --ph-primary: #516beb;
-        --ph-primary-dark: #2f4bd9;
-        --ph-primary-light: #84dfff;
+        --ph-primary: #f2b233;
+        --ph-primary-dark: #d4961a;
+        --ph-primary-light: #ffe2a8;
         --ph-text: #34495e;
         --ph-text-strong: #1f2937;
-        --ph-header-height: 104px;
+        --ph-header-height: 60px;
       }
       .pageview {
         padding-top: var(--ph-header-height);
@@ -553,6 +553,14 @@
       #w-v7dxir7l {
         display: none !important;
       }
+      #w-gpls1s9r {
+        height: 0 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+      }
+      #sticky-gpls1s9r {
+        display: none !important;
+      }
       .ph-site-header {
         position: fixed;
         top: 0;
@@ -562,7 +570,7 @@
         background: rgba(255, 255, 255, 0.96);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid #e5e7eb;
+        border-bottom: 1px solid rgba(242, 178, 51, 0.25);
       }
       .ph-header-container {
         max-width: 1280px;
@@ -581,7 +589,7 @@
         align-items: center;
       }
       .ph-site-logo {
-        height: 70px;
+        height: 55px;
         width: auto;
         display: block;
       }
@@ -666,19 +674,45 @@
         transition: background 0.2s ease, color 0.2s ease;
       }
       .ph-header-dropdown-item:hover {
-        background: rgba(81, 107, 235, 0.12);
+        background: rgba(242, 178, 51, 0.15);
         color: var(--ph-primary);
       }
       .ph-header-actions {
         display: flex;
         align-items: center;
+        gap: 12px;
+      }
+      .ph-header-phone {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #cfa63a 0%, #f2d37a 100%);
+        color: #0b4aa1;
+        border: 1px solid rgba(11, 74, 161, 0.2);
+        font-weight: 700;
+        font-size: 15px;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 6px 16px rgba(207, 166, 58, 0.35);
+      }
+      .ph-header-phone:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(207, 166, 58, 0.45);
+      }
+      .ph-phone-icon {
+        width: 18px;
+        height: 18px;
+        display: block;
       }
       .ph-header-menu-toggle {
         display: none;
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--ph-primary-light);
         background: #ffffff;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         cursor: pointer;
@@ -740,7 +774,7 @@
         flex-direction: column;
         gap: 10px;
         padding-left: 12px;
-        border-left: 2px solid #f1f5f9;
+        border-left: 2px solid var(--ph-primary-light);
       }
       .ph-header-submenu.is-open {
         display: flex;
@@ -748,10 +782,16 @@
       .ph-header-mobile .ph-header-link {
         font-size: 16px;
         font-weight: 700;
-        color: #4b5563;
+        color: var(--ph-text);
+      }
+      .ph-header-phone-mobile {
+        align-self: flex-start;
       }
       @media (max-width: 991px) {
         .ph-header-nav {
+          display: none;
+        }
+        .ph-header-phone {
           display: none;
         }
         .ph-header-menu-toggle {
@@ -763,43 +803,59 @@
       <div class="ph-header-container">
         <div class="ph-header-inner">
           <a href="/" class="ph-header-logo" aria-label="Perfect House">
-            <img src="/image/Logo%20T%C3%A1ch%20N%E1%BB%81n.png" alt="Perfect House Logo" class="ph-site-logo" />
+            <img src="/image/png.webp" alt="Perfect House Logo" class="ph-site-logo" />
           </a>
           <nav class="ph-header-nav" aria-label="Main">
-            <a href="/" class="ph-header-link">Trang chủ</a>
+            <a href="/#san-pham" class="ph-header-link">Sản phẩm</a>
             <div class="ph-header-dropdown">
               <button type="button" class="ph-header-link ph-header-dropdown-toggle" aria-expanded="false">
-                Lĩnh vực liên quan
+                Các lĩnh vực kinh doanh
                 <span class="ph-caret" aria-hidden="true"></span>
               </button>
               <div class="ph-header-dropdown-menu" role="menu">
                 <a href="/gemlock" class="ph-header-dropdown-item" role="menuitem">Gemlock</a>
                 <a href="/#gemsolar" class="ph-header-dropdown-item" role="menuitem">Gemsolar</a>
-                <a href="/#tin-tuc" class="ph-header-dropdown-item" role="menuitem">Tin tức sự kiện</a>
-                <a href="/#lien-he" class="ph-header-dropdown-item" role="menuitem">Liên hệ</a>
+                <a href="/#xay-dung" class="ph-header-dropdown-item" role="menuitem">Xây dựng</a>
+                <a href="/#noi-that" class="ph-header-dropdown-item" role="menuitem">Nội thất</a>
               </div>
             </div>
+            <a href="/#tin-tuc" class="ph-header-link">Tin tức sự kiện</a>
+            <a href="/#lien-he" class="ph-header-link">Liên hệ với chúng tôi</a>
           </nav>
           <div class="ph-header-actions">
+            <a href="tel:0967263944" class="ph-header-phone" aria-label="Gọi 0967 263 944">
+              <svg class="ph-phone-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.36 11.36 0 0 0 3.56.57 1 1 0 0 1 1 1v3.49a1 1 0 0 1-1 1C10.85 21 3 13.15 3 3a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.56 1 1 0 0 1-.25 1.01z"/>
+              </svg>
+              0967 263 944
+            </a>
             <button type="button" class="ph-header-menu-toggle" aria-label="Mở menu" aria-expanded="false">
               <span class="ph-menu-icon" aria-hidden="true"></span>
             </button>
           </div>
         </div>
         <div class="ph-header-mobile">
-          <a href="/" class="ph-header-link">Trang chủ</a>
+          <a href="/#san-pham" class="ph-header-link">Sản phẩm</a>
           <div class="ph-header-mobile-group">
             <button type="button" class="ph-header-mobile-toggle" aria-expanded="false">
-              Lĩnh vực liên quan
+              Các lĩnh vực kinh doanh
               <span class="ph-caret" aria-hidden="true"></span>
             </button>
             <div class="ph-header-submenu">
               <a href="/gemlock" class="ph-header-link">Gemlock</a>
               <a href="/#gemsolar" class="ph-header-link">Gemsolar</a>
-              <a href="/#tin-tuc" class="ph-header-link">Tin tức sự kiện</a>
-              <a href="/#lien-he" class="ph-header-link">Liên hệ</a>
+              <a href="/#xay-dung" class="ph-header-link">Xây dựng</a>
+              <a href="/#noi-that" class="ph-header-link">Nội thất</a>
             </div>
           </div>
+          <a href="/#tin-tuc" class="ph-header-link">Tin tức sự kiện</a>
+          <a href="/#lien-he" class="ph-header-link">Liên hệ với chúng tôi</a>
+          <a href="tel:0967263944" class="ph-header-phone ph-header-phone-mobile" aria-label="Gọi 0967 263 944">
+            <svg class="ph-phone-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.36 11.36 0 0 0 3.56.57 1 1 0 0 1 1 1v3.49a1 1 0 0 1-1 1C10.85 21 3 13.15 3 3a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.56 1 1 0 0 1-.25 1.01z"/>
+            </svg>
+            0967 263 944
+          </a>
         </div>
       </div>
     </header>

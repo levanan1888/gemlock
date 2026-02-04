@@ -85,7 +85,7 @@ class ProductService
                 'name' => 'KHÓA THÔNG MINH CAO CẤP GEM - N86',
                 'brand' => 'Gem Smart Lock',
                 'category' => 'biet-thu',
-                'price' => 'Liên hệ',
+                'price' => '12.500.000đ',
                 'image' => 'https://gemcorp.vn/images/N86.png',
                 'images' => [
                     'https://gemcorp.vn/images/N86.png',
@@ -99,11 +99,53 @@ class ProductService
                 'specs' => ['Chất liệu' => 'Hợp kim kẽm', 'Bảo hành' => '24 tháng']
             ],
             [
+                'slug' => 'n90-pro',
+                'name' => 'KHÓA THÔNG MINH GEM N90 PRO',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'biet-thu',
+                'price' => '15.900.000đ',
+                'image' => 'https://gemcorp.vn/images/N86.png',
+                'description' => 'Flagship 2024 - Nhận diện khuôn mặt 3D + Camera AI 2K tích hợp. Bảo mật cao nhất dành cho biệt thự.',
+                'features' => [
+                    ['title' => 'Camera AI 2K', 'desc' => 'Ghi hình và nhận diện người lạ', 'icon' => 'fas fa-video'],
+                    ['title' => 'Pin dự phòng', 'desc' => 'Hoạt động 12 tháng không cần sạc', 'icon' => 'fas fa-battery-full']
+                ],
+                'specs' => ['Chất liệu' => 'Titan Grade 5', 'Bảo hành' => '36 tháng']
+            ],
+            [
+                'slug' => 'n85-plus',
+                'name' => 'KHÓA THÔNG MINH GEM N85 PLUS',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'biet-thu',
+                'price' => '8.500.000đ',
+                'image' => 'https://gemcorp.vn/images/N81B.png',
+                'description' => 'Phiên bản nâng cấp với màn hình cảm ứng IPS và chuông hình thông minh tích hợp.',
+                'features' => [
+                    ['title' => 'Màn hình IPS 4.5 inch', 'desc' => 'Hiển thị sắc nét, cảm ứng mượt', 'icon' => 'fas fa-tv'],
+                    ['title' => 'Chuông hình HD', 'desc' => 'Xem khách từ xa qua điện thoại', 'icon' => 'fas fa-bell']
+                ],
+                'specs' => ['Màn hình' => 'IPS 4.5 inch', 'Bảo hành' => '24 tháng']
+            ],
+            [
+                'slug' => 'n82-face',
+                'name' => 'KHÓA VÂN TAY KHUÔN MẶT GEM N82',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'biet-thu',
+                'price' => '11.200.000đ',
+                'image' => 'https://gemcorp.vn/images/N86.png',
+                'description' => 'Công nghệ nhận diện khuôn mặt 3D infrared, hoạt động tốt trong mọi điều kiện ánh sáng.',
+                'features' => [
+                    ['title' => '3D Infrared Face ID', 'desc' => 'Nhận diện trong bóng tối', 'icon' => 'fas fa-user-check'],
+                    ['title' => 'Chống giả mạo', 'desc' => 'Không mở bằng ảnh/video', 'icon' => 'fas fa-shield-virus']
+                ],
+                'specs' => ['Công nghệ' => '3D Structured Light', 'Bảo hành' => '24 tháng']
+            ],
+            [
                 'slug' => 'n88b',
                 'name' => 'KHÓA THÔNG MINH CAO CẤP GEM-N88B',
                 'brand' => 'Gem Smart Lock',
                 'category' => 'can-ho',
-                'price' => 'Liên hệ',
+                'price' => '7.200.000đ',
                 'image' => 'https://gemcorp.vn/images/N88B.png',
                 'images' => [
                     'https://gemcorp.vn/images/N88B.png'
@@ -119,7 +161,7 @@ class ProductService
                 'name' => 'KHÓA THÔNG MINH CAO CẤP GEM – N282',
                 'brand' => 'Gem Smart Lock',
                 'category' => 'can-ho',
-                'price' => 'Liên hệ',
+                'price' => '4.500.000đ',
                 'image' => 'https://gemcorp.vn/images/N282.png',
                 'description' => 'Mẫu khóa quốc dân với giá thành hợp lý nhưng vẫn đảm bảo độ bảo mật cực cao.',
                 'features' => [
@@ -128,11 +170,67 @@ class ProductService
                 'specs' => ['Chất liệu' => 'Hợp kim cao cấp']
             ],
             [
+                'slug' => 'n300-wifi',
+                'name' => 'KHÓA WIFI THÔNG MINH GEM N300',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'can-ho',
+                'price' => '5.200.000đ',
+                'image' => 'https://gemcorp.vn/images/N88B.png',
+                'description' => 'Kết nối WiFi trực tiếp, không cần Gateway. Mở cửa từ xa mọi lúc mọi nơi qua App Tuya.',
+                'features' => [
+                    ['title' => 'WiFi 2.4GHz', 'desc' => 'Không cần Gateway trung gian', 'icon' => 'fas fa-wifi'],
+                    ['title' => 'Tuya Smart', 'desc' => 'Tích hợp hệ sinh thái Smart Home', 'icon' => 'fas fa-home']
+                ],
+                'specs' => ['Kết nối' => 'WiFi 2.4GHz', 'App' => 'Tuya Smart']
+            ],
+            [
+                'slug' => 'n255-slim',
+                'name' => 'KHÓA SIÊU MỎNG GEM N255 SLIM',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'can-ho',
+                'price' => '3.900.000đ',
+                'image' => 'https://gemcorp.vn/images/N282.png',
+                'description' => 'Thiết kế siêu mỏng chỉ 23mm, phù hợp cửa chung cư đố nhỏ. Lắp đặt dễ dàng.',
+                'features' => [
+                    ['title' => 'Siêu mỏng 23mm', 'desc' => 'Phù hợp mọi loại cửa', 'icon' => 'fas fa-compress-alt'],
+                    ['title' => 'Lắp đặt nhanh', 'desc' => 'Chỉ 30 phút hoàn thiện', 'icon' => 'fas fa-tools']
+                ],
+                'specs' => ['Độ dày' => '23mm', 'Bảo hành' => '18 tháng']
+            ],
+            [
+                'slug' => 'n310-card',
+                'name' => 'KHÓA THẺ TỪ GEM N310',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'can-ho',
+                'price' => '2.900.000đ',
+                'image' => 'https://gemcorp.vn/images/N88B.png',
+                'description' => 'Giải pháp khóa thẻ từ kinh tế cho căn hộ cho thuê. Quản lý dễ dàng, chi phí thấp.',
+                'features' => [
+                    ['title' => 'Thẻ từ RFID', 'desc' => 'Tương thích thẻ chung cư', 'icon' => 'fas fa-id-card'],
+                    ['title' => 'Giá hợp lý', 'desc' => 'Phù hợp cho thuê', 'icon' => 'fas fa-tags']
+                ],
+                'specs' => ['Loại thẻ' => 'RFID 13.56MHz', 'Bảo hành' => '12 tháng']
+            ],
+            [
+                'slug' => 'n288-premium',
+                'name' => 'KHÓA CĂN HỘ CAO CẤP GEM N288',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'can-ho',
+                'price' => '6.800.000đ',
+                'image' => 'https://gemcorp.vn/images/N282.png',
+                'description' => 'Dòng khóa căn hộ cao cấp với đầy đủ 5 phương thức mở: vân tay, mã số, thẻ từ, App, chìa cơ.',
+                'features' => [
+                    ['title' => '5 phương thức mở', 'desc' => 'Linh hoạt cho mọi thành viên', 'icon' => 'fas fa-key'],
+                    ['title' => 'Cảnh báo thông minh', 'desc' => 'Chống cạy, chống phá', 'icon' => 'fas fa-exclamation-triangle']
+                ],
+                'specs' => ['Phương thức' => '5 in 1', 'Bảo hành' => '24 tháng']
+            ],
+            [
                 'slug' => 'n68',
                 'name' => 'KHÓA THÔNG MINH CAO CẤP GEM-N68',
                 'brand' => 'Gem Smart Lock',
                 'category' => 'van-phong',
-                'price' => 'Liên hệ',
+                'price' => '4.200.000đ',
                 'image' => 'https://gemcorp.vn/images/N68.png',
                 'description' => 'Chuyên dụng cho các dòng cửa nhôm hệ, cửa Xingfa với thiết kế đố nhỏ.',
                 'features' => [
@@ -145,13 +243,83 @@ class ProductService
                 'name' => 'KHÓA THÔNG MINH GEM-H29',
                 'brand' => 'Gem Smart Lock',
                 'category' => 'van-phong',
-                'price' => 'Liên hệ',
+                'price' => '3.200.000đ',
                 'image' => 'https://gemcorp.vn/images/H29.png',
                 'description' => 'Giải pháp khóa khách sạn thông minh, quản lý tập trung qua phần mềm.',
                 'features' => [
                     ['title' => 'Quản lý tập trung', 'desc' => 'Phần mềm quản lý chuyên dụng cho khách sạn', 'icon' => 'fas fa-hotel']
                 ],
                 'specs' => ['Loại' => 'Khóa khách sạn']
+            ],
+            [
+                'slug' => 'g100-glass',
+                'name' => 'KHÓA CỬA KÍNH GEM G100',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'van-phong',
+                'price' => '4.800.000đ',
+                'image' => 'https://gemcorp.vn/images/N68.png',
+                'description' => 'Thiết kế dành riêng cho cửa kính văn phòng. Lắp không cần khoan, giữ nguyên tính thẩm mỹ.',
+                'features' => [
+                    ['title' => 'Không khoan kính', 'desc' => 'Lắp đặt bằng kẹp chuyên dụng', 'icon' => 'fas fa-compress'],
+                    ['title' => 'Chấm công vân tay', 'desc' => 'Tích hợp quản lý nhân sự', 'icon' => 'fas fa-user-clock']
+                ],
+                'specs' => ['Độ dày kính' => '10-12mm', 'Bảo hành' => '24 tháng']
+            ],
+            [
+                'slug' => 'g150-double',
+                'name' => 'KHÓA CỬA KÍNH ĐÔI GEM G150',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'van-phong',
+                'price' => '7.500.000đ',
+                'image' => 'https://gemcorp.vn/images/H29.png',
+                'description' => 'Giải pháp cho cửa kính đôi (cửa trượt/cửa mở). Khóa đồng bộ cả 2 cánh.',
+                'features' => [
+                    ['title' => 'Khóa cửa đôi', 'desc' => 'Đồng bộ 2 cánh cửa', 'icon' => 'fas fa-door-closed'],
+                    ['title' => 'Remote điều khiển', 'desc' => 'Mở từ xa tiện lợi', 'icon' => 'fas fa-broadcast-tower']
+                ],
+                'specs' => ['Loại cửa' => 'Cửa kính đôi', 'Bảo hành' => '24 tháng']
+            ],
+            [
+                'slug' => 'h50-hotel',
+                'name' => 'KHÓA KHÁCH SẠN GEM H50 PRO',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'van-phong',
+                'price' => '2.800.000đ',
+                'image' => 'https://gemcorp.vn/images/H29.png',
+                'description' => 'Khóa thẻ từ chuyên nghiệp cho khách sạn, nhà nghỉ. Tương thích hệ thống quản lý PMS.',
+                'features' => [
+                    ['title' => 'Tương thích PMS', 'desc' => 'Kết nối phần mềm quản lý khách sạn', 'icon' => 'fas fa-server'],
+                    ['title' => 'Thẻ master', 'desc' => 'Quản lý đa tầng', 'icon' => 'fas fa-layer-group']
+                ],
+                'specs' => ['Giao thức' => 'Mifare', 'Bảo hành' => '18 tháng']
+            ],
+            [
+                'slug' => 'n75-aluminum',
+                'name' => 'KHÓA CỬA NHÔM GEM N75',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'van-phong',
+                'price' => '3.500.000đ',
+                'image' => 'https://gemcorp.vn/images/N68.png',
+                'description' => 'Chuyên dụng cho cửa nhôm Xingfa, cửa nhôm hệ cao. Thiết kế gọn, lắp đặt dễ dàng.',
+                'features' => [
+                    ['title' => 'Cửa nhôm chuyên dụng', 'desc' => 'Xingfa, Việt Pháp, JMA...', 'icon' => 'fas fa-border-style'],
+                    ['title' => 'Chống nước IP54', 'desc' => 'Phù hợp ngoài trời', 'icon' => 'fas fa-cloud-rain']
+                ],
+                'specs' => ['Loại cửa' => 'Nhôm hệ', 'Bảo hành' => '18 tháng']
+            ],
+            [
+                'slug' => 'a200-access',
+                'name' => 'HỆ THỐNG KIỂM SOÁT RA VÀO GEM A200',
+                'brand' => 'Gem Smart Lock',
+                'category' => 'van-phong',
+                'price' => '12.000.000đ',
+                'image' => 'https://gemcorp.vn/images/H29.png',
+                'description' => 'Hệ thống Access Control chuyên nghiệp: quẹt thẻ, vân tay, khuôn mặt + chấm công.',
+                'features' => [
+                    ['title' => 'Chấm công 3 in 1', 'desc' => 'Thẻ + Vân tay + Khuôn mặt', 'icon' => 'fas fa-id-badge'],
+                    ['title' => 'Báo cáo Excel', 'desc' => 'Xuất dữ liệu chấm công tự động', 'icon' => 'fas fa-file-excel']
+                ],
+                'specs' => ['Dung lượng' => '3000 người dùng', 'Bảo hành' => '24 tháng']
             ]
         ];
     }

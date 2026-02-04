@@ -30,6 +30,20 @@
         text-decoration: none;
         font-weight: 700;
         font-size: 14px;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .gemlock-topbar-arrow {
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        transition: transform 0.2s ease;
+    }
+    .gemlock-topbar-link:hover {
+        transform: translateX(-2px);
+        opacity: 0.95;
+    }
+    .gemlock-topbar-link:hover .gemlock-topbar-arrow {
+        transform: translateX(-2px);
     }
     .site-header {
         position: fixed;
@@ -246,9 +260,20 @@
     }
     .header-dropdown-menu.mega-menu {
         width: 880px;
+        max-width: calc(100vw - 32px);
         padding: 0;
         display: flex;
         overflow: hidden;
+        /* Center on screen */
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%) translateY(8px);
+        top: var(--header-height, 104px);
+    }
+    .header-dropdown:hover .header-dropdown-menu.mega-menu,
+    .header-dropdown:focus-within .header-dropdown-menu.mega-menu,
+    .header-dropdown.is-open .header-dropdown-menu.mega-menu {
+        transform: translateX(-50%) translateY(0);
     }
     .mega-sidebar {
         width: 250px;
@@ -358,6 +383,50 @@
         font-size: 20px;
         color: #D4A800;
     }
+    
+    /* Mega Menu Responsive - Laptop nhỏ */
+    @media (max-width: 1200px) {
+        .header-dropdown-menu.mega-menu {
+            width: 750px;
+        }
+        .mega-sidebar {
+            width: 200px;
+        }
+        .mega-content {
+            padding: 16px;
+        }
+        .mega-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .mega-card {
+            padding: 8px;
+        }
+        .mega-card-title {
+            font-size: 11px;
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .header-dropdown-menu.mega-menu {
+            width: calc(100vw - 40px);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .mega-sidebar {
+            width: 180px;
+            flex-shrink: 0;
+        }
+        .mega-content {
+            padding: 14px;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+        .mega-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    
     .header-mobile-group {
         display: flex;
         flex-direction: column;

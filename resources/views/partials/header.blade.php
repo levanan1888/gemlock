@@ -1,14 +1,15 @@
 @include('partials.header_styles')
 @php($headerCategories = \App\Services\ProductService::getCategories())
 @php($cartCount = collect(session('cart', []))->sum('quantity'))
+@php($isGemlock = request()->is('gemlock') || request()->is('gemlock/*') || request()->is('product') || request()->is('product/*') || request()->is('product-detail/*'))
+@php($homeUrl = $isGemlock ? '/gemlock' : '/')
 <header class="site-header glass-header">
     <div class="header-container">
         <div class="header-inner">
-            <a href="/" class="header-logo">
+            <a href="{{ $homeUrl }}" class="header-logo">
                 <img loading="lazy" src="{{ asset('image/Logo Tách Nền.png') }}" alt="GemLock Logo" class="site-logo" />
             </a>
             <nav class="header-nav" aria-label="Main">
-                <a href="/" class="header-link">Trang chủ</a>
                 <div class="header-dropdown">
                     <a href="/product" class="header-link header-dropdown-toggle">
                         Sản phẩm
@@ -58,6 +59,7 @@
                         </div>
                     </div>
                 </div>
+                <a href="{{ $homeUrl }}" class="header-link">Trang chủ</a>
                 <a href="/blog" class="header-link">Bài viết</a>
                 <a href="/contact" class="header-link">Liên hệ</a>
             </nav>
@@ -76,7 +78,6 @@
             </div>
         </div>
         <div class="header-mobile">
-            <a href="/" class="header-link">Trang chủ</a>
             <div class="header-mobile-group">
                 <button type="button" class="header-mobile-toggle" aria-expanded="false">
                     Sản phẩm
@@ -92,6 +93,7 @@
                     @endforeach
                 </div>
             </div>
+            <a href="{{ $homeUrl }}" class="header-link">Trang chủ</a>
             <a href="/blog" class="header-link">Bài viết</a>
             <a href="/contact" class="header-link">Liên hệ</a>
             <a href="{{ route('cart.index') }}" class="header-link">Giỏ hàng</a>

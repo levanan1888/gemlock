@@ -247,9 +247,9 @@
         <section class="relative pt-20" id="hero-slider">
             <div class="hero-slider-inner">
                 <div class="hero-slides">
-                    <div class="hero-slide active" data-slide="0" style="background-image: url('{{ asset('furni/images/couch.png') }}');"></div>
-                    <div class="hero-slide" data-slide="1" style="background-image: url('{{ asset('image/solar.png') }}');"></div>
-                    <div class="hero-slide" data-slide="2" style="background-image: url('{{ asset('image/banner perfect.png') }}');"></div>
+                    <div class="hero-slide active" data-slide="0" style="background-image: url('{{ asset('image/banner2.jpg') }}');"></div>
+                    <div class="hero-slide" data-slide="1" style="background-image: url('{{ asset('image/Banner Solar 1.png') }}');"></div>
+                    <div class="hero-slide" data-slide="2" style="background-image: url('{{ asset('image/gratisography-moon-robot-1035x780.jpg') }}');"></div>
                 </div>
                 <div class="hero-slider-dots">
                     <button type="button" class="hero-dot active" data-index="0" aria-label="Slide 1"></button>

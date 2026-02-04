@@ -10,21 +10,17 @@
     {{-- Hero Slider - Giống ảnh FPT Style --}}
     <section class="hero-slider-section" id="hero-slider">
         <div class="hero-slider-wrapper">
-            <div class="hero-slides">
-                <div class="hero-slide active" data-slide="0">
-                    <img src="{{ asset('image/solar.png') }}" alt="Slide 1" />
-                </div>
-                <div class="hero-slide" data-slide="1">
-                    <img src="{{ asset('furni/images/couch.png') }}" alt="Slide 2" />
-                </div>
-                <div class="hero-slide" data-slide="2">
-                    <img src="{{ asset('image/banner perfect.png') }}" alt="Slide 3" />
-                </div>
+        <div class="hero-slides">
+            <div class="hero-slide active" data-slide="0">
+                <img src="{{ asset('image/banner2.jpg') }}" alt="Slide 1" loading="eager" />
             </div>
+            <div class="hero-slide" data-slide="1">
+                <img src="{{ asset('image/Banner Solar 1.png') }}" alt="Slide 2" loading="lazy" />
+            </div>
+        </div>
             <div class="hero-slider-dots">
                 <button type="button" class="hero-dot active" data-index="0" aria-label="Slide 1"></button>
                 <button type="button" class="hero-dot" data-index="1" aria-label="Slide 2"></button>
-                <button type="button" class="hero-dot" data-index="2" aria-label="Slide 3"></button>
             </div>
             <button type="button" class="hero-slider-prev" aria-label="Slide trước">
                 <span class="material-icons">chevron_left</span>
@@ -52,32 +48,13 @@
         </div>
         <div class="gallery-slider">
             <div class="gallery-track">
-                <!-- Set 1 -->
+                <img src="{{ asset('image/banner2.jpg') }}" loading="lazy" alt="Gallery Image"
+                    class="gallery-item img-tall" />
                 <img src="{{ asset('furni/images/img-grid-1.jpg') }}" loading="lazy" alt="Gallery Image"
+                    class="gallery-item img-short" />
+                <img src="{{ asset('image/Banner Solar 1.png') }}" loading="lazy" alt="Gallery Image"
                     class="gallery-item img-tall" />
                 <img src="{{ asset('furni/images/img-grid-2.jpg') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-short" />
-                <img src="{{ asset('image/solar.png') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-tall" />
-                <img src="{{ asset('image/perfect_house_09.png') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-short" />
-                <img src="{{ asset('furni/images/img-grid-3.jpg') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-tall" />
-                <img src="{{ asset('image/banner perfect.png') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-short" />
-
-                <!-- Set 2 (Duplicate for loop) -->
-                <img src="{{ asset('furni/images/img-grid-1.jpg') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-tall" />
-                <img src="{{ asset('furni/images/img-grid-2.jpg') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-short" />
-                <img src="{{ asset('image/solar.png') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-tall" />
-                <img src="{{ asset('image/perfect_house_09.png') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-short" />
-                <img src="{{ asset('furni/images/img-grid-3.jpg') }}" loading="lazy" alt="Gallery Image"
-                    class="gallery-item img-tall" />
-                <img src="{{ asset('image/banner perfect.png') }}" loading="lazy" alt="Gallery Image"
                     class="gallery-item img-short" />
             </div>
         </div>
@@ -320,17 +297,17 @@
     {{-- ===== NEWS SECTION ===== --}}
     <section class="news section-white" style="padding: 80px 0;">
         <div class="w-layout-blockcontainer container w-container">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px;">
+            <div class="news-header">
                 <div class="title">
                     <h1 class="heading-h2">Tin tức <span class="text-span">Mới nhất</span></h1>
                     <p class="hero-subtitle">Cập nhật những thông tin mới nhất về sản phẩm và công nghệ Smart Home.</p>
                 </div>
-                <a href="/blog" class="secondary-button w-inline-block" style="display: inline-flex; align-items: center; gap: 8px;">
+                <a href="/blog" class="secondary-button w-inline-block news-view-all">
                     <p style="margin: 0;">Xem tất cả</p>
                     <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
                 </a>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div class="news-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
                 {{-- News Card 1 --}}
                 <a href="/blog" style="text-decoration: none; display: block; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid #f0f0f0; transition: all 0.3s ease;" class="news-card">
                     <div style="position: relative; height: 200px; overflow: hidden;">
@@ -425,59 +402,29 @@
                                 alt="Right Icon" style="filter: invert(1);" /></div>
                     </a>
                 </div>
-                <div data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad574d" class="cta-line">
-                    <div class="cta-image-wrapper"><img src="{{ asset('image/Logo Tách Nền.png') }}" loading="lazy"
-                            data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad574e" alt="Partner Brand" class="cta-avatar-image"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /><img
-                            src="https://content.pancake.vn/1/s750x750/fwebp/a0/10/53/ce/0c8b304d1a5c085e4718387faaa3e33a09f9f9b5dc201adb4b2db48d-w:5906-h:5906-l:419034-t:image/png.png"
-                            loading="lazy" data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad574f" alt="Partner Brand"
-                            class="cta-avatar-image"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /></div>
-                    <div class="cta-image-wrapper vartical"><img
-                            src="https://content.pancake.vn/1/s569x499/fwebp/07/26/cd/7b/6196f9de02559345bba69d77cd42f862fe5e878c55935a4fbd3720ce-w:4009-h:3509-l:303004-t:image/png.png"
-                            loading="lazy" data-w-id="8841373c-85bc-8a3d-0925-3d73763368d2" alt="Partner Brand"
-                            class="cta-avatar-image vartical"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /><img
-                            src="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c9/69420cbdd4e2e39b5eb779d5_Vector%20(7).svg"
-                            loading="lazy" data-w-id="8841373c-85bc-8a3d-0925-3d73763368d3" alt="Partner Brand"
-                            class="cta-avatar-image vartical"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /></div>
-                </div>
-                <div data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad5750" class="cta-line medium">
-                    <div class="cta-image-wrapper"><img src="{{ asset('image/Logo Tách Nền.png') }}" loading="lazy"
-                            data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad5751" alt="Partner Brand" class="cta-avatar-image"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /><img
-                            src="https://content.pancake.vn/1/s750x750/fwebp/a0/10/53/ce/0c8b304d1a5c085e4718387faaa3e33a09f9f9b5dc201adb4b2db48d-w:5906-h:5906-l:419034-t:image/png.png"
-                            loading="lazy" data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad5752" alt="Partner Brand"
-                            class="cta-avatar-image"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /></div>
-                    <div class="cta-image-wrapper vartical"><img
-                            src="https://content.pancake.vn/1/s569x499/fwebp/07/26/cd/7b/6196f9de02559345bba69d77cd42f862fe5e878c55935a4fbd3720ce-w:4009-h:3509-l:303004-t:image/png.png"
-                            loading="lazy" data-w-id="29a3c8a7-39f3-fbff-022b-959c6fa6b621" alt="Partner Brand"
-                            class="cta-avatar-image vartical"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /><img
-                            src="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c9/69420cbdd4e2e39b5eb779d5_Vector%20(7).svg"
-                            loading="lazy" data-w-id="29a3c8a7-39f3-fbff-022b-959c6fa6b622" alt="Partner Brand"
-                            class="cta-avatar-image vartical"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /></div>
-                </div>
-                <div data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad5753" class="cta-line small">
-                    <div class="cta-image-wrapper"><img src="{{ asset('image/Logo Tách Nền.png') }}" loading="lazy"
-                            data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad5754" alt="Partner Brand" class="cta-avatar-image"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /><img
-                            src="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c9/69420cbdd4e2e39b5eb779d3_Vector%20(5).svg"
-                            loading="lazy" data-w-id="a90f08e8-b8cb-0d7a-1c6e-ea4374ad5755" alt="Partner Brand"
-                            class="cta-avatar-image"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /></div>
-                    <div class="cta-image-wrapper vartical"><img
-                            src="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c9/69420cbdd4e2e39b5eb779d4_Vector%20(6).svg"
-                            loading="lazy" data-w-id="6f3df56e-b1e8-3726-8bf9-e8f61f1f2159" alt="Partner Brand"
-                            class="cta-avatar-image vartical"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /><img
-                            src="https://cdn.prod.website-files.com/69420cbdd4e2e39b5eb779c9/69420cbdd4e2e39b5eb779d5_Vector%20(7).svg"
-                            loading="lazy" data-w-id="6f3df56e-b1e8-3726-8bf9-e8f61f1f215a" alt="Partner Brand"
-                            class="cta-avatar-image vartical"
-                            style="background: white; padding: 10px; border-radius: 50%; object-fit: contain;" /></div>
+                <div class="cta-orbits">
+                    <div class="cta-orbit cta-orbit-1">
+                        <div class="cta-orbit-item" style="--angle: 0deg;">
+                            <img src="{{ asset('image/Logo Tách Nền.png') }}" loading="lazy" alt="Perfect House" />
+                        </div>
+                        <div class="cta-orbit-item" style="--angle: 120deg;">
+                            <img src="https://content.pancake.vn/1/s750x750/fwebp/a0/10/53/ce/0c8b304d1a5c085e4718387faaa3e33a09f9f9b5dc201adb4b2db48d-w:5906-h:5906-l:419034-t:image/png.png" loading="lazy" alt="GemLock" />
+                        </div>
+                        <div class="cta-orbit-item" style="--angle: 240deg;">
+                            <img src="https://content.pancake.vn/1/s569x499/fwebp/07/26/cd/7b/6196f9de02559345bba69d77cd42f862fe5e878c55935a4fbd3720ce-w:4009-h:3509-l:303004-t:image/png.png" loading="lazy" alt="GemSolar" />
+                        </div>
+                    </div>
+                    <div class="cta-orbit cta-orbit-2">
+                        <div class="cta-orbit-item" style="--angle: 60deg;">
+                            <img src="{{ asset('image/Logo Tách Nền.png') }}" loading="lazy" alt="Perfect House" />
+                        </div>
+                        <div class="cta-orbit-item" style="--angle: 180deg;">
+                            <img src="https://content.pancake.vn/1/s750x750/fwebp/a0/10/53/ce/0c8b304d1a5c085e4718387faaa3e33a09f9f9b5dc201adb4b2db48d-w:5906-h:5906-l:419034-t:image/png.png" loading="lazy" alt="GemLock" />
+                        </div>
+                        <div class="cta-orbit-item" style="--angle: 300deg;">
+                            <img src="https://content.pancake.vn/1/s569x499/fwebp/07/26/cd/7b/6196f9de02559345bba69d77cd42f862fe5e878c55935a4fbd3720ce-w:4009-h:3509-l:303004-t:image/png.png" loading="lazy" alt="GemSolar" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -499,25 +446,39 @@
             margin-top: calc(-1 * var(--header-height, 104px));
             padding-top: var(--header-height, 104px);
         }
-        .hero-slider-section::before {
+        /* Hero Slide Effects */
+        .hero-slide::before {
             content: "";
             position: absolute;
-            inset: -25%;
-            background: radial-gradient(circle at 30% 30%, rgba(212, 168, 0, 0.25), transparent 55%);
-            opacity: 0.55;
-            animation: heroPulse 6s ease-in-out infinite;
+            inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(212, 168, 0, 0.15), transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(59, 93, 80, 0.1), transparent 50%);
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.8s ease;
         }
-        .hero-slider-section::after {
+        .hero-slide.active::before {
+            opacity: 1;
+        }
+        .hero-slide::after {
             content: "";
             position: absolute;
-            inset: -40%;
-            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.45) 48%, transparent 100%);
-            opacity: 0.25;
-            animation: heroSweep 7s linear infinite;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+            transform: translateX(-100%);
             pointer-events: none;
-            z-index: 0;
+            z-index: 2;
+        }
+        .hero-slide.active::after {
+            animation: slideShine 3s ease-in-out infinite;
+        }
+        @keyframes slideShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         .hero-slider-wrapper {
             position: relative;
@@ -535,6 +496,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            user-select: none;
+            -webkit-user-select: none;
+            background: #f5f7fa;
         }
         .hero-slide {
             position: absolute;
@@ -544,31 +508,40 @@
             bottom: 0;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
             z-index: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 60px;
-            transform: translateY(22px) scale(0.98);
+            padding: 0;
             overflow: hidden;
+            background: #f5f7fa;
         }
         .hero-slide.active {
             opacity: 1;
             visibility: visible;
             z-index: 1;
-            transform: translateY(0) scale(1);
         }
         .hero-slide img {
-            width: 100%;
-            height: 100%;
+            width: 90%;
+            height: 90%;
             object-fit: contain;
-            border-radius: 0;
-            box-shadow: none;
-            transition: transform 0.6s ease;
+            object-position: center;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            background: transparent;
+            transform: scale(0.95);
+            opacity: 0.8;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .hero-slide.active img {
-            animation: heroFloat 5.5s ease-in-out infinite;
+            transform: scale(1);
+            opacity: 1;
+            animation: slideFloat 4s ease-in-out infinite;
+        }
+        @keyframes slideFloat {
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.02) translateY(-8px); }
         }
         .hero-slide::after {
             content: "";
@@ -584,9 +557,54 @@
             opacity: 0.5;
             animation: heroSweep 4.5s ease-in-out infinite;
         }
+        /* Mobile - Full width slider with full image */
         @media (max-width: 768px) {
+            .hero-slider-section {
+                margin-top: calc(-1 * var(--header-height, 80px));
+                padding-top: var(--header-height, 80px);
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .hero-slider-wrapper {
+                min-height: 50vh;
+                border-radius: 0;
+                margin: 0 -15px; /* Full width beyond container padding */
+                width: calc(100% + 30px);
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            }
+            .hero-slides {
+                height: 50vh;
+                min-height: 280px;
+                max-height: 400px;
+            }
             .hero-slide {
-                padding: 0 20px;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            }
+            .hero-slide img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: contain !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                transform: none !important;
+            }
+            .hero-slide.active img {
+                animation: none !important;
+                transform: none !important;
+            }
+            .hero-slider-dots {
+                bottom: 15px;
+            }
+            .hero-dot {
+                width: 24px;
+                height: 3px;
+            }
+            .hero-dot.active {
+                width: 36px;
             }
         }
         
@@ -832,6 +850,82 @@
             background: white;
             border-radius: 50%;
             padding: 10px;
+        }
+
+        /* CTA Text */
+        .cta-text {
+            max-width: 55%;
+            position: relative;
+            z-index: 2;
+        }
+        @media (max-width: 992px) {
+            .cta-text {
+                max-width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* CTA Orbits - Rotating Icons */
+        .cta-orbits {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            height: 280px;
+        }
+        .cta-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px dashed rgba(26, 16, 0, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .cta-orbit-1 {
+            width: 200px;
+            height: 200px;
+            animation: orbitSpin 20s linear infinite;
+        }
+        .cta-orbit-2 {
+            width: 280px;
+            height: 280px;
+            animation: orbitSpin 30s linear infinite reverse;
+        }
+        .cta-orbit-item {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            left: 50%;
+            transform: rotate(var(--angle)) translateX(calc(50% + 50px)) rotate(calc(-1 * var(--angle)));
+            animation: orbitItemSpin 20s linear infinite reverse;
+        }
+        .cta-orbit-2 .cta-orbit-item {
+            transform: rotate(var(--angle)) translateX(calc(50% + 90px)) rotate(calc(-1 * var(--angle)));
+            animation: orbitItemSpin 30s linear infinite;
+        }
+        .cta-orbit-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        @keyframes orbitSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes orbitItemSpin {
+            from { transform: rotate(var(--angle)) translateX(calc(50% + 50px)) rotate(calc(-1 * var(--angle) - 0deg)); }
+            to { transform: rotate(var(--angle)) translateX(calc(50% + 50px)) rotate(calc(-1 * var(--angle) - 360deg)); }
+        }
+        @media (max-width: 992px) {
+            .cta-orbits {
+                display: none;
+            }
         }
 
         /* Hover Effects */
@@ -1168,6 +1262,35 @@
         }
 
         /* News Section Styles */
+        /* News Section Styles */
+        .news-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        .news-view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .news-card {
+            text-decoration: none;
+            display: block;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
         .news-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 50px rgba(212,168,0,0.2) !important;
@@ -1176,25 +1299,94 @@
         .news-card:hover img {
             transform: scale(1.08);
         }
+        
+        /* News Responsive - Tablet */
         @media (max-width: 992px) {
-            .news section > div > div:last-child {
-                grid-template-columns: 1fr !important;
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px;
+            }
+            .news-header {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
             }
         }
+        
+        /* News Responsive - Mobile */
         @media (max-width: 768px) {
-            .news section > div > div:first-child {
-                flex-direction: column;
-                gap: 16px;
+            .news.section-white {
+                padding: 50px 0 !important;
             }
+            .news-header {
+                margin-bottom: 25px;
+            }
+            .news-header .title {
+                margin-bottom: 15px;
+            }
+            .news-header .heading-h2 {
+                font-size: 24px !important;
+            }
+            .news-header .hero-subtitle {
+                font-size: 14px;
+            }
+            .news-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+            }
+            .news-card > div:first-child {
+                height: 180px !important;
+            }
+            .news-card > div:last-child {
+                padding: 18px !important;
+            }
+            .news-card h3 {
+                font-size: 16px !important;
+            }
+            .news-card p {
+                font-size: 13px !important;
+            }
+        }
+        
+        /* News Responsive - Small Mobile */
+        @media (max-width: 480px) {
+            .news-view-all {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Slider - Small Mobile Full Width */
+        @media (max-width: 480px) {
+            .hero-slider-wrapper {
+                min-height: 45vh;
+            }
+            .hero-slides {
+                height: 45vh;
+                min-height: 240px;
+                max-height: 320px;
+            }
+            .hero-slider-prev,
+            .hero-slider-next {
+                width: 36px;
+                height: 36px;
+            }
+            .hero-slider-prev .material-icons,
+            .hero-slider-next .material-icons {
+                font-size: 18px;
+            }
+            .hero-slider-prev { left: 8px; }
+            .hero-slider-next { right: 8px; }
         }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Hero slider (chuyển mượt như FPT Smart Home)
+            // Hero slider (chuyển mượt + kéo để chuyển slide)
             (function() {
                 var slider = document.getElementById('hero-slider');
                 if (!slider) return;
+                var slidesContainer = slider.querySelector('.hero-slides');
                 var slides = slider.querySelectorAll('.hero-slide');
                 var dots = slider.querySelectorAll('.hero-dot');
                 var btnPrev = slider.querySelector('.hero-slider-prev');
@@ -1202,6 +1394,10 @@
                 var total = slides.length;
                 var current = 0;
                 var autoplayTimer;
+                var isDragging = false;
+                var startX = 0;
+                var dragThreshold = 50; // px để trigger chuyển slide
+
                 function goTo(i) {
                     current = (i + total) % total;
                     slides.forEach(function(s, idx) {
@@ -1212,15 +1408,80 @@
                     });
                 }
                 function next() { goTo(current + 1); }
+                function prev() { goTo(current - 1); }
                 function startAutoplay() {
                     clearInterval(autoplayTimer);
                     autoplayTimer = setInterval(next, 5000);
                 }
+
+                // Click dots
                 dots.forEach(function(dot, i) {
                     dot.addEventListener('click', function() { goTo(i); startAutoplay(); });
                 });
-                if (btnPrev) btnPrev.addEventListener('click', function() { goTo(current - 1); startAutoplay(); });
+
+                // Click buttons
+                if (btnPrev) btnPrev.addEventListener('click', function() { prev(); startAutoplay(); });
                 if (btnNext) btnNext.addEventListener('click', function() { next(); startAutoplay(); });
+
+                // Drag/Swipe support
+                slidesContainer.style.cursor = 'grab';
+                
+                slidesContainer.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    startX = e.pageX;
+                    slidesContainer.style.cursor = 'grabbing';
+                    clearInterval(autoplayTimer);
+                });
+
+                slidesContainer.addEventListener('mousemove', function(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                });
+
+                slidesContainer.addEventListener('mouseup', function(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    slidesContainer.style.cursor = 'grab';
+                    var deltaX = e.pageX - startX;
+                    if (deltaX < -dragThreshold) {
+                        next();
+                    } else if (deltaX > dragThreshold) {
+                        prev();
+                    }
+                    startAutoplay();
+                });
+
+                slidesContainer.addEventListener('mouseleave', function() {
+                    if (isDragging) {
+                        isDragging = false;
+                        slidesContainer.style.cursor = 'grab';
+                        startAutoplay();
+                    }
+                });
+
+                // Touch support
+                slidesContainer.addEventListener('touchstart', function(e) {
+                    isDragging = true;
+                    startX = e.touches[0].pageX;
+                    clearInterval(autoplayTimer);
+                });
+
+                slidesContainer.addEventListener('touchmove', function(e) {
+                    if (!isDragging) return;
+                });
+
+                slidesContainer.addEventListener('touchend', function(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    var deltaX = e.changedTouches[0].pageX - startX;
+                    if (deltaX < -dragThreshold) {
+                        next();
+                    } else if (deltaX > dragThreshold) {
+                        prev();
+                    }
+                    startAutoplay();
+                });
+
                 startAutoplay();
             })();
 
@@ -1457,5 +1718,260 @@
                 flyingImg.remove();
             }, 1200);
         }
+
+        // Consultation Popup - Show on first visit, with 2 hour hide option
+        (function() {
+            var POPUP_KEY = 'gemlock_consultation_hidden';
+            var TWO_HOURS = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+            
+            function shouldShowPopup() {
+                var hiddenUntil = localStorage.getItem(POPUP_KEY);
+                if (!hiddenUntil) return true;
+                return Date.now() > parseInt(hiddenUntil);
+            }
+            
+            function hidePopupFor2Hours() {
+                localStorage.setItem(POPUP_KEY, Date.now() + TWO_HOURS);
+            }
+            
+            function createPopup() {
+                var popupHtml = `
+                    <div id="consultationPopup" class="consultation-popup">
+                        <div class="consultation-popup-overlay" onclick="closeConsultationPopup()"></div>
+                        <div class="consultation-popup-content">
+                            <button class="consultation-popup-close" onclick="closeConsultationPopup()">
+                                <i class="material-icons">close</i>
+                            </button>
+                            <div class="consultation-popup-header">
+                                <div class="consultation-icon">
+                                    <span class="material-icons">support_agent</span>
+                                </div>
+                                <h3>Nhận Thông Tin Tư Vấn</h3>
+                                <p>Để lại thông tin để được tư vấn miễn phí về sản phẩm khóa thông minh & điện mặt trời</p>
+                            </div>
+                            <form class="consultation-form" onsubmit="submitConsultation(event)">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Họ và tên *" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" placeholder="Số điện thoại *" required>
+                                </div>
+                                <div class="form-group">
+                                    <select required>
+                                        <option value="">Chọn sản phẩm quan tâm *</option>
+                                        <option value="khoa">Khóa thông minh</option>
+                                        <option value="solar">Điện mặt trời</option>
+                                        <option value="noithat">Nội thất</option>
+                                        <option value="xaydung">Xây dựng</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-consultation-submit">
+                                    <span class="material-icons">send</span>
+                                    Gửi yêu cầu tư vấn
+                                </button>
+                            </form>
+                            <div class="consultation-footer">
+                                <label class="dont-show-checkbox">
+                                    <input type="checkbox" id="dontShowAgain" onchange="handleDontShowAgain()">
+                                    <span>Không hiển thị trong 2 giờ tới</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', popupHtml);
+                
+                // Show popup with delay
+                setTimeout(function() {
+                    document.getElementById('consultationPopup').classList.add('active');
+                }, 2000);
+            }
+            
+            window.closeConsultationPopup = function() {
+                var popup = document.getElementById('consultationPopup');
+                if (popup) {
+                    popup.classList.remove('active');
+                    setTimeout(function() {
+                        popup.remove();
+                    }, 300);
+                }
+            };
+            
+            window.handleDontShowAgain = function() {
+                var checkbox = document.getElementById('dontShowAgain');
+                if (checkbox && checkbox.checked) {
+                    hidePopupFor2Hours();
+                }
+            };
+            
+            window.submitConsultation = function(e) {
+                e.preventDefault();
+                alert('Cảm ơn bạn! Chúng tôi sẽ liên hệ tư vấn trong thời gian sớm nhất.');
+                closeConsultationPopup();
+            };
+            
+            // Initialize
+            if (shouldShowPopup()) {
+                createPopup();
+            }
+        })();
     </script>
+
+    <style>
+        /* Consultation Popup Styles */
+        .consultation-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .consultation-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .consultation-popup-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+        .consultation-popup-content {
+            position: relative;
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .consultation-popup.active .consultation-popup-content {
+            transform: translateY(0) scale(1);
+        }
+        .consultation-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .consultation-popup-close:hover {
+            background: #D4A800;
+            color: #fff;
+            transform: rotate(90deg);
+        }
+        .consultation-popup-close .material-icons {
+            font-size: 20px;
+        }
+        .consultation-popup-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .consultation-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #D4A800 0%, #E6B800 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(212, 168, 0, 0.3);
+        }
+        .consultation-icon .material-icons {
+            font-size: 32px;
+            color: #fff;
+        }
+        .consultation-popup-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        .consultation-popup-header p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .consultation-form .form-group {
+            margin-bottom: 15px;
+        }
+        .consultation-form input,
+        .consultation-form select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .consultation-form input:focus,
+        .consultation-form select:focus {
+            outline: none;
+            border-color: #D4A800;
+            box-shadow: 0 0 0 4px rgba(212, 168, 0, 0.1);
+        }
+        .btn-consultation-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #D4A800 0%, #E6B800 100%);
+            color: #1a1000;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(212, 168, 0, 0.3);
+        }
+        .btn-consultation-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(212, 168, 0, 0.4);
+        }
+        .btn-consultation-submit .material-icons {
+            font-size: 20px;
+        }
+        .consultation-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .dont-show-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #666;
+        }
+        .dont-show-checkbox input {
+            width: 18px;
+            height: 18px;
+            accent-color: #D4A800;
+        }
+    </style>
 @endsection

@@ -165,6 +165,49 @@
             pointer-events: none;
             animation: flyToCart 1.2s ease-in-out forwards;
         }
+
+        /* Pagination Styles */
+        .pagination-wrapper {
+            margin-top: 2rem;
+            padding: 1rem 0;
+        }
+        .pagination {
+            gap: 8px;
+        }
+        .pagination .page-item .page-link {
+            border: none;
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            min-width: 44px;
+            text-align: center;
+        }
+        .pagination .page-item .page-link:hover {
+            background: linear-gradient(135deg, #f9bf29 0%, #D4A800 100%);
+            color: #1a1000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 168, 0, 0.35);
+        }
+        .pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, #f9bf29 0%, #D4A800 100%);
+            color: #1a1000;
+            box-shadow: 0 4px 12px rgba(212, 168, 0, 0.35);
+        }
+        .pagination .page-item.disabled .page-link {
+            background: #e9ecef;
+            color: #adb5bd;
+            pointer-events: none;
+        }
+        @media (max-width: 576px) {
+            .pagination .page-item .page-link {
+                padding: 8px 12px;
+                min-width: 38px;
+                font-size: 14px;
+            }
+        }
     </style>
 @endpush
 
@@ -221,10 +264,16 @@
                 <div class="col-lg-9">
                     <div class="row">
                         @php
-                            // $products is passed from the route
+                            // Pagination logic
+                            $perPage = 9;
+                            $currentPage = request()->get('page', 1);
+                            $totalProducts = count($products);
+                            $totalPages = ceil($totalProducts / $perPage);
+                            $offset = ($currentPage - 1) * $perPage;
+                            $paginatedProducts = array_slice($products, $offset, $perPage);
                         @endphp
 
-                        @foreach($products as $product)
+                        @foreach($paginatedProducts as $product)
                             <!-- Start Column -->
                             <div class="col-12 col-md-6 col-lg-4 mb-5">
                                 <a class="product-item" href="{{ route('product.detail', $product['slug']) }}">
@@ -243,6 +292,41 @@
                             <!-- End Column -->
                         @endforeach
                     </div>
+                    
+                    <!-- Pagination -->
+                    @if($totalPages > 1)
+                    <nav class="pagination-wrapper mt-4">
+                        <ul class="pagination justify-content-center">
+                            {{-- Previous --}}
+                            <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
+                                <a class="page-link" href="?page={{ $currentPage - 1 }}" aria-label="Previous">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                            
+                            {{-- Page Numbers --}}
+                            @for($i = 1; $i <= $totalPages; $i++)
+                                @if($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 2)
+                                    <li class="page-item {{ $currentPage == $i ? 'active' : '' }}">
+                                        <a class="page-link" href="?page={{ $i }}">{{ $i }}</a>
+                                    </li>
+                                @elseif(abs($i - $currentPage) == 3)
+                                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                                @endif
+                            @endfor
+                            
+                            {{-- Next --}}
+                            <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
+                                <a class="page-link" href="?page={{ $currentPage + 1 }}" aria-label="Next">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="text-center text-muted mt-2 small">
+                            Hiển thị {{ $offset + 1 }}-{{ min($offset + $perPage, $totalProducts) }} trong {{ $totalProducts }} sản phẩm
+                        </p>
+                    </nav>
+                    @endif
                 </div>
             </div>
         </div>
