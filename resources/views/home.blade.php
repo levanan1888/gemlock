@@ -7,34 +7,69 @@
     @include('partials.gemlock_topbar')
     @include('partials.header')
 
-    {{-- Hero Slider - Giống ảnh FPT Style --}}
+    {{-- Hero Slider + Danh mục cạnh banner (GemLock Home) --}}
     @php
         use App\Helpers\ContentHelper;
         $heroSlide1Image = ContentHelper::image('hero_slide_1_image', 'image/banner2.jpg');
         $heroSlide2Image = ContentHelper::image('hero_slide_2_image', 'image/Banner Solar 1.png');
         $heroSlide1Alt = ContentHelper::text('hero_slide_1_alt', 'Slide 1');
         $heroSlide2Alt = ContentHelper::text('hero_slide_2_alt', 'Slide 2');
+
+        // Lấy danh sách danh mục cho thanh menu bên trái
+        $heroCategories = collect($groupedProducts ?? [])->pluck('category')->values();
     @endphp
     <section class="hero-slider-section" id="hero-slider">
-        <div class="hero-slider-wrapper">
-        <div class="hero-slides">
-            <div class="hero-slide active" data-slide="0">
-                <img src="{{ $heroSlide1Image }}" alt="{{ $heroSlide1Alt }}" loading="eager" />
+        <div class="w-layout-blockcontainer container w-container hero-layout">
+            {{-- Danh mục sản phẩm bên trái --}}
+            <aside class="hero-categories">
+                <div class="hero-categories-header">
+                    <span class="material-icons">menu</span>
+                    <span>Danh mục sản phẩm</span>
+                </div>
+                @if($heroCategories->isNotEmpty())
+                    <ul class="hero-category-list">
+                        @foreach($heroCategories as $category)
+                            <li class="hero-category-item">
+                                <a href="#category-{{ $category['slug'] }}">
+                                    <span class="material-icons hero-category-icon">{{ $category['icon'] ?? 'apps' }}</span>
+                                    <span class="hero-category-text">{{ $category['name'] }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <ul class="hero-category-list">
+                        <li class="hero-category-item">
+                            <a href="#">
+                                <span class="material-icons hero-category-icon">lock</span>
+                                <span class="hero-category-text">Khóa thông minh</span>
+                            </a>
+                        </li>
+                    </ul>
+                @endif
+            </aside>
+
+            {{-- Banner slider bên phải --}}
+            <div class="hero-slider-wrapper">
+                <div class="hero-slides">
+                    <div class="hero-slide active" data-slide="0">
+                        <img src="{{ $heroSlide1Image }}" alt="{{ $heroSlide1Alt }}" loading="eager" />
+                    </div>
+                    <div class="hero-slide" data-slide="1">
+                        <img src="{{ $heroSlide2Image }}" alt="{{ $heroSlide2Alt }}" loading="lazy" />
+                    </div>
+                </div>
+                <div class="hero-slider-dots">
+                    <button type="button" class="hero-dot active" data-index="0" aria-label="Slide 1"></button>
+                    <button type="button" class="hero-dot" data-index="1" aria-label="Slide 2"></button>
+                </div>
+                <button type="button" class="hero-slider-prev" aria-label="Slide trước">
+                    <span class="material-icons">chevron_left</span>
+                </button>
+                <button type="button" class="hero-slider-next" aria-label="Slide sau">
+                    <span class="material-icons">chevron_right</span>
+                </button>
             </div>
-            <div class="hero-slide" data-slide="1">
-                <img src="{{ $heroSlide2Image }}" alt="{{ $heroSlide2Alt }}" loading="lazy" />
-            </div>
-        </div>
-            <div class="hero-slider-dots">
-                <button type="button" class="hero-dot active" data-index="0" aria-label="Slide 1"></button>
-                <button type="button" class="hero-dot" data-index="1" aria-label="Slide 2"></button>
-            </div>
-            <button type="button" class="hero-slider-prev" aria-label="Slide trước">
-                <span class="material-icons">chevron_left</span>
-            </button>
-            <button type="button" class="hero-slider-next" aria-label="Slide sau">
-                <span class="material-icons">chevron_right</span>
-            </button>
         </div>
     </section>
     <section class="gallery section-tint">
@@ -79,7 +114,7 @@
     </section>
     {{-- ===== PRODUCTS SECTIONS BY CATEGORY ===== --}}
     @foreach($groupedProducts as $groupIndex => $group)
-    <section class="category-section {{ $groupIndex % 2 == 0 ? 'section-white' : 'section-tint' }}" data-category="{{ $group['category']['slug'] }}" style="padding: 50px 0;">
+    <section id="category-{{ $group['category']['slug'] }}" class="category-section {{ $groupIndex % 2 == 0 ? 'section-white' : 'section-tint' }}" data-category="{{ $group['category']['slug'] }}" style="padding: 50px 0;">
         <div class="w-layout-blockcontainer container w-container">
             <div class="category-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid rgba(212,168,0,0.2);">
                 <div style="display: flex; align-items: center; gap: 14px;">
@@ -508,7 +543,7 @@
             padding: 0 !important;
             position: relative;
         }
-        /* Hero Slider - FPT Style (giống ảnh) */
+        /* Hero Slider - FPT Style (giống ảnh) + Danh mục cạnh banner */
         .hero-slider-section {
             position: relative;
             background: linear-gradient(135deg, #f0f4f8 0%, #e8f4fc 50%, #f5f7fa 100%);
@@ -516,6 +551,89 @@
             overflow: hidden;
             margin-top: calc(-1 * var(--header-height, 104px));
             padding-top: var(--header-height, 104px);
+        }
+        .hero-layout {
+            display: flex;
+            gap: 24px;
+            align-items: stretch;
+            padding: 32px 0 40px;
+        }
+        .hero-categories {
+            width: 270px;
+            max-width: 100%;
+            background: linear-gradient(180deg, #0043a5 0%, #0060d6 50%, #0043a5 100%);
+            border-radius: 16px;
+            color: #fff;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+        }
+        .hero-categories-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.12);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 13px;
+        }
+        .hero-categories-header .material-icons {
+            font-size: 20px;
+        }
+        .hero-category-list {
+            list-style: none;
+            margin: 0;
+            padding: 6px 0 10px 0;
+        }
+        .hero-category-item a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 16px;
+            font-size: 13px;
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+        }
+        .hero-category-item a::after {
+            content: "";
+            position: absolute;
+            right: 14px;
+            width: 6px;
+            height: 6px;
+            border-right: 2px solid rgba(255,255,255,0.8);
+            border-bottom: 2px solid rgba(255,255,255,0.8);
+            transform: rotate(-45deg);
+            opacity: 0.7;
+        }
+        .hero-category-item:hover a {
+            background: rgba(0, 0, 0, 0.14);
+        }
+        .hero-category-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.16);
+            font-size: 17px;
+        }
+        .hero-category-text {
+            flex: 1;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        @media (max-width: 992px) {
+            .hero-layout {
+                flex-direction: column;
+            }
+            .hero-categories {
+                width: 100%;
+                order: 2;
+            }
         }
         /* Hero Slide Effects */
         .hero-slide::before {
@@ -554,7 +672,7 @@
         .hero-slider-wrapper {
             position: relative;
             width: 100%;
-            min-height: calc(100vh - var(--header-height, 104px));
+            min-height: 420px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -563,7 +681,7 @@
         .hero-slides {
             position: relative;
             width: 100%;
-            height: calc(100vh - var(--header-height, 104px));
+            height: 420px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -635,6 +753,13 @@
                 padding-top: var(--header-height, 80px);
                 padding-left: 0;
                 padding-right: 0;
+            }
+            .hero-layout {
+                padding: 16px 0 24px;
+            }
+            .hero-categories {
+                border-radius: 0;
+                box-shadow: none;
             }
             .hero-slider-wrapper {
                 min-height: 50vh;
