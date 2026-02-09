@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isGemlockAdmin(): bool
+    {
+        return $this->role === 'admin_genlock';
+    }
+
+    public function isGemsolarAdmin(): bool
+    {
+        return $this->role === 'admin_gemsolar';
+    }
+
+    public function canAccessPanel(string $panelId): bool
+    {
+        return match ($panelId) {
+            'admin' => $this->isAdmin(),
+            'gemlock' => $this->isGemlockAdmin(),
+            'gemsolar' => $this->isGemsolarAdmin(),
+            default => false,
+        };
     }
 }

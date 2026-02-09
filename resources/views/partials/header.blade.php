@@ -1,13 +1,24 @@
 @include('partials.header_styles')
-@php($headerCategories = \App\Services\ProductService::getCategories())
-@php($cartCount = collect(session('cart', []))->sum('quantity'))
-@php($isGemlock = request()->is('gemlock') || request()->is('gemlock/*') || request()->is('product') || request()->is('product/*') || request()->is('product-detail/*'))
-@php($homeUrl = $isGemlock ? '/gemlock' : '/')
+@php
+    use App\Helpers\ContentHelper;
+    use App\Models\MenuItem;
+    
+    $headerCategories = \App\Services\ProductService::getCategories();
+    $cartCount = collect(session('cart', []))->sum('quantity');
+    $isGemlock = request()->is('gemlock') || request()->is('gemlock/*') || request()->is('product') || request()->is('product/*') || request()->is('product-detail/*');
+    $pageType = $isGemlock ? 'gemlock' : 'perfect_house';
+    $homeUrl = $isGemlock ? '/gemlock' : '/';
+    
+    $headerLogo = ContentHelper::image('header_logo_'.$pageType, 'image/Logo Tách Nền.png');
+    $headerPhone = ContentHelper::text('header_phone_'.$pageType, '0967 263 944');
+    
+    $headerMenus = MenuItem::getMenu($pageType, 'header');
+@endphp
 <header class="site-header glass-header">
     <div class="header-container">
         <div class="header-inner">
             <a href="{{ $homeUrl }}" class="header-logo">
-                <img loading="lazy" src="{{ asset('image/Logo Tách Nền.png') }}" alt="GemLock Logo" class="site-logo" />
+                <img loading="lazy" src="{{ $headerLogo }}" alt="Logo" class="site-logo" />
             </a>
             <nav class="header-nav" aria-label="Main">
                 <div class="header-dropdown">
@@ -59,18 +70,25 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ $homeUrl }}" class="header-link">Trang chủ</a>
-                <a href="/blog" class="header-link">Bài viết</a>
-                <a href="/contact" class="header-link">Liên hệ</a>
+                @foreach($headerMenus as $menu)
+                    @if(empty($menu['children']))
+                        <a href="{{ $menu['url'] }}" class="header-link" {{ $menu['open_in_new_tab'] ? 'target="_blank"' : '' }}>
+                            @if($menu['icon'])
+                                <span class="material-icons">{{ $menu['icon'] }}</span>
+                            @endif
+                            {{ $menu['label'] }}
+                        </a>
+                    @endif
+                @endforeach
             </nav>
             <div class="header-actions">
                 <a href="{{ route('cart.index') }}" class="header-cart" aria-label="Giỏ hàng">
                     <span class="material-icons">shopping_cart</span>
                     <span class="cart-quantity {{ $cartCount ? '' : 'is-empty' }}">{{ $cartCount }}</span>
                 </a>
-                <a href="tel:0967263944" class="btn-primary header-phone">
+                <a href="tel:{{ str_replace(' ', '', $headerPhone) }}" class="btn-primary header-phone">
                     <span class="material-icons">phone</span>
-                    0967 263 944
+                    {{ $headerPhone }}
                 </a>
                 <button type="button" class="header-menu-toggle" aria-label="Mở menu">
                     <span class="material-icons">menu</span>
@@ -93,13 +111,18 @@
                     @endforeach
                 </div>
             </div>
-            <a href="{{ $homeUrl }}" class="header-link">Trang chủ</a>
-            <a href="/blog" class="header-link">Bài viết</a>
-            <a href="/contact" class="header-link">Liên hệ</a>
+            @foreach($headerMenus as $menu)
+                <a href="{{ $menu['url'] }}" class="header-link" {{ $menu['open_in_new_tab'] ? 'target="_blank"' : '' }}>
+                    @if($menu['icon'])
+                        <span class="material-icons">{{ $menu['icon'] }}</span>
+                    @endif
+                    {{ $menu['label'] }}
+                </a>
+            @endforeach
             <a href="{{ route('cart.index') }}" class="header-link">Giỏ hàng</a>
-            <a href="tel:0967263944" class="btn-primary header-phone-mobile">
+            <a href="tel:{{ str_replace(' ', '', $headerPhone) }}" class="btn-primary header-phone-mobile">
                 <span class="material-icons">phone</span>
-                0967 263 944
+                {{ $headerPhone }}
             </a>
         </div>
     </div>

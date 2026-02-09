@@ -3,11 +3,29 @@
 use App\Services\ProductService;
 use Illuminate\Support\Facades\Route;
 
+// Perfect House - Trang chính
 Route::get('/', function () {
-    return response()->file(base_path('home1.html'));
+    $sections = \App\Services\Home1ContentService::getSections('perfect_house');
+    $homeContent = \App\Models\ContentItem::getAllByPage('perfect_house')['home'] ?? [];
+
+    return view('home1', [
+        'head' => $sections['head'],
+        'home1PageContent' => $sections['main'],
+        'footer' => $sections['footer'],
+        'homeContent' => $homeContent,
+    ]);
 });
 
+// Gemlock - Trang con
 Route::get('/gemlock', function () {
+    $products = ProductService::getAllProducts();
+    $groupedProducts = ProductService::getProductsGroupedByCategory();
+
+    return view('home', compact('products', 'groupedProducts'));
+});
+
+// Gemsolar - Trang con
+Route::get('/gemsolar', function () {
     $products = ProductService::getAllProducts();
     $groupedProducts = ProductService::getProductsGroupedByCategory();
 
@@ -19,7 +37,7 @@ Route::get('/home-gemlock', function () {
     $products = ProductService::getAllProducts();
     $groupedProducts = ProductService::getProductsGroupedByCategory();
 
-    return view('home_gemlock', compact('products', 'groupedProducts'));
+    return view('home', compact('products', 'groupedProducts'));
 });
 
 Route::get('/product', function () {
