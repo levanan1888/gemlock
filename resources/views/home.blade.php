@@ -7,38 +7,11 @@
     @include('partials.gemlock_topbar')
     @include('partials.header')
 
-    {{-- Hero Slider - Giống ảnh FPT Style --}}
-    @php
-        use App\Helpers\ContentHelper;
-        $heroSlide1Image = ContentHelper::image('hero_slide_1_image', 'image/banner2.jpg');
-        $heroSlide2Image = ContentHelper::image('hero_slide_2_image', 'image/Banner Solar 1.png');
-        $heroSlide1Alt = ContentHelper::text('hero_slide_1_alt', 'Slide 1');
-        $heroSlide2Alt = ContentHelper::text('hero_slide_2_alt', 'Slide 2');
-    @endphp
-    <section class="hero-slider-section" id="hero-slider">
-        <div class="hero-slider-wrapper">
-        <div class="hero-slides">
-            <div class="hero-slide active" data-slide="0">
-                <img src="{{ $heroSlide1Image }}" alt="{{ $heroSlide1Alt }}" loading="eager" />
-            </div>
-            <div class="hero-slide" data-slide="1">
-                <img src="{{ $heroSlide2Image }}" alt="{{ $heroSlide2Alt }}" loading="lazy" />
-            </div>
-        </div>
-            <div class="hero-slider-dots">
-                <button type="button" class="hero-dot active" data-index="0" aria-label="Slide 1"></button>
-                <button type="button" class="hero-dot" data-index="1" aria-label="Slide 2"></button>
-            </div>
-            <button type="button" class="hero-slider-prev" aria-label="Slide trước">
-                <span class="material-icons">chevron_left</span>
-            </button>
-            <button type="button" class="hero-slider-next" aria-label="Slide sau">
-                <span class="material-icons">chevron_right</span>
-            </button>
-        </div>
-    </section>
+    {{-- Banner cũ (hero slider) đã bỏ theo yêu cầu --}}
+
     <section class="gallery section-tint">
         @php
+            use App\Helpers\ContentHelper;
             $galleryTitle = ContentHelper::text('gallery_title', 'Sản phẩm & Giải pháp');
             $gallerySubtitle = ContentHelper::text('gallery_subtitle', 'Perfect House cung cấp giải pháp thông minh và bền vững cho ngôi nhà của bạn.');
             $galleryButtonText = ContentHelper::text('gallery_button_text', 'Tìm hiểu thêm');
