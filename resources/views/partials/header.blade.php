@@ -12,118 +12,144 @@
     $headerLogo = ContentHelper::image('header_logo_'.$pageType, 'image/Logo Tách Nền.png');
     $headerPhone = ContentHelper::text('header_phone_'.$pageType, '0967 263 944');
     
-    $headerMenus = MenuItem::getMenu($pageType, 'header');
+    // Banner slides cho Swiper (Latest Swiper structure)
+    $bannerSlides = [
+        ContentHelper::image('home_banner_1_'.$pageType, 'image/banner.jpg'),
+        ContentHelper::image('home_banner_2_'.$pageType, 'image/banner2.jpg'),
+        ContentHelper::image('home_banner_3_'.$pageType, 'image/Banner Solar 1.png'),
+    ];
+
+    // Map icon Bootstrap cho sidebar giải pháp dựa trên JWLock
+    $iconMap = [
+        'face-id-3d' => 'bi-person-bounding-box',
+        'one-handle' => 'bi-hand-index-thumb',
+        'aluminium-door' => 'bi-door-open',
+        'others' => 'bi-shield-lock',
+    ];
 @endphp
-<header class="site-header glass-header">
-    <div class="header-container">
-        <div class="header-inner">
-            <a href="{{ $homeUrl }}" class="header-logo">
-                <img loading="lazy" src="{{ $headerLogo }}" alt="Logo" class="site-logo" />
-            </a>
-            <nav class="header-nav" aria-label="Main">
-                <div class="header-dropdown">
-                    <a href="/product" class="header-link header-dropdown-toggle">
-                        Sản phẩm
-                        <span class="material-icons">expand_more</span>
-                    </a>
-                    <div class="header-dropdown-menu mega-menu">
-                        <div class="mega-sidebar">
-                            @foreach($headerCategories as $category)
-                                <button type="button"
-                                    class="mega-category {{ $loop->first ? 'is-active' : '' }}"
-                                    data-target="mega-{{ $category['slug'] }}">
-                                    <span class="material-icons">{{ $category['icon'] }}</span>
-                                    <span>{{ $category['name'] }}</span>
-                                </button>
-                            @endforeach
-                        </div>
-                        <div class="mega-content">
-                            @foreach($headerCategories as $category)
-                                @php($categoryProducts = \App\Services\ProductService::getProductsByCategory($category['slug']))
-                                <div class="mega-panel {{ $loop->first ? 'is-active' : '' }}"
-                                    data-panel="mega-{{ $category['slug'] }}">
-                                    <div class="mega-panel-head">
-                                        <div class="mega-panel-title">{{ $category['name'] }}</div>
-                                        <div class="mega-panel-sub">{{ $category['series'] }}</div>
-                                    </div>
-                                    <div class="mega-grid">
-                                        @foreach($categoryProducts as $product)
-                                            <a href="{{ route('product.detail', $product['slug']) }}"
-                                                class="mega-card mega-card--product">
-                                                <div class="mega-card-image"
-                                                    style="background-image: url('{{ $product['image'] }}');">
-                                                </div>
-                                                <div class="mega-card-title">{{ $product['name'] }}</div>
-                                                <div class="mega-card-price">{{ $product['price'] }}</div>
-                                            </a>
-                                        @endforeach
-                                        @foreach($category['features'] as $feature)
-                                            <a href="{{ url('/product?category=' . $category['slug']) }}"
-                                                class="mega-card mega-card--feature">
-                                                <span class="material-icons">{{ $feature['icon'] }}</span>
-                                                <div class="mega-card-title">{{ $feature['text'] }}</div>
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                @foreach($headerMenus as $menu)
-                    @if(empty($menu['children']))
-                        <a href="{{ $menu['url'] }}" class="header-link" {{ $menu['open_in_new_tab'] ? 'target="_blank"' : '' }}>
-                            @if($menu['icon'])
-                                <span class="material-icons">{{ $menu['icon'] }}</span>
-                            @endif
-                            {{ $menu['label'] }}
-                        </a>
-                    @endif
-                @endforeach
-            </nav>
-            <div class="header-actions">
-                <a href="{{ route('cart.index') }}" class="header-cart" aria-label="Giỏ hàng">
-                    <span class="material-icons">shopping_cart</span>
-                    <span class="cart-quantity {{ $cartCount ? '' : 'is-empty' }}">{{ $cartCount }}</span>
+<div class="jw">
+    <!-- ===== HEADER TOP ===== -->
+    <header class="header">
+        <div class="container header-top">
+            <div class="logo">
+                <a href="{{ $homeUrl }}">
+                    <img loading="lazy" src="{{ $headerLogo }}" alt="JW" />
                 </a>
-                <a href="tel:{{ str_replace(' ', '', $headerPhone) }}" class="btn-primary header-phone">
-                    <span class="material-icons">phone</span>
-                    {{ $headerPhone }}
-                </a>
-                <button type="button" class="header-menu-toggle" aria-label="Mở menu">
-                    <span class="material-icons">menu</span>
+            </div>
+
+            <form class="search-box" action="{{ url('/product') }}" method="GET" role="search">
+                <input type="text" name="q" placeholder="Tìm kiếm sản phẩm" value="{{ request('q') }}" />
+                <button type="submit" aria-label="Tìm kiếm">
+                    <i class="bi bi-search"></i>
                 </button>
+            </form>
+
+            <div class="header-right">
+                <a href="{{ url('/product') }}">Cửa hàng</a>
+                <span class="hotline">
+                    <i class="bi bi-telephone-fill"></i> {{ $headerPhone }}
+                </span>
+                <a href="{{ route('cart.index') }}" class="header-right-cart" aria-label="Giỏ hàng">
+                    <i class="bi bi-cart-fill"></i>
+                    <span>({{ $cartCount }})</span>
+                </a>
             </div>
         </div>
-        <div class="header-mobile">
-            <div class="header-mobile-group">
-                <button type="button" class="header-mobile-toggle" aria-expanded="false">
-                    Sản phẩm
-                    <span class="material-icons">expand_more</span>
-                </button>
-                <div class="header-submenu">
-                    <a href="/product" class="header-link">Tất cả sản phẩm</a>
+
+        <!-- ===== MENU NAV ===== -->
+        <div class="menu-bar">
+            <div class="container menu-container">
+                <div class="menu-left">
+                    <span>DANH MỤC SẢN PHẨM</span>
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+
+                <ul class="menu">
+                    <li><a href="{{ url('/about') }}">Giới thiệu</a></li>
+                    <li class="has-dropdown">
+                        <a href="{{ url('/product') }}">
+                            Sản phẩm
+                            <i class="bi bi-chevron-down"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="{{ url('/product?series=face-id-3d') }}">Dòng khoá nhận diện khuôn mặt 3D</a></li>
+                            <li><a href="{{ url('/product?series=one-handle') }}">Dòng khoá vân tay một tay cầm</a></li>
+                            <li><a href="{{ url('/product?series=aluminium-door') }}">Dòng khoá vân tay cho cửa nhôm</a></li>
+                            <li><a href="{{ url('/product?series=others') }}">Dòng khoá khác</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://jwlock.com.vn/chinh-sach-bao-hanh.html" target="_blank">Chính sách</a></li>
+                    <li><a href="{{ url('/documents') }}">Tài liệu</a></li>
+                    <li><a href="{{ url('/blog') }}">Bài viết</a></li>
+                    <li><a href="{{ url('/contact') }}">Liên hệ</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN BANNER AREA ===== -->
+    <section class="main-banner">
+        <div class="container banner-wrapper">
+
+            <!-- Sidebar - Vàng liền khối -->
+            <aside class="sidebar" aria-label="Danh mục">
+                <ul>
                     @foreach($headerCategories as $category)
-                        <a href="{{ url('/product?category=' . $category['slug']) }}" class="header-link">
-                            <span class="material-icons">{{ $category['icon'] }}</span>
-                            {{ $category['name'] }}
-                        </a>
+                        <li>
+                            <i class="bi {{ $iconMap[$category['slug']] ?? 'bi-caret-right-fill' }}"></i>
+                            <a href="{{ url("/product?category={$category['slug']}") }}">
+                                {{ $category['name'] }}
+                            </a>
+                        </li>
                     @endforeach
+                </ul>
+            </aside>
+
+            <!-- Banner Swiper Slider - Full Width trong cột -->
+            <div class="banner">
+                <div class="swiper jw-banner-swiper">
+                    <div class="swiper-wrapper">
+                        @foreach($bannerSlides as $slide)
+                            <div class="swiper-slide">
+                                <img src="{{ $slide }}" alt="Banner" />
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Pagination (Dots) -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Navigation (Arrows) -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
             </div>
-            @foreach($headerMenus as $menu)
-                <a href="{{ $menu['url'] }}" class="header-link" {{ $menu['open_in_new_tab'] ? 'target="_blank"' : '' }}>
-                    @if($menu['icon'])
-                        <span class="material-icons">{{ $menu['icon'] }}</span>
-                    @endif
-                    {{ $menu['label'] }}
-                </a>
-            @endforeach
-            <a href="{{ route('cart.index') }}" class="header-link">Giỏ hàng</a>
-            <a href="tel:{{ str_replace(' ', '', $headerPhone) }}" class="btn-primary header-phone-mobile">
-                <span class="material-icons">phone</span>
-                {{ $headerPhone }}
-            </a>
+
         </div>
-    </div>
-</header>
+    </section>
+</div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Swiper !== 'undefined') {
+            new Swiper('.jw-banner-swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                effect: 'slide',
+                speed: 800,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                autoHeight: false, // Chiều cao cố định theo content cột
+            });
+        }
+    });
+</script>
+@endpush
