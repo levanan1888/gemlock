@@ -1,0 +1,259 @@
+/* Gemlock product listing page (product.blade.php) */
+
+.product-section {
+    padding-top: 2rem;
+}
+
+.hero-product {
+    background-image: url('https://gemcorp.vn/images/BN02.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-product::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.hero-product .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-product h1,
+.hero-product p {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.product-item {
+    text-decoration: none;
+    display: block;
+    transition: .3s all ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.product-thumbnail {
+    height: 250px;
+    object-fit: contain;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Filter / sidebar block */
+.sidebar-column {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px 20px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(212, 168, 0, 0.15);
+    align-self: flex-start; 
+}
+
+.sidebar-search {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.sidebar-search input {
+    width: 100%;
+    padding: 12px 20px;
+    padding-right: 40px;
+    border: 1px solid #efefef;
+    border-radius: 30px;
+    background: #f9f9f9;
+    transition: .3s all;
+}
+
+.sidebar-search input:focus {
+    outline: none;
+    border-color: #f9bf29;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-search .fa-search {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.sidebar-widget {
+    margin-bottom: 32px;
+}
+
+.sidebar-widget + .sidebar-widget {
+    padding-top: 20px;
+    border-top: 1px dashed rgba(148, 163, 184, 0.5);
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #1f2933;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.category-list li {
+    margin-bottom: 12px;
+    display: block;
+    width: 100%;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #555;
+    padding: 4px 2px;
+    border-radius: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.filter-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.filter-count {
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.filter-option:hover {
+    background-color: #f9fafb;
+    color: #111827;
+}
+
+.sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.btn-filter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-filter-primary {
+    background-color: var(--brand-yellow, #f9bf29);
+    color: #1f2933;
+    border-color: var(--brand-yellow, #f9bf29);
+}
+
+.btn-filter-primary:hover {
+    background-color: #e0a922;
+    border-color: #e0a922;
+}
+
+.btn-filter-outline {
+    background-color: #ffffff;
+    color: #374151;
+    border-color: #e5e7eb;
+}
+
+.btn-filter-outline:hover {
+    background-color: #f9fafb;
+}
+
+.pagination-wrapper {
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.gemlock-product-page .before-footer-section {
+    padding-top: 20px !important;
+    margin-bottom: 0;
+}
+
+.gemlock-product-detail-page .before-footer-section {
+    padding: 0 !important;
+    margin-bottom: 0;
+}
+
+.pagination {
+    gap: 4px;
+}
+
+.pagination .page-link {
+    border-radius: 999px !important;
+    border: 1px solid #e5e7eb;
+    color: var(--brand-yellow-dark, #b58900);
+    padding: 6px 12px;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--brand-yellow, #f9bf29);
+    border-color: var(--brand-yellow, #f9bf29);
+    color: #ffffff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #9ca3af;
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    box-shadow: none;
+}
+
+@media (max-width: 991px) {
+    .sidebar-column {
+        display: none !important; 
+    }
+}
+
+@keyframes flyToCart {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    50% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0.8; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0.1); opacity: 0; }
+}
+
+.flying-image {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    animation: flyToCart 1.2s ease-in-out forwards;
+}
+

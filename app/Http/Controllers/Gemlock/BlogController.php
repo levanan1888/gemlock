@@ -9,7 +9,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        return view('gemlock.blog');
+        return view('gemlock.blog.index');
     }
 
     public function show(string $slug)
@@ -21,7 +21,7 @@ class BlogController extends Controller
 
         abort_unless($post, 404);
 
-        return view('gemlock.blog_detail', compact('post'));
+        return view('gemlock.blog.detail', compact('post'));
     }
 
     /**

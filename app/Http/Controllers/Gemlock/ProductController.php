@@ -9,10 +9,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // Hiện tại vẫn dùng ProductService tĩnh như cũ
         $products = ProductService::getAllProducts();
 
-        return view('gemlock.product', compact('products'));
+        return view('gemlock.product.list', compact('products'));
     }
 
     public function show(string $slug = 'n81b')
@@ -20,7 +19,7 @@ class ProductController extends Controller
         $product = ProductService::getProductBySlug($slug);
         $relatedProducts = ProductService::getAllProducts();
 
-        return view('gemlock.product_detail', compact('product', 'relatedProducts'));
+        return view('gemlock.product.detail', compact('product', 'relatedProducts'));
     }
 }
 
