@@ -95,8 +95,6 @@
 @endpush
 
 @section('content')
-    @include('partials.header')
-
     <!-- Start Hero Section -->
     <div class="hero hero-checkout">
         <div class="container">
@@ -264,7 +262,7 @@
                                     </div>
 
                                     @if (empty($cart))
-                                        <a class="btn btn-outline-black btn-lg py-3 btn-block" href="{{ url('/product') }}">Quay
+                                        <a class="btn btn-outline-black btn-lg py-3 btn-block" href="{{ url('/gemlock/product') }}">Quay
                                             lại mua sắm</a>
                                     @endif
                                 </div>

@@ -1,13 +1,18 @@
-@extends('layouts.app')
-@push('scripts')
+@extends('gemlock.layouts.app')
+
+@section('title', 'Sản Phẩm - Hệ Sinh Thái Gemcorp')
+@section('body_class', 'gemlock-shop-page')
+
+@section('before_main')
+    @include('gemlock.partials.gemlock_topbar')
+    @include('gemlock.partials.header')
+@endsection
+
+@push('gemlock_styles')
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 @endpush
 
-
-@section('title', 'Sản Phẩm - Hệ Sinh Thái Gemcorp')
-
-@section('content')
-    @include('partials.header')
+@section('page_content')
     @include('partials.section_category_video', ['videoTitle' => 'Sản phẩm Hệ Sinh Thái Gemcorp', 'youtubeId' => null])
     <main class="py-8 px-4 md:px-10 lg:px-40">
         <div class="max-w-[1440px] mx-auto">
@@ -18,9 +23,9 @@
                 <span class="text-[#1c190d] dark:text-white text-sm font-medium">Sản Phẩm Hệ Sinh Thái</span>
             </div>
 
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 px-1">
-                <div class="flex flex-col gap-3 max-w-2xl">
-                    <h1 class="text-[#1c190d] dark:text-white text-4xl md:text-5xl font-black leading-[1.1] tracking-tight">
+            <div class="flex flex-col md:flex-row md:items-end justify_between gap-6 mb-12 px-1">
+                <div class="flex flex_col gap-3 max-w-2xl">
+                    <h1 class="text-[#1c190d] dark:text_white text-4xl md:text-5xl font-black leading-[1.1] tracking-tight">
                         Hệ Sinh Thái Gemcorp</h1>
                     <p class="text-[#9c8a49] text-lg md:text-xl font-normal leading-relaxed">
                         Khám phá các giải pháp đổi mới trên bốn lĩnh vực riêng biệt của chúng tôi, được thiết kế để cung cấp
@@ -46,7 +51,6 @@
 
             <div
                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 border border-[#f4f1e7] dark:border-[#3d361c]">
-                <!-- Product Card -->
                 <div
                     class="group flex flex-col bg-surface-light dark:bg-surface-dark border-[#f4f1e7] dark:border-[#3d361c] hover:bg-black transition-all duration-500 reveal">
                     <div
@@ -74,8 +78,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- More product cards can be added here -->
             </div>
         </div>
     </main>
 @endsection
+

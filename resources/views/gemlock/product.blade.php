@@ -1,6 +1,14 @@
-@extends('layouts.app')
+@extends('gemlock.layouts.app')
 
-@push('styles')
+@section('title', $product['name'] . ' - Gemlock')
+@section('body_class', 'gemlock-product-page')
+
+@section('before_main')
+    @include('gemlock.partials.gemlock_topbar')
+    @include('gemlock.partials.header')
+@endsection
+
+@push('gemlock_styles')
     <link href="{{ asset('furni/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('furni/css/tiny-slider.css') }}" rel="stylesheet">
@@ -8,10 +16,7 @@
     <style>
         .product-section {
             padding-top: 2rem;
-            /* Header fixed đã có main-with-fixed-header padding */
         }
-
-        /* Full-width banner styling (giống màn giỏ hàng) */
         .hero-product {
             background-image: url('https://gemcorp.vn/images/BN02.png');
             background-size: cover;
@@ -25,10 +30,7 @@
         .hero-product::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            inset: 0;
             background: rgba(0, 0, 0, 0.3);
         }
         .hero-product .container {
@@ -40,33 +42,26 @@
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
-
         .product-item {
             text-decoration: none;
             display: block;
             transition: .3s all ease;
         }
-
         .product-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
-
         .product-thumbnail {
             height: 250px;
             object-fit: contain;
-            /* Ensure images don't stretch */
             width: 100%;
             margin-bottom: 20px;
         }
-
-        /* Sidebar Styling */
         .sidebar-search {
             position: relative;
             margin-bottom: 30px;
         }
-
         .sidebar-search input {
             width: 100%;
             padding: 12px 20px;
@@ -76,15 +71,12 @@
             background: #f9f9f9;
             transition: .3s all;
         }
-
         .sidebar-search input:focus {
             outline: none;
             border-color: #f9bf29;
-            /* Brand Yellow */
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
-
         .sidebar-search .fa-search {
             position: absolute;
             right: 20px;
@@ -92,34 +84,26 @@
             transform: translateY(-50%);
             color: #aaa;
         }
-
         .sidebar-widget {
             margin-bottom: 40px;
         }
-
         .sidebar-title {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 20px;
             color: #3b5d50;
         }
-
         .category-list {
             list-style: none;
             padding: 0;
             margin: 0;
             display: block;
-            /* Ensure list is block */
         }
-
         .category-list li {
             margin-bottom: 12px;
             display: block;
-            /* Force vertical stacking */
             width: 100%;
-            /* Take full width */
         }
-
         .category-list a {
             color: #666;
             text-decoration: none;
@@ -128,92 +112,30 @@
             display: flex;
             justify-content: space-between;
         }
-
         .category-list a:hover {
             color: #f9bf29;
             padding-left: 5px;
         }
-
-        /* Mobile: Hide sidebar */
         @media (max-width: 991px) {
             .sidebar-column {
                 display: none !important;
             }
         }
-
-        /* Fly to cart animation */
         @keyframes flyToCart {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: translate(var(--tx), var(--ty)) scale(0.5);
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: translate(var(--tx), var(--ty)) scale(0.1);
-                opacity: 0;
-            }
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            50% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0.8; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0.1); opacity: 0; }
         }
-
         .flying-image {
             position: fixed;
             z-index: 9999;
             pointer-events: none;
             animation: flyToCart 1.2s ease-in-out forwards;
         }
-
-        /* Pagination Styles */
-        .pagination-wrapper {
-            margin-top: 2rem;
-            padding: 1rem 0;
-        }
-        .pagination {
-            gap: 8px;
-        }
-        .pagination .page-item .page-link {
-            border: none;
-            background: #f8f9fa;
-            color: #333;
-            font-weight: 600;
-            padding: 10px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            min-width: 44px;
-            text-align: center;
-        }
-        .pagination .page-item .page-link:hover {
-            background: linear-gradient(135deg, #f9bf29 0%, #D4A800 100%);
-            color: #1a1000;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 168, 0, 0.35);
-        }
-        .pagination .page-item.active .page-link {
-            background: linear-gradient(135deg, #f9bf29 0%, #D4A800 100%);
-            color: #1a1000;
-            box-shadow: 0 4px 12px rgba(212, 168, 0, 0.35);
-        }
-        .pagination .page-item.disabled .page-link {
-            background: #e9ecef;
-            color: #adb5bd;
-            pointer-events: none;
-        }
-        @media (max-width: 576px) {
-            .pagination .page-item .page-link {
-                padding: 8px 12px;
-                min-width: 38px;
-                font-size: 14px;
-            }
-        }
     </style>
 @endpush
 
-@section('content')
-    @include('partials.header')
-    <!-- Start Hero Section -->
+@section('page_content')
     <div class="hero hero-product">
         <div class="container">
             <div class="row">
@@ -226,12 +148,10 @@
             </div>
         </div>
     </div>
-    <!-- End Hero Section -->
 
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
             <div class="row">
-                <!-- Sidebar -->
                 <div class="col-lg-3 mb-5 sidebar-column">
                     <div class="sidebar-search">
                         <input type="text" placeholder="Tìm kiếm sản phẩm...">
@@ -260,11 +180,9 @@
                     </div>
                 </div>
 
-                <!-- Product Grid -->
                 <div class="col-lg-9">
                     <div class="row">
                         @php
-                            // Pagination logic
                             $perPage = 9;
                             $currentPage = request()->get('page', 1);
                             $totalProducts = count($products);
@@ -274,58 +192,48 @@
                         @endphp
 
                         @foreach($paginatedProducts as $product)
-                            <!-- Start Column -->
                             <div class="col-12 col-md-6 col-lg-4 mb-5">
                                 <a class="product-item" href="{{ route('product.detail', $product['slug']) }}">
                                     <img src="{{ $product['image'] }}" class="img-fluid product-thumbnail"
-                                        onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                         onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
                                     <h3 class="product-title">{{ $product['name'] }}</h3>
                                     <strong class="product-price">{{ $product['price'] }}</strong>
-
-                                    <span class="icon-cross add-to-cart-btn" data-name="{{ $product['name'] }}"
-                                        data-price="{{ $product['price'] }}" data-image="{{ $product['image'] }}"
-                                        onclick="event.preventDefault(); addToCart(this);">
+                                    <span class="icon-cross add-to-cart-btn"
+                                          data-name="{{ $product['name'] }}"
+                                          data-price="{{ $product['price'] }}"
+                                          data-image="{{ $product['image'] }}"
+                                          onclick="event.preventDefault(); addToCart(this);">
                                         <img src="{{ asset('furni/images/cross.svg') }}" class="img-fluid">
                                     </span>
                                 </a>
                             </div>
-                            <!-- End Column -->
                         @endforeach
                     </div>
-                    
-                    <!-- Pagination -->
+
                     @if($totalPages > 1)
-                    <nav class="pagination-wrapper mt-4">
-                        <ul class="pagination justify-content-center">
-                            {{-- Previous --}}
-                            <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
-                                <a class="page-link" href="?page={{ $currentPage - 1 }}" aria-label="Previous">
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
-                            </li>
-                            
-                            {{-- Page Numbers --}}
-                            @for($i = 1; $i <= $totalPages; $i++)
-                                @if($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 2)
-                                    <li class="page-item {{ $currentPage == $i ? 'active' : '' }}">
-                                        <a class="page-link" href="?page={{ $i }}">{{ $i }}</a>
-                                    </li>
-                                @elseif(abs($i - $currentPage) == 3)
-                                    <li class="page-item disabled"><span class="page-link">...</span></li>
-                                @endif
-                            @endfor
-                            
-                            {{-- Next --}}
-                            <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
-                                <a class="page-link" href="?page={{ $currentPage + 1 }}" aria-label="Next">
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="text-center text-muted mt-2 small">
-                            Hiển thị {{ $offset + 1 }}-{{ min($offset + $perPage, $totalProducts) }} trong {{ $totalProducts }} sản phẩm
-                        </p>
-                    </nav>
+                        <nav class="pagination-wrapper mt-4">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage - 1 }}" aria-label="Previous">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                                @for($i = 1; $i <= $totalPages; $i++)
+                                    @if($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 2)
+                                        <li class="page-item {{ $currentPage == $i ? 'active' : '' }}">
+                                            <a class="page-link" href="?page={{ $i }}">{{ $i }}</a>
+                                        </li>
+                                    @elseif(abs($i - $currentPage) == 3)
+                                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                                    @endif
+                                @endfor
+                                <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
+                                    <a class="page-link" href="?page={{ $currentPage + 1 }}" aria-label="Next">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     @endif
                 </div>
             </div>
@@ -333,37 +241,27 @@
     </div>
 @endsection
 
-@push('scripts')
+@push('gemlock_scripts')
     <script>
         function addToCart(element) {
-            // Get product data
             const name = element.getAttribute('data-name');
             const price = element.getAttribute('data-price');
             const image = element.getAttribute('data-image');
 
-            // Perform AJAX request
             fetch('{{ route('cart.add') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({
-                    name: name,
-                    price: price,
-                    image: image
-                })
+                body: JSON.stringify({ name, price, image })
             })
             .then(response => response.json())
             .then(data => {
-                // Determine if we should fly
                 flyToCart(element);
-                
-                // Update cart count from server response
                 const cartCount = document.querySelector('.cart-quantity');
                 if (cartCount) {
-                    // Update after a slight delay to match animation arrival
-                     setTimeout(() => {
+                    setTimeout(() => {
                         const countValue = data.cart_count || 0;
                         cartCount.textContent = countValue;
                         cartCount.classList.toggle('is-empty', countValue < 1);
@@ -374,33 +272,25 @@
         }
 
         function flyToCart(element) {
-            // Get the product image
             const productItem = element.closest('.product-item');
-            const productImage = productItem.querySelector('.product-thumbnail');
-
-            // Get cart icon position
-            const cartIcon = document.querySelector('.w-commerce-commercecartopenlink');
+            const productImage = productItem ? productItem.querySelector('.product-thumbnail') : null;
+            const cartIcon = document.querySelector('.header-cart') || document.querySelector('.w-commerce-commercecartopenlink');
             if (!cartIcon || !productImage) return;
 
-            // Create flying image clone
             const flyingImg = productImage.cloneNode(true);
             flyingImg.classList.add('flying-image');
 
-            // Get positions
             const imgRect = productImage.getBoundingClientRect();
             const cartRect = cartIcon.getBoundingClientRect();
 
-            // Set initial position
             flyingImg.style.position = 'fixed';
             flyingImg.style.left = imgRect.left + 'px';
             flyingImg.style.top = imgRect.top + 'px';
             flyingImg.style.width = imgRect.width + 'px';
             flyingImg.style.height = imgRect.height + 'px';
 
-            // Calculate translation (Center to Center)
             const imgCenterX = imgRect.left + imgRect.width / 2;
             const imgCenterY = imgRect.top + imgRect.height / 2;
-
             const cartCenterX = cartRect.left + cartRect.width / 2;
             const cartCenterY = cartRect.top + cartRect.height / 2;
 
@@ -410,13 +300,9 @@
             flyingImg.style.setProperty('--tx', deltaX + 'px');
             flyingImg.style.setProperty('--ty', deltaY + 'px');
 
-            // Add to body
             document.body.appendChild(flyingImg);
-
-            // Remove after animation
-            setTimeout(() => {
-                flyingImg.remove();
-            }, 1200);
+            setTimeout(() => flyingImg.remove(), 1200);
         }
     </script>
 @endpush
+

@@ -1,12 +1,18 @@
 <?php
 
-use App\Services\ProductService;
+use App\Models\ContentItem;
+use App\Services\Home1ContentService;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Gemlock\HomeController;
+use App\Http\Controllers\Gemlock\AboutController;
+use App\Http\Controllers\Gemlock\BlogController;
+use App\Http\Controllers\Gemlock\ProductController;
+use App\Http\Controllers\Gemlock\ContactController;
 
-// Perfect House - Trang chính
 Route::get('/', function () {
-    $sections = \App\Services\Home1ContentService::getSections('perfect_house');
-    $homeContent = \App\Models\ContentItem::getAllByPage('perfect_house')['home'] ?? [];
+    $sections = Home1ContentService::getSections('perfect_house');
+    $homeContent = ContentItem::getAllByPage('perfect_house')['home'] ?? [];
 
     return view('home1', [
         'head' => $sections['head'],
@@ -16,15 +22,21 @@ Route::get('/', function () {
     ]);
 });
 
-// Gemlock - Trang con
-Route::get('/gemlock', function () {
-    $products = ProductService::getAllProducts();
-    $groupedProducts = ProductService::getProductsGroupedByCategory();
+// Gemlock - prefix /gemlock
+Route::prefix('gemlock')->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
 
-    return view('home', compact('products', 'groupedProducts'));
+    Route::get('/about', [AboutController::class, 'index']);
+
+    Route::get('/blog', [BlogController::class, 'index']);
+    Route::get('/blog/{slug}', [BlogController::class, 'show']);
+
+    Route::get('/product', [ProductController::class, 'index']);
+    Route::get('/product-detail/{slug?}', [ProductController::class, 'show'])->name('product.detail');
+
+    Route::get('/contact', [ContactController::class, 'index']);
 });
 
-// Gemsolar - Trang con
 Route::get('/gemsolar', function () {
     $products = ProductService::getAllProducts();
     $groupedProducts = ProductService::getProductsGroupedByCategory();
@@ -32,28 +44,12 @@ Route::get('/gemsolar', function () {
     return view('home', compact('products', 'groupedProducts'));
 });
 
-// Trang Gemlock Home mới (kết hợp từ home1.html và home2.html)
 Route::get('/home-gemlock', function () {
     $products = ProductService::getAllProducts();
     $groupedProducts = ProductService::getProductsGroupedByCategory();
 
     return view('home', compact('products', 'groupedProducts'));
 });
-
-Route::get('/product', function () {
-    $products = ProductService::getAllProducts();
-
-    return view('product', compact('products'));
-});
-
-Route::get('/product-detail/{slug?}', function ($slug = 'n81b') {
-    $product = ProductService::getProductBySlug($slug);
-    $relatedProducts = ProductService::getAllProducts();
-
-    return view('product_detail', compact('product', 'relatedProducts'));
-})->name('product.detail');
-
-use App\Http\Controllers\CartController;
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');

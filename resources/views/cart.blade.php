@@ -101,8 +101,6 @@
 @endpush
 
 @section('content')
-    @include('partials.header')
-
     <!-- Start Hero Section -->
     <div class="hero hero-cart">
         <div class="container">
@@ -202,7 +200,7 @@
                             <button class="btn btn-black btn-sm btn-block" type="button">Cập nhật giỏ hàng</button>
                         </div>
                         <div class="col-md-6">
-                            <a class="btn btn-outline-black btn-sm btn-block" href="{{ url('/product') }}">Tiếp tục mua sắm</a>
+                            <a class="btn btn-outline-black btn-sm btn-block" href="{{ url('/gemlock/product') }}">Tiếp tục mua sắm</a>
                         </div>
                     </div>
                     <div class="row">
@@ -264,7 +262,7 @@
                         <h2 class="text-black">Sản phẩm liên quan</h2>
                     </div>
                     <div class="col-md-4 text-md-right">
-                        <a class="btn btn-outline-black btn-sm" href="{{ url('/product') }}">Xem tất cả</a>
+                        <a class="btn btn-outline-black btn-sm" href="{{ url('/gemlock/product') }}">Xem tất cả</a>
                     </div>
                 </div>
                 <div class="row">

@@ -1,13 +1,18 @@
-@extends('layouts.app')
-@push('scripts')
+@extends('gemlock.layouts.app')
+
+@section('title', 'Sản Phẩm Gemcorp - Năng Lượng & Công Nghệ')
+@section('body_class', 'gemlock-products-page')
+
+@section('before_main')
+    @include('gemlock.partials.gemlock_topbar')
+    @include('gemlock.partials.header')
+@endsection
+
+@push('gemlock_styles')
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 @endpush
 
-
-@section('title', 'Sản Phẩm Gemcorp - Năng Lượng & Công Nghệ')
-
-@section('content')
-    @include('partials.header')
+@section('page_content')
     @include('partials.section_category_video', ['videoTitle' => 'Danh mục sản phẩm GemLock', 'youtubeId' => null])
     <div class="px-4 md:px-10 lg:px-40 py-8 max-w-[1440px] mx-auto min-h-screen">
         <div class="reveal mb-8">
@@ -80,3 +85,4 @@
         </div>
     </div>
 @endsection
+
