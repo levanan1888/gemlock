@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Awcodes\Curator\Models\Media as CuratorMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -18,7 +20,7 @@ class Blog extends Model
         'content',
         'thumbnail',
         'author_name',
-        'category',
+        'blog_category_id',
         'is_active',
         'is_featured',
         'published_at',
@@ -29,6 +31,8 @@ class Blog extends Model
     protected function casts(): array
     {
         return [
+            'blog_category_id' => 'integer',
+            'thumbnail' => 'integer',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
             'published_at' => 'datetime',
@@ -42,6 +46,16 @@ class Blog extends Model
                 $blog->slug = Str::slug($blog->title);
             }
         });
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(BlogCategory::class, 'blog_category_id');
+    }
+
+    public function thumbnailMedia(): BelongsTo
+    {
+        return $this->belongsTo(CuratorMedia::class, 'thumbnail');
     }
 
     public function scopePublished(Builder $query): Builder

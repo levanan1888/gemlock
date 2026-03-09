@@ -79,7 +79,11 @@
                     <div class="col-12 col-sm-6 col-md-4 mb-5">
                         <div class="post-entry">
                             <a href="{{ url('/gemlock/blog/' . $post->slug) }}" class="post-thumbnail">
-                                <img src="{{ $post->thumbnail ? asset('storage/' . $post->thumbnail) : asset('furni/images/post-1.jpg') }}" alt="{{ $post->title }}" class="img-fluid">
+                                <img
+                                    src="{{ $post->thumbnailMedia?->thumbnail_url ?? asset('furni/images/post-1.jpg') }}"
+                                    alt="{{ $post->title }}"
+                                    class="img-fluid"
+                                >
                             </a>
                             <div class="post-content-entry">
                                 <h3><a href="{{ url('/gemlock/blog/' . $post->slug) }}">{{ $post->title }}</a></h3>

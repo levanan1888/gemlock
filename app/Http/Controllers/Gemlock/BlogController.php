@@ -35,7 +35,10 @@ class BlogController extends Controller
             $query->orderByDesc('published_at')->orderByDesc('id');
         }
 
-        $posts = $query->paginate(6)->withQueryString();
+        $posts = $query
+            ->with('thumbnailMedia')
+            ->paginate(6)
+            ->withQueryString();
 
         $categories = Blog::query()
             ->published()
@@ -52,11 +55,13 @@ class BlogController extends Controller
     {
         $post = Blog::query()
             ->published()
+            ->with('thumbnailMedia')
             ->where('slug', $slug)
             ->firstOrFail();
 
         $popularPosts = Blog::query()
             ->published()
+            ->with('thumbnailMedia')
             ->whereKeyNot($post->id)
             ->orderByDesc('is_featured')
             ->orderByDesc('published_at')

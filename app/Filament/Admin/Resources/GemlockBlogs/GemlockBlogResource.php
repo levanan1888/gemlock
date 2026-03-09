@@ -9,8 +9,8 @@ use App\Models\Blog;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -46,21 +46,38 @@ class GemlockBlogResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')->label('Tiêu đề')->required()->maxLength(255),
-            TextInput::make('slug')->label('Slug')->required()->maxLength(255)->unique(ignoreRecord: true),
-            TextInput::make('category')->label('Chuyên mục')->maxLength(120),
-            TextInput::make('author_name')->label('Tác giả')->default('Gemlock Team')->maxLength(255),
-            TextInput::make('thumbnail')
-                ->label('Ảnh đại diện')
+            TextInput::make('title')
+                ->label('Tiêu đề')
+                ->required()
+                ->maxLength(255),
+            TextInput::make('slug')
+                ->label('Slug')
+                ->required()
                 ->maxLength(255)
-                ->helperText('Nhập đường dẫn ảnh trong storage, ví dụ: blogs/post-1.jpg'),
-            Textarea::make('excerpt')->label('Mô tả ngắn')->rows(3)->maxLength(1000),
-            Textarea::make('content')->label('Nội dung')->rows(12)->required()->columnSpanFull(),
-            DateTimePicker::make('published_at')->label('Ngày đăng')->seconds(false),
-            Toggle::make('is_active')->label('Hiển thị')->default(true),
-            Toggle::make('is_featured')->label('Nổi bật')->default(false),
-            TextInput::make('meta_title')->label('Meta title')->maxLength(255),
-            Textarea::make('meta_description')->label('Meta description')->rows(2)->maxLength(255),
+                ->unique(ignoreRecord: true),
+            TextInput::make('category')
+                ->label('Chuyên mục')
+                ->maxLength(120),
+            TextInput::make('author_name')
+                ->label('Tác giả')
+                ->default('Gemlock Team')
+                ->maxLength(255),
+            Toggle::make('is_active')
+                ->label('Hiển thị')
+                ->default(true),
+            Toggle::make('is_featured')
+                ->label('Nổi bật')
+                ->default(false),
+            CuratorPicker::make('thumbnail')
+                ->label('Ảnh đại diện')
+                ->buttonLabel('Chọn hoặc tải ảnh')
+                ->constrained()
+                ->directory('blogs'),
+            Textarea::make('content')
+                ->label('Nội dung')
+                ->rows(14)
+                ->required()
+                ->columnSpanFull(),
         ]);
     }
 

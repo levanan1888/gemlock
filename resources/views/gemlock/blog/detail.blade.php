@@ -37,7 +37,7 @@
                             <span>Ngày đăng: {{ optional($post->published_at)->format('d/m/Y H:i') }}</span>
                         </div>
 
-                        <img src="{{ $post->thumbnail ? asset('storage/' . $post->thumbnail) : asset('furni/images/post-1.jpg') }}"
+                        <img src="{{ $post->thumbnailMedia?->large_url ?? asset('furni/images/post-1.jpg') }}"
                              alt="{{ $post->title }}" class="img-fluid blog-detail-hero-img">
 
                         <div class="blog-detail-content">
@@ -51,7 +51,7 @@
                         <div class="blog-sidebar-title">Bài viết mới</div>
                         @forelse ($popularPosts as $item)
                             <div class="blog-sidebar-post">
-                                <img src="{{ $item->thumbnail ? asset('storage/' . $item->thumbnail) : asset('furni/images/post-2.jpg') }}" alt="{{ $item->title }}">
+                                <img src="{{ $item->thumbnailMedia?->thumbnail_url ?? asset('furni/images/post-2.jpg') }}" alt="{{ $item->title }}">
                                 <div>
                                     <h6><a href="{{ url('/gemlock/blog/' . $item->slug) }}">{{ $item->title }}</a></h6>
                                     <small>{{ optional($item->published_at)->format('d/m/Y') }}</small>
