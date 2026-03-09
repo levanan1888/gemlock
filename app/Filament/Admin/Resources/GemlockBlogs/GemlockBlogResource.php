@@ -6,11 +6,14 @@ use App\Filament\Admin\Resources\GemlockBlogs\Pages\CreateGemlockBlog;
 use App\Filament\Admin\Resources\GemlockBlogs\Pages\EditGemlockBlog;
 use App\Filament\Admin\Resources\GemlockBlogs\Pages\ListGemlockBlogs;
 use App\Models\Blog;
+use App\Models\BlogCategory;
+use App\Models\User;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -55,13 +58,25 @@ class GemlockBlogResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->unique(ignoreRecord: true),
-            TextInput::make('category')
+            Select::make('category')
                 ->label('Chuyên mục')
-                ->maxLength(120),
-            TextInput::make('author_name')
+                ->options(fn () => BlogCategory::query()
+                    ->where('is_active', true)
+                    ->orderBy('name')
+                    ->pluck('name', 'name')
+                )
+                ->searchable()
+                ->preload()
+                ->native(false),
+            Select::make('author_name')
                 ->label('Tác giả')
-                ->default('Gemlock Team')
-                ->maxLength(255),
+                ->options(fn () => User::query()
+                    ->orderBy('name')
+                    ->pluck('name', 'name')
+                )
+                ->searchable()
+                ->preload()
+                ->native(false),
             Toggle::make('is_active')
                 ->label('Hiển thị')
                 ->default(true),
