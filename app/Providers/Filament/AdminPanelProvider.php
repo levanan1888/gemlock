@@ -45,7 +45,15 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugin(
                 CuratorPlugin::make()
-                    ->navigationGroup('Gemlock')
+                ->label('Media')
+                ->pluralLabel('Media')
+                // ->navigationIcon(Heroicon::OutlinedPhoto)
+                ->navigationGroup('Gemlock')
+                ->navigationSort(3)
+                ->showBadge(true) 
+                ->registerNavigation(true)
+                ->curations(true)
+                ->fileSwap(true),  
             )
             ->middleware([
                 EncryptCookies::class,
