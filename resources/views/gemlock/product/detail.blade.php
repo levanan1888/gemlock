@@ -133,12 +133,28 @@
                             <div class="related-track">
                                 @foreach ($filteredRelated as $related)
                                     <div class="related-slide">
-                                        <a class="product-item" href="{{ route('product.detail', $related['slug']) }}">
-                                            <img src="{{ $related['image'] }}" class="img-fluid product-thumbnail"
-                                                 onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                        <div class="product-item">
+                                            <a href="{{ route('product.detail', $related['slug']) }}" class="product-card-image-link">
+                                                <img src="{{ $related['image'] }}" class="img-fluid product-thumbnail"
+                                                     onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                            </a>
                                             <h3 class="product-title">{{ $related['name'] }}</h3>
                                             <strong class="product-price">{{ $related['price'] }}</strong>
-                                        </a>
+
+                                            <div class="product-card-actions">
+                                                <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $related['slug']) }}">
+                                                    Chi tiết
+                                                </a>
+                                                <button type="button"
+                                                        class="btn-card-action btn-card-cart"
+                                                        data-name="{{ $related['name'] }}"
+                                                        data-price="{{ $related['price'] }}"
+                                                        data-image="{{ $related['image'] }}"
+                                                        onclick="addToCart(this);">
+                                                    Thêm giỏ hàng
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
