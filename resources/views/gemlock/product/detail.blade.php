@@ -17,19 +17,6 @@
 @endpush
 
 @section('page_content')
-    <div class="hero hero-product">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="intro-excerpt">
-                        <h1>{{ $product['name'] }}</h1>
-                        <p class="mb-4">{{ $product['description'] ?? 'Giải pháp khóa thông minh Gemlock cho ngôi nhà của bạn.' }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
             <div class="row">
@@ -122,23 +109,42 @@
             </div>
 
             @if (!empty($relatedProducts))
-                <div class="row mt-5">
-                    <div class="col-12">
-                        <h3 class="mb-4">Sản phẩm liên quan</h3>
-                    </div>
-                    @foreach ($relatedProducts as $related)
-                        @if ($related['slug'] !== $product['slug'])
-                            <div class="col-12 col-md-6 col-lg-3 mb-4">
-                                <a class="product-item" href="{{ route('product.detail', $related['slug']) }}">
-                                    <img src="{{ $related['image'] }}" class="img-fluid product-thumbnail"
-                                         onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
-                                    <h3 class="product-title">{{ $related['name'] }}</h3>
-                                    <strong class="product-price">{{ $related['price'] }}</strong>
-                                </a>
+                @php
+                    $filteredRelated = collect($relatedProducts)
+                        ->filter(fn($related) => $related['slug'] !== $product['slug'])
+                        ->values();
+                @endphp
+
+                @if($filteredRelated->isNotEmpty())
+                    <div class="related-carousel-section mt-5">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="mb-0">Sản phẩm liên quan</h3>
+                            <div class="related-carousel-nav">
+                                <button type="button" class="related-prev" aria-label="Trước">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="related-next" aria-label="Tiếp theo">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
                             </div>
-                        @endif
-                    @endforeach
-                </div>
+                        </div>
+
+                        <div class="related-carousel" id="related-carousel">
+                            <div class="related-track">
+                                @foreach ($filteredRelated as $related)
+                                    <div class="related-slide">
+                                        <a class="product-item" href="{{ route('product.detail', $related['slug']) }}">
+                                            <img src="{{ $related['image'] }}" class="img-fluid product-thumbnail"
+                                                 onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                            <h3 class="product-title">{{ $related['name'] }}</h3>
+                                            <strong class="product-price">{{ $related['price'] }}</strong>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @endif
         </div>
     </div>

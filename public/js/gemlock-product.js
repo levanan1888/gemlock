@@ -33,8 +33,68 @@
         });
     }
 
+    function initRelatedCarousel() {
+        var root = document.getElementById('related-carousel');
+        if (!root) return;
+
+        var track = root.querySelector('.related-track');
+        var slides = root.querySelectorAll('.related-slide');
+        var prevBtn = document.querySelector('.related-prev');
+        var nextBtn = document.querySelector('.related-next');
+
+        if (!track || !slides.length || !prevBtn || !nextBtn) return;
+
+        var currentIndex = 0;
+
+        function getVisibleCount() {
+            var width = window.innerWidth;
+            if (width <= 480) return 1;
+            if (width <= 767) return 2;
+            if (width <= 1199) return 3;
+            return 4;
+        }
+
+        function getStepSize() {
+            if (!slides[0]) return 0;
+            var slideRect = slides[0].getBoundingClientRect();
+            var trackStyle = window.getComputedStyle(track);
+            var gap = parseFloat(trackStyle.columnGap || trackStyle.gap || '0');
+            return slideRect.width + gap;
+        }
+
+        function getMaxIndex() {
+            return Math.max(slides.length - getVisibleCount(), 0);
+        }
+
+        function render() {
+            var step = getStepSize();
+            track.style.transform = 'translateX(-' + (currentIndex * step) + 'px)';
+
+            prevBtn.disabled = currentIndex <= 0;
+            nextBtn.disabled = currentIndex >= getMaxIndex();
+        }
+
+        prevBtn.addEventListener('click', function () {
+            currentIndex = Math.max(currentIndex - 1, 0);
+            render();
+        });
+
+        nextBtn.addEventListener('click', function () {
+            currentIndex = Math.min(currentIndex + 1, getMaxIndex());
+            render();
+        });
+
+        window.addEventListener('resize', function () {
+            currentIndex = Math.min(currentIndex, getMaxIndex());
+            render();
+        });
+
+        render();
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         initProductGallery();
+        initRelatedCarousel();
     });
 
     // Cart helpers (called from HTML)
