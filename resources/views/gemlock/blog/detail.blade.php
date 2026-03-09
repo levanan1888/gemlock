@@ -13,6 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('furni/css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('furni/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/gemlock-blog.css') }}" rel="stylesheet">
 @endpush
 
 @section('page_content')
@@ -37,11 +38,32 @@
                             <span>Ngày đăng: {{ optional($post->published_at)->format('d/m/Y H:i') }}</span>
                         </div>
 
-                        <img src="{{ $post->thumbnailMedia?->large_url ?? asset('furni/images/post-1.jpg') }}"
+                        <img src="{{ $post->thumbnailMedia?->large_url ?? asset('image/no-image.jpg') }}"
+                             onerror="this.onerror=null;this.src='{{ asset('image/no-image.jpg') }}';"
                              alt="{{ $post->title }}" class="img-fluid blog-detail-hero-img">
 
                         <div class="blog-detail-content">
                             {!! nl2br(e($post->content)) !!}
+                        </div>
+
+                        <div class="blog-share-wrap">
+                            <span class="blog-share-label">Chia sẻ bài viết:</span>
+                            @php
+                                $shareUrl = urlencode(request()->fullUrl());
+                                $shareTitle = urlencode($post->title);
+                            @endphp
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ $shareUrl }}" target="_blank" rel="noopener" class="blog-share-btn facebook">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://zalo.me/share?url={{ $shareUrl }}" target="_blank" rel="noopener" class="blog-share-btn zalo">
+                                <i class="fas fa-comment-dots"></i> Zalo
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url={{ $shareUrl }}&text={{ $shareTitle }}" target="_blank" rel="noopener" class="blog-share-btn twitter">
+                                <i class="fab fa-twitter"></i> X/Twitter
+                            </a>
+                            <button type="button" class="blog-share-btn copy" onclick="navigator.clipboard.writeText(window.location.href)">
+                                <i class="fas fa-link"></i> Copy link
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -51,7 +73,9 @@
                         <div class="blog-sidebar-title">Bài viết mới</div>
                         @forelse ($popularPosts as $item)
                             <div class="blog-sidebar-post">
-                                <img src="{{ $item->thumbnailMedia?->thumbnail_url ?? asset('furni/images/post-2.jpg') }}" alt="{{ $item->title }}">
+                                <img src="{{ $item->thumbnailMedia?->thumbnail_url ?? asset('image/no-image.jpg') }}"
+                                     onerror="this.onerror=null;this.src='{{ asset('image/no-image.jpg') }}';"
+                                     alt="{{ $item->title }}">
                                 <div>
                                     <h6><a href="{{ url('/gemlock/blog/' . $item->slug) }}">{{ $item->title }}</a></h6>
                                     <small>{{ optional($item->published_at)->format('d/m/Y') }}</small>

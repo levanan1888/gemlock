@@ -2,9 +2,10 @@
 
 namespace App\Filament\Admin\Resources\GemlockFooters\Schemas;
 
-use Filament\Forms\Components\Select;
+use App\Models\ContentItem;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class GemlockFooterForm
@@ -13,48 +14,30 @@ class GemlockFooterForm
     {
         return $schema
             ->components([
-                TextInput::make('page_type')
-                    ->default('gemlock')
-                    ->required()
-                    ->disabled()
-                    ->dehydrated(),
-                TextInput::make('section')
-                    ->default('footer')
-                    ->required()
-                    ->disabled()
-                    ->dehydrated(),
-                TextInput::make('key')
-                    ->label('Key (Định danh)')
-                    ->required()
-                    ->unique(ignoreRecord: true)
-                    ->helperText('Ví dụ: footer_description, footer_copyright, footer_social_facebook')
-                    ->maxLength(255),
-                Select::make('type')
-                    ->label('Loại')
-                    ->options([
-                        'text' => 'Text',
-                        'image' => 'Hình ảnh',
-                        'link' => 'Link',
-                        'html' => 'HTML',
-                    ])
-                    ->required()
-                    ->native(false),
-                TextInput::make('label')
-                    ->label('Nhãn')
-                    ->required()
-                    ->maxLength(255),
+                Placeholder::make('key_info')
+                    ->label('Mã cấu hình')
+                    ->content(fn (?ContentItem $record): string => $record?->key ?? '-'),
+                Placeholder::make('type_info')
+                    ->label('Loại dữ liệu')
+                    ->content(fn (?ContentItem $record): string => match ($record?->key) {
+                        'footer_logo_gemlock' => 'Image path',
+                        'footer_social_facebook_gemlock',
+                        'footer_social_youtube_gemlock',
+                        'footer_social_zalo_gemlock' => 'Link URL',
+                        default => 'Text',
+                    }),
                 Textarea::make('value')
                     ->label('Giá trị')
-                    ->rows(4)
+                    ->required()
+                    ->rows(3)
                     ->columnSpanFull(),
                 Textarea::make('description')
-                    ->label('Mô tả')
+                    ->label('Ghi chú (tuỳ chọn)')
                     ->rows(2)
                     ->columnSpanFull(),
-                TextInput::make('order')
-                    ->label('Thứ tự')
-                    ->numeric()
-                    ->default(0),
+                Toggle::make('is_active')
+                    ->label('Hiển thị')
+                    ->default(true),
             ]);
     }
 }

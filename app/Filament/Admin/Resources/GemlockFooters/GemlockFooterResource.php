@@ -20,12 +20,7 @@ class GemlockFooterResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $navigationLabel = 'Footer (Cũ)';
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }
+    protected static ?string $navigationLabel = 'Cấu hình Footer';
 
     public static function getNavigationGroup(): ?string
     {

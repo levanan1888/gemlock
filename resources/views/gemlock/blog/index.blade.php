@@ -45,10 +45,10 @@
         <div class="blog-filter-wrap">
             <div class="blog-filter-title">Bộ lọc bài viết</div>
             <form method="GET" action="{{ url('/gemlock/blog') }}" class="row g-2 align-items-end blog-filter-actions">
-                <div class="col-12 col-md-5">
+                <div class="col-12 col-md-4">
                     <input type="text" class="form-control" name="q" value="{{ $q }}" placeholder="Tìm theo tiêu đề hoặc mô tả...">
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-4">
                     <select name="category" class="form-select">
                         <option value="">Tất cả chuyên mục</option>
                         @foreach($categories as $item)
@@ -56,7 +56,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12 col-md-2">
+                <div class="col-12 col-md-4">
                     <select name="sort" class="form-select">
                         <option value="newest" {{ $sort === 'newest' ? 'selected' : '' }}>Mới nhất</option>
                         <option value="oldest" {{ $sort === 'oldest' ? 'selected' : '' }}>Cũ nhất</option>
@@ -80,7 +80,8 @@
                         <div class="post-entry">
                             <a href="{{ url('/gemlock/blog/' . $post->slug) }}" class="post-thumbnail">
                                 <img
-                                    src="{{ $post->thumbnailMedia?->thumbnail_url ?? asset('furni/images/post-1.jpg') }}"
+                                    src="{{ $post->thumbnailMedia?->thumbnail_url ?? asset('image/no-image.jpg') }}"
+                                    onerror="this.onerror=null;this.src='{{ asset('image/no-image.jpg') }}';"
                                     alt="{{ $post->title }}"
                                     class="img-fluid"
                                 >
@@ -90,7 +91,7 @@
                                 <p class="mb-2">{{ $post->excerpt }}</p>
                                 <div class="meta">
                                     <span>by <a href="#">{{ $post->author_name }}</a></span>
-                                    <span>on <a href="#">{{ optional($post->published_at)->format('M d, Y') }}</a></span>
+                                    <span>ngày <a href="#">{{ optional($post->published_at)->format('d/m/Y') }}</a></span>
                                 </div>
                             </div>
                         </div>

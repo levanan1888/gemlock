@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\BlogCategory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class BlogCategorySeeder extends Seeder
 {
@@ -28,9 +29,14 @@ class BlogCategorySeeder extends Seeder
         ];
 
         foreach ($categories as $data) {
+            $slug = Str::slug($data['name']);
+
             BlogCategory::updateOrCreate(
-                ['name' => $data['name']],
-                $data,
+                ['slug' => $slug],
+                [
+                    ...$data,
+                    'slug' => $slug,
+                ],
             );
         }
     }

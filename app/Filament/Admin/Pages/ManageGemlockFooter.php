@@ -4,19 +4,16 @@ namespace App\Filament\Admin\Pages;
 
 use App\Models\ContentItem;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Schemas\Schema;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Grid;
-use Filament\Notifications\Notification;
-use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
 class ManageGemlockFooter extends Page implements HasForms
@@ -41,53 +38,199 @@ class ManageGemlockFooter extends Page implements HasForms
     public static function canAccess(): bool
     {
         $user = auth()->user();
+
         return $user && ($user->isAdmin() || $user->isGemlockAdmin());
     }
 
     public ?array $data = [];
 
+    private const FOOTER_FIELDS = [
+        'footer_description_gemlock' => [
+            'label' => 'Mô tả footer',
+            'default' => 'Perfect House Việt Nam - Kết nối tương lai. Chuyên cung cấp giải pháp Smart Home và Năng lượng sạch.',
+            'type' => 'text',
+            'order' => 1,
+        ],
+        'footer_social_title_gemlock' => [
+            'label' => 'Liên kết mạng xã hội',
+            'default' => 'Liên kết mạng xã hội',
+            'type' => 'text',
+            'order' => 2,
+        ],
+        'footer_company_title_gemlock' => [
+            'label' => 'Tiêu đề cột Công ty',
+            'default' => 'Công ty',
+            'type' => 'text',
+            'order' => 6,
+        ],
+        'footer_more_title_gemlock' => [
+            'label' => 'Tiêu đề cột Thêm',
+            'default' => 'Thêm',
+            'type' => 'text',
+            'order' => 7,
+        ],
+        'footer_policy_title_gemlock' => [
+            'label' => 'Tiêu đề cột Chính sách',
+            'default' => 'Chính sách & Pháp lý',
+            'type' => 'text',
+            'order' => 8,
+        ],
+        'footer_logo_gemlock' => [
+            'label' => 'Logo',
+            'default' => 'image/Logo Tách Nền.png',
+            'type' => 'image',
+            'order' => 9,
+        ],
+        'footer_copyright_gemlock' => [
+            'label' => 'Copyright',
+            'default' => 'Copyright © 2025 Perfect House Việt Nam.',
+            'type' => 'text',
+            'order' => 10,
+        ],
+    ];
+
+    private const FOOTER_SOCIAL_ITEMS_KEY = 'footer_social_items_gemlock';
+
+    private const FOOTER_COMPANY_ITEMS_KEY = 'footer_company_items_gemlock';
+
+    private const FOOTER_MORE_ITEMS_KEY = 'footer_more_items_gemlock';
+
+    private const FOOTER_POLICY_ITEMS_KEY = 'footer_policy_items_gemlock';
+
     public function mount(): void
     {
+        $this->ensureFooterKeys();
         $this->loadContent();
+    }
+
+    private function ensureFooterKeys(): void
+    {
+        foreach (self::FOOTER_FIELDS as $key => $config) {
+            $item = ContentItem::firstOrCreate(
+                ['key' => $key],
+                [
+                    'page_type' => 'gemlock',
+                    'section' => 'footer',
+                    'label' => $config['label'],
+                    'type' => $config['type'],
+                    'value' => $config['default'],
+                    'order' => $config['order'],
+                    'is_active' => true,
+                ],
+            );
+
+            $item->update([
+                'page_type' => 'gemlock',
+                'section' => 'footer',
+                'label' => $config['label'],
+                'type' => $config['type'],
+                'order' => $config['order'],
+            ]);
+        }
+
+        $this->ensureJsonKey(
+            self::FOOTER_SOCIAL_ITEMS_KEY,
+            'Danh sách mạng xã hội',
+            [
+                ['label' => 'Facebook', 'url' => 'https://facebook.com/', 'icon' => 'bi bi-facebook'],
+                ['label' => 'Youtube', 'url' => 'https://youtube.com/', 'icon' => 'bi bi-youtube'],
+                ['label' => 'Zalo', 'url' => 'https://zalo.me/', 'icon' => 'bi bi-chat-dots-fill'],
+            ],
+            19,
+        );
+
+        $this->ensureJsonKey(
+            self::FOOTER_COMPANY_ITEMS_KEY,
+            'Danh sách item cột Công ty',
+            [
+                ['label' => 'Trang chủ', 'url' => '/'],
+                ['label' => 'Giới thiệu', 'url' => '/about'],
+                ['label' => 'Tin tức', 'url' => '/blog'],
+            ],
+            20,
+        );
+
+        $this->ensureJsonKey(
+            self::FOOTER_MORE_ITEMS_KEY,
+            'Danh sách item cột Thêm',
+            [
+                ['label' => 'Cảm nhận', 'url' => '#'],
+                ['label' => 'Liên hệ', 'url' => '/contact'],
+                ['label' => 'Giấy phép', 'url' => '#'],
+            ],
+            21,
+        );
+
+        $this->ensureJsonKey(
+            self::FOOTER_POLICY_ITEMS_KEY,
+            'Danh sách item cột Chính sách',
+            [
+                ['label' => 'Chính sách bảo mật', 'url' => '#'],
+                ['label' => 'Điều khoản sử dụng', 'url' => '#'],
+            ],
+            22,
+        );
+    }
+
+    private function ensureJsonKey(string $key, string $label, array $defaultValue, int $order): void
+    {
+        $item = ContentItem::firstOrCreate(
+            ['key' => $key],
+            [
+                'page_type' => 'gemlock',
+                'section' => 'footer',
+                'label' => $label,
+                'type' => 'json',
+                'value' => json_encode($defaultValue, JSON_UNESCAPED_UNICODE),
+                'order' => $order,
+                'is_active' => true,
+            ],
+        );
+
+        $item->update([
+            'page_type' => 'gemlock',
+            'section' => 'footer',
+            'label' => $label,
+            'type' => 'json',
+            'order' => $order,
+        ]);
     }
 
     public function loadContent(): void
     {
-        $items = ContentItem::where('page_type', 'gemlock')
+        $jsonKeys = [
+            self::FOOTER_SOCIAL_ITEMS_KEY,
+            self::FOOTER_COMPANY_ITEMS_KEY,
+            self::FOOTER_MORE_ITEMS_KEY,
+            self::FOOTER_POLICY_ITEMS_KEY,
+        ];
+
+        $items = ContentItem::query()
+            ->where('page_type', 'gemlock')
             ->where('section', 'footer')
-            ->get();
+            ->whereIn('key', [...array_keys(self::FOOTER_FIELDS), ...$jsonKeys])
+            ->get()
+            ->keyBy('key');
 
-        $formattedData = [];
-        
-        // 1. Thông tin công ty
-        $formattedData['company'] = [
-            'name' => $items->where('key', 'footer_company_name')->first()?->value ?? '',
-            'name_active' => (bool) ($items->where('key', 'footer_company_name')->first()?->is_active ?? true),
-            'tax_info' => $items->where('key', 'footer_tax_info')->first()?->value ?? '',
-            'tax_info_active' => (bool) ($items->where('key', 'footer_tax_info')->first()?->is_active ?? true),
-            'about_text' => $items->where('key', 'footer_about_text')->first()?->value ?? '',
-            'about_text_active' => (bool) ($items->where('key', 'footer_about_text')->first()?->is_active ?? true),
-            'bct_logo' => $items->where('key', 'footer_bct_logo')->first()?->value ?? '',
-            'bct_logo_active' => (bool) ($items->where('key', 'footer_bct_logo')->first()?->is_active ?? true),
-        ];
+        $decode = function (?string $value): array {
+            $data = json_decode($value ?? '[]', true);
 
-        // 2. Thông tin liên hệ đa chi nhánh (Repeater)
-        $branchItems = $items->where('key', 'footer_branches')->first();
-        $formattedData['branches'] = $branchItems ? json_decode($branchItems->value, true) : [];
+            return is_array($data) ? $data : [];
+        };
 
-        // 3. Chính sách (Repeater)
-        $policyItems = $items->where('key', 'footer_policies')->first();
-        $formattedData['policies'] = $policyItems ? json_decode($policyItems->value, true) : [];
-
-        // 4. Bản đồ & Khác
-        $formattedData['other'] = [
-            'map_iframe' => $items->where('key', 'footer_map_iframe')->first()?->value ?? '',
-            'map_active' => (bool) ($items->where('key', 'footer_map_iframe')->first()?->is_active ?? true),
-            'copyright' => $items->where('key', 'footer_copyright')->first()?->value ?? '',
-            'copyright_active' => (bool) ($items->where('key', 'footer_copyright')->first()?->is_active ?? true),
-        ];
-
-        $this->form->fill($formattedData);
+        $this->form->fill([
+            'footer_description_gemlock' => $items['footer_description_gemlock']->value ?? self::FOOTER_FIELDS['footer_description_gemlock']['default'],
+            'footer_social_title_gemlock' => $items['footer_social_title_gemlock']->value ?? self::FOOTER_FIELDS['footer_social_title_gemlock']['default'],
+            'footer_company_title_gemlock' => $items['footer_company_title_gemlock']->value ?? self::FOOTER_FIELDS['footer_company_title_gemlock']['default'],
+            'footer_more_title_gemlock' => $items['footer_more_title_gemlock']->value ?? self::FOOTER_FIELDS['footer_more_title_gemlock']['default'],
+            'footer_policy_title_gemlock' => $items['footer_policy_title_gemlock']->value ?? self::FOOTER_FIELDS['footer_policy_title_gemlock']['default'],
+            'footer_logo_gemlock' => $items['footer_logo_gemlock']->value ?? self::FOOTER_FIELDS['footer_logo_gemlock']['default'],
+            'footer_copyright_gemlock' => $items['footer_copyright_gemlock']->value ?? self::FOOTER_FIELDS['footer_copyright_gemlock']['default'],
+            'footer_social_items_gemlock' => $decode($items[self::FOOTER_SOCIAL_ITEMS_KEY]->value ?? null),
+            'footer_company_items_gemlock' => $decode($items[self::FOOTER_COMPANY_ITEMS_KEY]->value ?? null),
+            'footer_more_items_gemlock' => $decode($items[self::FOOTER_MORE_ITEMS_KEY]->value ?? null),
+            'footer_policy_items_gemlock' => $decode($items[self::FOOTER_POLICY_ITEMS_KEY]->value ?? null),
+        ]);
     }
 
     public function form(Schema $schema): Schema
@@ -96,96 +239,109 @@ class ManageGemlockFooter extends Page implements HasForms
             ->components([
                 Tabs::make('footer_tabs')
                     ->tabs([
-                        Tab::make('company_tab')
-                            ->label('Thông tin công ty')
+                        Tab::make('thong_so')
+                            ->label('Thông số chung')
                             ->schema([
-                                Section::make('Thông tin chung')
+                                Section::make('Thông số footer cần cấu hình')
                                     ->schema([
-                                        Grid::make(2)->schema([
-                                            TextInput::make('company.name')
-                                                ->label('Tên công ty')
-                                                ->placeholder('CÔNG TY CỔ PHẦN PERFECT HOUSE VIỆT NAM'),
-                                            Toggle::make('company.name_active')->label('Bật')->inline(false),
-                                        ]),
-                                        Grid::make(2)->schema([
-                                            Textarea::make('company.tax_info')
-                                                ->label('Thông tin Mã số thuế / Ngày cấp')
-                                                ->rows(3),
-                                            Toggle::make('company.tax_info_active')->label('Bật')->inline(false),
-                                        ]),
-                                        Grid::make(2)->schema([
-                                            Textarea::make('company.about_text')
-                                                ->label('Mô tả ngắn về công ty')
-                                                ->rows(5),
-                                            Toggle::make('company.about_text_active')->label('Bật')->inline(false),
-                                        ]),
-                                    ]),
-                                Section::make('Chứng nhận Bộ Công Thương')
-                                    ->schema([
-                                        Grid::make(2)->schema([
-                                            FileUpload::make('company.bct_logo')
-                                                ->label('Logo Đã Thông Báo BCT')
-                                                ->image()
-                                                ->directory('content'),
-                                            Toggle::make('company.bct_logo_active')->label('Bật')->inline(false),
-                                        ]),
+                                        TextInput::make('footer_description_gemlock')
+                                            ->label('Mô tả')
+                                            ->required(),
+                                        TextInput::make('footer_social_title_gemlock')
+                                            ->label('Tiêu đề mạng xã hội')
+                                            ->required(),
+                                        TextInput::make('footer_company_title_gemlock')
+                                            ->label('Tiêu đề cột Công ty')
+                                            ->required(),
+                                        TextInput::make('footer_more_title_gemlock')
+                                            ->label('Tiêu đề cột Thêm')
+                                            ->required(),
+                                        TextInput::make('footer_policy_title_gemlock')
+                                            ->label('Tiêu đề cột Chính sách')
+                                            ->required(),
+                                        FileUpload::make('footer_logo_gemlock')
+                                            ->label('Logo')
+                                            ->image()
+                                            ->directory('content/footer')
+                                            ->disk('public')
+                                            ->visibility('public')
+                                            ->required(),
+                                        TextInput::make('footer_copyright_gemlock')
+                                            ->label('Copyright')
+                                            ->required(),
                                     ]),
                             ]),
-                        Tab::make('branches_tab')
-                            ->label('Hệ thống chi nhánh')
+                        Tab::make('mang_xa_hoi')
+                            ->label('Mạng xã hội')
                             ->schema([
-                                Section::make('Thông tin liên hệ & Chi nhánh')
+                                Section::make('Danh sách mạng xã hội')
+                                    ->collapsible()
                                     ->schema([
-                                        Repeater::make('branches')
-                                            ->label('Danh sách chi nhánh / văn phòng')
+                                        Repeater::make('footer_social_items_gemlock')
+                                            ->label('Items mạng xã hội')
                                             ->schema([
-                                                TextInput::make('label')->label('Tên chi nhánh (VD: Trụ sở chính, VP Hà Nội...)')->required(),
-                                                TextInput::make('address')->label('Địa chỉ')->required(),
-                                                TextInput::make('phone')->label('Số điện thoại'),
-                                                TextInput::make('email')->label('Email'),
-                                                Toggle::make('is_active')->label('Hiển thị')->default(true),
+                                                TextInput::make('label')->label('Tên hiển thị')->required(),
+                                                TextInput::make('url')->label('URL')->required(),
+                                                TextInput::make('icon')->label('Class icon (VD: bi bi-facebook)'),
                                             ])
+                                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
                                             ->collapsible()
-                                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null),
+                                            ->collapsed()
+                                            ->defaultItems(0),
                                     ]),
                             ]),
-                        Tab::make('policies_tab')
-                            ->label('Chính sách')
+                        Tab::make('cong_ty')
+                            ->label('Menu Công ty')
                             ->schema([
-                                Section::make('Liên kết chính sách')
+                                Section::make('Danh sách item cột Công ty')
+                                    ->collapsible()
                                     ->schema([
-                                        Repeater::make('policies')
-                                            ->label('Danh sách chính sách')
+                                        Repeater::make('footer_company_items_gemlock')
+                                            ->label('Items Công ty')
                                             ->schema([
-                                                TextInput::make('label')->label('Tên chính sách')->required(),
-                                                TextInput::make('url')->label('Đường dẫn (URL)')->required(),
-                                                Toggle::make('is_active')->label('Hiển thị')->default(true),
+                                                TextInput::make('label')->label('Tên item')->required(),
+                                                TextInput::make('url')->label('URL')->required(),
                                             ])
+                                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
                                             ->collapsible()
-                                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null),
+                                            ->collapsed()
+                                            ->defaultItems(0),
                                     ]),
                             ]),
-                        Tab::make('other_tab')
-                            ->label('Bản đồ & Khác')
+                        Tab::make('them')
+                            ->label('Menu Thêm')
                             ->schema([
-                                Section::make('Bản đồ (Google Maps)')
+                                Section::make('Danh sách item cột Thêm')
+                                    ->collapsible()
                                     ->schema([
-                                        Grid::make(2)->schema([
-                                            Textarea::make('other.map_iframe')
-                                                ->label('Iframe Google Maps')
-                                                ->helperText('Dán mã nhúng <iframe> từ Google Maps vào đây')
-                                                ->rows(5),
-                                            Toggle::make('other.map_active')->label('Bật')->inline(false),
-                                        ]),
+                                        Repeater::make('footer_more_items_gemlock')
+                                            ->label('Items Thêm')
+                                            ->schema([
+                                                TextInput::make('label')->label('Tên item')->required(),
+                                                TextInput::make('url')->label('URL')->required(),
+                                            ])
+                                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
+                                            ->collapsible()
+                                            ->collapsed()
+                                            ->defaultItems(0),
                                     ]),
-                                Section::make('Chân trang')
+                            ]),
+                        Tab::make('chinh_sach')
+                            ->label('Menu Chính sách')
+                            ->schema([
+                                Section::make('Danh sách item cột Chính sách')
+                                    ->collapsible()
                                     ->schema([
-                                        Grid::make(2)->schema([
-                                            TextInput::make('other.copyright')
-                                                ->label('Copyright text')
-                                                ->placeholder('© Copyright 2015. All rights reserved...'),
-                                            Toggle::make('other.copyright_active')->label('Bật')->inline(false),
-                                        ]),
+                                        Repeater::make('footer_policy_items_gemlock')
+                                            ->label('Items Chính sách')
+                                            ->schema([
+                                                TextInput::make('label')->label('Tên item')->required(),
+                                                TextInput::make('url')->label('URL')->required(),
+                                            ])
+                                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
+                                            ->collapsible()
+                                            ->collapsed()
+                                            ->defaultItems(0),
                                     ]),
                             ]),
                     ])
@@ -198,56 +354,69 @@ class ManageGemlockFooter extends Page implements HasForms
     {
         $data = $this->form->getState();
 
-        // Lưu các trường đơn lẻ
-        $mappings = [
-            'footer_company_name' => ['value' => $data['company']['name'], 'is_active' => $data['company']['name_active'], 'type' => 'text'],
-            'footer_tax_info' => ['value' => $data['company']['tax_info'], 'is_active' => $data['company']['tax_info_active'], 'type' => 'html'],
-            'footer_about_text' => ['value' => $data['company']['about_text'], 'is_active' => $data['company']['about_text_active'], 'type' => 'html'],
-            'footer_bct_logo' => ['value' => $data['company']['bct_logo'], 'is_active' => $data['company']['bct_logo_active'], 'type' => 'image'],
-            'footer_map_iframe' => ['value' => $data['other']['map_iframe'], 'is_active' => $data['other']['map_active'], 'type' => 'html'],
-            'footer_copyright' => ['value' => $data['other']['copyright'], 'is_active' => $data['other']['copyright_active'], 'type' => 'text'],
-        ];
-
-        foreach ($mappings as $key => $values) {
+        foreach (self::FOOTER_FIELDS as $key => $config) {
             ContentItem::updateOrCreate(
-                ['page_type' => 'gemlock', 'key' => $key],
+                ['key' => $key],
                 [
+                    'page_type' => 'gemlock',
                     'section' => 'footer',
-                    'type' => $values['type'],
-                    'label' => ucfirst(str_replace(['footer_', '_'], ['', ' '], $key)),
-                    'value' => $values['value'] ?? '',
-                    'is_active' => $values['is_active'],
-                ]
+                    'label' => $config['label'],
+                    'type' => $config['type'],
+                    'value' => $data[$key] ?? $config['default'],
+                    'order' => $config['order'],
+                    'is_active' => true,
+                ],
             );
         }
 
-        // Lưu các trường danh sách (JSON)
-        ContentItem::updateOrCreate(
-            ['page_type' => 'gemlock', 'key' => 'footer_branches'],
-            [
-                'section' => 'footer',
-                'type' => 'json',
-                'label' => 'Hệ thống chi nhánh',
-                'value' => json_encode($data['branches'] ?? []),
-                'is_active' => true,
-            ]
+        $this->saveJsonItems(
+            self::FOOTER_SOCIAL_ITEMS_KEY,
+            'Danh sách mạng xã hội',
+            $data['footer_social_items_gemlock'] ?? [],
+            19,
         );
 
-        ContentItem::updateOrCreate(
-            ['page_type' => 'gemlock', 'key' => 'footer_policies'],
-            [
-                'section' => 'footer',
-                'type' => 'json',
-                'label' => 'Danh sách chính sách',
-                'value' => json_encode($data['policies'] ?? []),
-                'is_active' => true,
-            ]
+        $this->saveJsonItems(
+            self::FOOTER_COMPANY_ITEMS_KEY,
+            'Danh sách item cột Công ty',
+            $data['footer_company_items_gemlock'] ?? [],
+            20,
+        );
+
+        $this->saveJsonItems(
+            self::FOOTER_MORE_ITEMS_KEY,
+            'Danh sách item cột Thêm',
+            $data['footer_more_items_gemlock'] ?? [],
+            21,
+        );
+
+        $this->saveJsonItems(
+            self::FOOTER_POLICY_ITEMS_KEY,
+            'Danh sách item cột Chính sách',
+            $data['footer_policy_items_gemlock'] ?? [],
+            22,
         );
 
         Notification::make()
             ->title('Đã lưu cấu hình Footer thành công!')
             ->success()
             ->send();
+    }
+
+    private function saveJsonItems(string $key, string $label, array $items, int $order): void
+    {
+        ContentItem::updateOrCreate(
+            ['key' => $key],
+            [
+                'page_type' => 'gemlock',
+                'section' => 'footer',
+                'label' => $label,
+                'type' => 'json',
+                'value' => json_encode($items, JSON_UNESCAPED_UNICODE),
+                'order' => $order,
+                'is_active' => true,
+            ],
+        );
     }
 
     protected function getFormActions(): array

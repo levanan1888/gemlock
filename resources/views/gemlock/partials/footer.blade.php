@@ -1,19 +1,33 @@
 @php
-    use App\Helpers\ContentHelper;
-    use App\Models\MenuItem;
+    $pageType = 'gemlock';
 
-    $isGemlock = request()->is('gemlock') || request()->is('gemlock/*') || request()->is('product') || request()->is('product/*') || request()->is('product-detail/*');
-    $pageType = $isGemlock ? 'gemlock' : 'perfect_house';
+    $footerDescription = \App\Helpers\ContentHelper::text('footer_description_'.$pageType, 'Perfect House Việt Nam - Kết nối tương lai. Chuyên cung cấp giải pháp Smart Home và Năng lượng sạch.', $pageType);
+    $footerSocialTitle = \App\Helpers\ContentHelper::text('footer_social_title_'.$pageType, 'Liên kết mạng xã hội', $pageType);
+    $footerFacebook = \App\Helpers\ContentHelper::link('footer_social_facebook_'.$pageType, 'https://facebook.com/', $pageType);
+    $footerYoutube = \App\Helpers\ContentHelper::link('footer_social_youtube_'.$pageType, 'https://youtube.com/', $pageType);
+    $footerZalo = \App\Helpers\ContentHelper::link('footer_social_zalo_'.$pageType, 'https://zalo.me/', $pageType);
+    $footerCopyright = \App\Helpers\ContentHelper::text('footer_copyright_'.$pageType, 'Copyright © 2025 Perfect House Việt Nam.', $pageType);
+    $footerLogo = \App\Helpers\ContentHelper::image('footer_logo_'.$pageType, 'image/Logo Tách Nền.png', $pageType);
 
-    $footerDescription = ContentHelper::text('footer_description_'.$pageType, 'Perfect House Việt Nam - Kết nối tương lai. Chuyên cung cấp giải pháp Smart Home và Năng lượng sạch.');
-    $footerSocialTitle = ContentHelper::text('footer_social_title_'.$pageType, 'Liên kết mạng xã hội');
-    $footerFacebook = ContentHelper::link('footer_social_facebook_'.$pageType, 'https://facebook.com/');
-    $footerYoutube = ContentHelper::link('footer_social_youtube_'.$pageType, 'https://youtube.com/');
-    $footerZalo = ContentHelper::link('footer_social_zalo_'.$pageType, 'https://zalo.me/');
-    $footerCopyright = ContentHelper::text('footer_copyright_'.$pageType, 'Copyright © 2025 Perfect House Việt Nam.');
-    $footerLogo = ContentHelper::image('footer_logo_'.$pageType, 'image/Logo Tách Nền.png');
+    $footerCompanyTitle = \App\Helpers\ContentHelper::text('footer_company_title_'.$pageType, 'Công ty', $pageType);
+    $footerMoreTitle = \App\Helpers\ContentHelper::text('footer_more_title_'.$pageType, 'Thêm', $pageType);
+    $footerPolicyTitle = \App\Helpers\ContentHelper::text('footer_policy_title_'.$pageType, 'Chính sách & Pháp lý', $pageType);
 
-    $footerMenus = MenuItem::getMenu($pageType, 'footer');
+    $decode = function (string $key) use ($pageType): array {
+        $data = json_decode(\App\Helpers\ContentHelper::text($key.'_'.$pageType, '[]', $pageType), true);
+
+        return is_array($data) ? $data : [];
+    };
+
+    $companyItems = $decode('footer_company_items');
+    $moreItems = $decode('footer_more_items');
+    $policyItems = $decode('footer_policy_items');
+
+    $footerLinks = [
+        ['group_title' => $footerCompanyTitle, 'links' => $companyItems],
+        ['group_title' => $footerMoreTitle, 'links' => $moreItems],
+        ['group_title' => $footerPolicyTitle, 'links' => $policyItems],
+    ];
 @endphp
 <section class="footer">
     <div class="w-layout-blockcontainer container w-container">
@@ -42,13 +56,13 @@
                 </div>
             </div>
             <div class="footer-links">
-                @foreach($footerMenus as $parentMenu)
+                @foreach($footerLinks as $group)
                     <div class="footer-link-column">
-                        <p class="text-18-bold">{{ $parentMenu['label'] }}</p>
+                        <p class="text-18-bold">{{ $group['group_title'] ?? '' }}</p>
                         <div class="footer-link-wrapper">
-                            @foreach($parentMenu['children'] ?? [] as $childMenu)
-                                <a href="{{ $childMenu['url'] }}" class="footer-link w-inline-block" {{ $childMenu['open_in_new_tab'] ? 'target="_blank"' : '' }}>
-                                    <p>{{ $childMenu['label'] }}</p>
+                            @foreach(($group['links'] ?? []) as $link)
+                                <a href="{{ $link['url'] ?? '#' }}" class="footer-link w-inline-block" {{ !empty($link['open_in_new_tab']) ? 'target="_blank"' : '' }}>
+                                    <p>{{ $link['label'] ?? '' }}</p>
                                 </a>
                             @endforeach
                         </div>
@@ -66,4 +80,3 @@
         </div>
     </div>
 </section>
-

@@ -9,11 +9,8 @@ class CreateGemlockFooter extends CreateRecord
 {
     protected static string $resource = GemlockFooterResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
+    public static function canAccess(array $parameters = []): bool
     {
-        $data['page_type'] = 'gemlock';
-        $data['section'] = 'footer';
-
-        return $data;
+        return false;
     }
 }

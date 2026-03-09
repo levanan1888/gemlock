@@ -2,8 +2,6 @@
 
 namespace App\Filament\Admin\Resources\GemlockFooters\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -15,37 +13,36 @@ class GemlockFootersTable
     {
         return $table
             ->columns([
-                TextColumn::make('key')
-                    ->label('Key')
-                    ->searchable()
+                TextColumn::make('order')
+                    ->label('STT')
                     ->sortable(),
                 TextColumn::make('label')
-                    ->label('Nhãn')
-                    ->searchable(),
+                    ->label('Nội dung')
+                    ->searchable()
+                    ->weight('medium'),
+                TextColumn::make('key')
+                    ->label('Mã cấu hình')
+                    ->searchable()
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('type')
                     ->label('Loại')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('value')
                     ->label('Giá trị')
-                    ->limit(50)
+                    ->limit(80)
+                    ->wrap()
                     ->searchable(),
                 IconColumn::make('is_active')
-                    ->label('Kích hoạt')
+                    ->label('Hiển thị')
                     ->boolean()
-                    ->sortable(),
-                TextColumn::make('order')
-                    ->label('Thứ tự')
                     ->sortable(),
             ])
             ->defaultSort('order')
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()->label('Chỉnh sửa'),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->toolbarActions([]);
     }
 }

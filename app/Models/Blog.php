@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-
-class Blog extends Model implements HasMedia
+class Blog extends Model
 {
-    use SoftDeletes, InteractsWithMedia;
+    use SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -68,10 +65,5 @@ class Blog extends Model implements HasMedia
             ->where('published_at', '<=', now());
     }
 
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('thumbnail')
-            ->singleFile();
-    }
 }
 
