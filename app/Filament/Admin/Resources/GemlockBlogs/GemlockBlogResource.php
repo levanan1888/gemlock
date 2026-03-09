@@ -16,6 +16,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -85,11 +86,11 @@ class GemlockBlogResource extends Resource
             Toggle::make('is_featured')
                 ->label('Nổi bật')
                 ->default(false),
-            CuratorPicker::make('thumbnail')
+            SpatieMediaLibraryFileUpload::make('thumbnail')
+                ->collection('thumbnail')
                 ->label('Ảnh đại diện')
-                ->buttonLabel('Chọn hoặc tải ảnh')
-                ->constrained()
-                ->directory('blogs'),
+                ->image()
+                ->imageEditor(),
             RichEditor::make('content')
                 ->label('Nội dung')
                 ->required()
