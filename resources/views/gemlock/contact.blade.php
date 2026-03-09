@@ -13,6 +13,103 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('furni/css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('furni/css/style.css') }}" rel="stylesheet">
+
+    <style>
+        .contact-page .untree_co-section {
+            padding: 3rem 0 4rem !important;
+        }
+
+        .contact-page .block {
+            background: #fff;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(212, 168, 0, 0.18);
+        }
+
+        .contact-page .service.horizontal {
+            background: #fffef7;
+            border: 1px solid rgba(212, 168, 0, 0.25);
+            border-radius: 16px;
+            padding: 14px;
+            min-height: 105px;
+        }
+
+        .contact-page .service .service-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0 !important;
+            background: #2f6b54;
+        }
+
+        .contact-page .service .service-icon i {
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .contact-page .service .service-contents p {
+            margin: 0;
+            color: #1f2937;
+            line-height: 1.45;
+        }
+
+        .contact-page label.text-black {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #111827 !important;
+        }
+
+        .contact-page .form-control {
+            min-height: 50px;
+            border-radius: 12px;
+            border: 1px solid #d6dbe1;
+            box-shadow: none;
+        }
+
+        .contact-page textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-page .form-control:focus {
+            border-color: var(--brand-yellow, #e3bf35);
+            box-shadow: 0 0 0 4px rgba(227, 191, 53, 0.18);
+        }
+
+        .contact-page .btn.btn-primary-hover-outline {
+            background: var(--brand-yellow, #e3bf35);
+            color: #1a1000;
+            border-color: var(--brand-yellow, #e3bf35);
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 12px 28px;
+        }
+
+        .contact-page .btn.btn-primary-hover-outline:hover {
+            background: var(--brand-yellow-dark, #c4a12d);
+            border-color: var(--brand-yellow-dark, #c4a12d);
+            color: #1a1000;
+        }
+
+        @media (max-width: 768px) {
+            .contact-page .block {
+                padding: 18px;
+                border-radius: 16px;
+            }
+
+            .contact-page .service.horizontal {
+                margin-bottom: 12px;
+            }
+
+            .contact-page form .col-6 {
+                width: 100%;
+            }
+        }
+    </style>
 @endpush
 
 @section('page_content')

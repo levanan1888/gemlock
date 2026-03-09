@@ -13,37 +13,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('furni/css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('furni/css/style.css') }}" rel="stylesheet">
-
-    <style>
-        .gemlock-about-page .hero {
-            padding: 64px 0;
-        }
-
-        .gemlock-about-page .hero h1 {
-            font-weight: 800;
-        }
-
-        .gemlock-about-page .hero .btn {
-            border-radius: 999px;
-            font-weight: 700;
-        }
-
-        .gemlock-about-page .hero .btn.btn-secondary {
-            background: var(--brand-yellow, #e3bf35);
-            border-color: var(--brand-yellow, #e3bf35);
-            color: var(--brand-text-on-yellow, #1a1000);
-        }
-
-        .gemlock-about-page .hero .btn.btn-white-outline {
-            border-color: rgba(26, 16, 0, 0.25);
-            color: var(--brand-text-on-yellow, #1a1000);
-        }
-    </style>
+    <link href="{{ asset('css/gemlock-about.css') }}" rel="stylesheet">
 @endpush
 
 @section('page_content')
-    <!-- Demo layout based on furni-1.0.0/about.html -->
-    <!-- Start Hero Section -->
     <div class="hero">
         <div class="container">
             <div class="row justify-content-between align-items-center">
@@ -67,9 +40,7 @@
             </div>
         </div>
     </div>
-    <!-- End Hero Section -->
 
-    <!-- Start Why Choose Us Section -->
     <div class="why-choose-section">
         <div class="container">
             <div class="row justify-content-between align-items-center">
@@ -130,9 +101,7 @@
             </div>
         </div>
     </div>
-    <!-- End Why Choose Us Section -->
 
-    <!-- Start Team Section -->
     <div class="untree_co-section">
         <div class="container">
             <div class="row mb-5">
@@ -172,9 +141,7 @@
             </div>
         </div>
     </div>
-    <!-- End Team Section -->
 
-    <!-- Start Testimonial Slider -->
     <div class="testimonial-section before-footer-section">
         <div class="container">
             <div class="row">
@@ -248,18 +215,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- /.testimonial-slider -->
-                    </div><!-- /.testimonial-slider-wrap -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Testimonial Slider -->
 @endsection
 
 @push('gemlock_scripts')
     <script src="{{ asset('furni/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('furni/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('furni/js/custom.js') }}"></script>
+    <script src="{{ asset('js/gemlock-about.js') }}"></script>
 @endpush
-

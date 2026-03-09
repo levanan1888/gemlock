@@ -1,0 +1,101 @@
+.gemlock-about-page .hero {
+    padding: 56px 0 48px;
+}
+
+.gemlock-about-page .hero h1 {
+    font-weight: 800;
+}
+
+.gemlock-about-page .hero .btn {
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.gemlock-about-page .hero .btn.btn-secondary {
+    background: var(--brand-yellow, #e3bf35);
+    border-color: var(--brand-yellow, #e3bf35);
+    color: var(--brand-text-on-yellow, #1a1000);
+}
+
+.gemlock-about-page .hero .btn.btn-white-outline {
+    border-color: rgba(26, 16, 0, 0.25);
+    color: var(--brand-text-on-yellow, #1a1000);
+}
+
+.gemlock-about-page .why-choose-section {
+    padding-top: 56px;
+    padding-bottom: 56px;
+}
+
+.gemlock-about-page .untree_co-section {
+    padding-top: 56px;
+    padding-bottom: 24px;
+}
+
+.gemlock-about-page .testimonial-section {
+    padding-top: 24px;
+    padding-bottom: 72px;
+}
+
+.gemlock-about-page .feature {
+    background: #fff;
+    border: 1px solid rgba(227, 191, 53, 0.24);
+    border-radius: 14px;
+    padding: 14px;
+    height: 100%;
+}
+
+.gemlock-about-page .feature h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.gemlock-about-page .img-wrap img {
+    border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.gemlock-about-page .untree_co-section .col-lg-3 > img {
+    border-radius: 14px;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    margin-bottom: 14px !important;
+}
+
+.gemlock-about-page .untree_co-section h3 {
+    margin-bottom: 4px;
+}
+
+.gemlock-about-page .untree_co-section .position {
+    margin-bottom: 8px !important;
+}
+
+.gemlock-about-page .untree_co-section h3 a,
+.gemlock-about-page .untree_co-section h3 a:hover {
+    text-decoration: none !important;
+    color: #1f2937;
+}
+
+.gemlock-about-page .testimonial-section .col-lg-7.mx-auto.text-center {
+    margin-bottom: 20px;
+}
+
+.gemlock-about-page .testimonial-slider-wrap {
+    background: #fffef7;
+    border: 1px solid rgba(227, 191, 53, 0.2);
+    border-radius: 18px;
+    padding: 24px 14px;
+}
+
+@media (max-width: 768px) {
+    .gemlock-about-page .hero {
+        padding: 42px 0 34px;
+    }
+
+    .gemlock-about-page .why-choose-section,
+    .gemlock-about-page .untree_co-section,
+    .gemlock-about-page .testimonial-section {
+        padding-top: 42px;
+        padding-bottom: 42px;
+    }
+}
