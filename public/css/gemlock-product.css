@@ -79,6 +79,8 @@
     text-decoration: none;
     border: 1px solid transparent;
     transition: all 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
 }
 
 .btn-card-detail {
