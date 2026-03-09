@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Awcodes\Curator\CuratorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -41,6 +42,19 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
             ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->plugin(
+                CuratorPlugin::make()
+                ->label('Media')
+                ->pluralLabel('Media')
+                // ->navigationIcon(Heroicon::OutlinedPhoto)
+                ->navigationGroup('Gemlock')
+                ->navigationSort(3)
+                ->showBadge(true) 
+                ->registerNavigation(true)
+                ->curations(true)
+                ->fileSwap(true),  
+            )
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

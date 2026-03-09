@@ -22,6 +22,8 @@ class MediaResource extends Resource
 
     protected static ?string $navigationLabel = 'Thư viện ảnh';
 
+    protected static ?string $slug = 'thu-vien-anh';
+
     public static function getNavigationGroup(): ?string
     {
         return 'Quản lý nội dung';

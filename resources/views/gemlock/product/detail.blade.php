@@ -17,26 +17,47 @@
 @endpush
 
 @section('page_content')
-    <div class="hero hero-product">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="intro-excerpt">
-                        <h1>{{ $product['name'] }}</h1>
-                        <p class="mb-4">{{ $product['description'] ?? 'Giải pháp khóa thông minh Gemlock cho ngôi nhà của bạn.' }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 mb-5">
-                    <div class="product-detail-gallery text-center">
-                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid product-thumbnail"
-                             onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                    @php
+                        $galleryImages = collect($product['images'] ?? [])->filter()->values();
+                        if ($galleryImages->isEmpty() && !empty($product['image'])) {
+                            $galleryImages = collect([$product['image']]);
+                        }
+                    @endphp
+
+                    <div class="product-detail-gallery">
+                        <div class="product-main-image-wrap text-center">
+                            <img
+                                id="product-main-image"
+                                src="{{ $galleryImages->first() ?? asset('furni/images/product-1.png') }}"
+                                alt="{{ $product['name'] }}"
+                                class="img-fluid product-main-image"
+                                onerror="this.src='{{ asset('furni/images/product-1.png') }}'"
+                            >
+                        </div>
+
+                        @if($galleryImages->count() > 1)
+                            <div class="product-thumbs-wrap">
+                                @foreach($galleryImages as $index => $img)
+                                    <button
+                                        type="button"
+                                        class="product-thumb-btn {{ $index === 0 ? 'is-active' : '' }}"
+                                        data-image="{{ $img }}"
+                                        aria-label="Ảnh sản phẩm {{ $index + 1 }}"
+                                    >
+                                        <img
+                                            src="{{ $img }}"
+                                            alt="{{ $product['name'] }} - {{ $index + 1 }}"
+                                            class="product-thumb-image"
+                                            onerror="this.src='{{ asset('furni/images/product-1.png') }}'"
+                                        >
+                                    </button>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 mb-5">
@@ -88,23 +109,58 @@
             </div>
 
             @if (!empty($relatedProducts))
-                <div class="row mt-5">
-                    <div class="col-12">
-                        <h3 class="mb-4">Sản phẩm liên quan</h3>
-                    </div>
-                    @foreach ($relatedProducts as $related)
-                        @if ($related['slug'] !== $product['slug'])
-                            <div class="col-12 col-md-6 col-lg-3 mb-4">
-                                <a class="product-item" href="{{ route('product.detail', $related['slug']) }}">
-                                    <img src="{{ $related['image'] }}" class="img-fluid product-thumbnail"
-                                         onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
-                                    <h3 class="product-title">{{ $related['name'] }}</h3>
-                                    <strong class="product-price">{{ $related['price'] }}</strong>
-                                </a>
+                @php
+                    $filteredRelated = collect($relatedProducts)
+                        ->filter(fn($related) => $related['slug'] !== $product['slug'])
+                        ->values();
+                @endphp
+
+                @if($filteredRelated->isNotEmpty())
+                    <div class="related-carousel-section mt-5">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="mb-0">Sản phẩm liên quan</h3>
+                            <div class="related-carousel-nav">
+                                <button type="button" class="related-prev" aria-label="Trước">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="related-next" aria-label="Tiếp theo">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
                             </div>
-                        @endif
-                    @endforeach
-                </div>
+                        </div>
+
+                        <div class="related-carousel" id="related-carousel">
+                            <div class="related-track">
+                                @foreach ($filteredRelated as $related)
+                                    <div class="related-slide">
+                                        <div class="product-item">
+                                            <a href="{{ route('product.detail', $related['slug']) }}" class="product-card-image-link">
+                                                <img src="{{ $related['image'] }}" class="img-fluid product-thumbnail"
+                                                     onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                            </a>
+                                            <h3 class="product-title">{{ $related['name'] }}</h3>
+                                            <strong class="product-price">{{ $related['price'] }}</strong>
+
+                                            <div class="product-card-actions">
+                                                <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $related['slug']) }}">
+                                                    Chi tiết
+                                                </a>
+                                                <button type="button"
+                                                        class="btn-card-action btn-card-cart"
+                                                        data-name="{{ $related['name'] }}"
+                                                        data-price="{{ $related['price'] }}"
+                                                        data-image="{{ $related['image'] }}"
+                                                        onclick="addToCart(this);">
+                                                    Thêm giỏ hàng
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @endif
         </div>
     </div>

@@ -24,11 +24,20 @@
                     <p class="text-18-bold">{{ $footerSocialTitle }}</p>
                     <div class="social-icon-wrapper">
                         <a data-w-id="57013a19-828b-8803-241e-4822ac87382f"
-                            href="{{ $footerFacebook }}" target="_blank" class="social-icon w-inline-block">Facebook</a>
+                            href="{{ $footerFacebook }}" target="_blank" class="social-icon w-inline-block" aria-label="Facebook">
+                            <i class="bi bi-facebook"></i>
+                            <span>Facebook</span>
+                        </a>
                         <a data-w-id="57013a19-828b-8803-241e-4822ac873832" href="{{ $footerYoutube }}" target="_blank"
-                            class="social-icon w-inline-block">Youtube</a>
+                            class="social-icon w-inline-block" aria-label="Youtube">
+                            <i class="bi bi-youtube"></i>
+                            <span>Youtube</span>
+                        </a>
                         <a data-w-id="57013a19-828b-8803-241e-4822ac873835" href="{{ $footerZalo }}" target="_blank"
-                            class="social-icon w-inline-block">Zalo</a>
+                            class="social-icon w-inline-block" aria-label="Zalo">
+                            <i class="bi bi-chat-dots-fill"></i>
+                            <span>Zalo</span>
+                        </a>
                     </div>
                 </div>
             </div>

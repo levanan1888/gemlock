@@ -151,19 +151,28 @@
 
                         @foreach($paginatedProducts as $product)
                             <div class="col-12 col-md-6 col-lg-4 mb-5">
-                                <a class="product-item" href="{{ route('product.detail', $product['slug']) }}">
-                                    <img src="{{ $product['image'] }}" class="img-fluid product-thumbnail"
-                                         onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                <div class="product-item">
+                                    <a href="{{ route('product.detail', $product['slug']) }}" class="product-card-image-link">
+                                        <img src="{{ $product['image'] }}" class="img-fluid product-thumbnail"
+                                             onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                    </a>
                                     <h3 class="product-title">{{ $product['name'] }}</h3>
                                     <strong class="product-price">{{ $product['price'] }}</strong>
-                                    <span class="icon-cross add-to-cart-btn"
-                                          data-name="{{ $product['name'] }}"
-                                          data-price="{{ $product['price'] }}"
-                                          data-image="{{ $product['image'] }}"
-                                          onclick="event.preventDefault(); addToCart(this);">
-                                        <img src="{{ asset('furni/images/cross.svg') }}" class="img-fluid">
-                                    </span>
-                                </a>
+
+                                    <div class="product-card-actions">
+                                        <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $product['slug']) }}">
+                                            Chi tiết
+                                        </a>
+                                        <button type="button"
+                                                class="btn-card-action btn-card-cart"
+                                                data-name="{{ $product['name'] }}"
+                                                data-price="{{ $product['price'] }}"
+                                                data-image="{{ $product['image'] }}"
+                                                onclick="addToCart(this);">
+                                            Thêm giỏ hàng
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     </div>

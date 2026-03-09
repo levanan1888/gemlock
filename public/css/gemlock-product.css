@@ -37,12 +37,21 @@
     text-decoration: none;
     display: block;
     transition: .3s all ease;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #f1f1f1;
+    padding: 14px;
+    height: 100%;
 }
 
 .product-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-radius: 14px;
+}
+
+.product-card-image-link {
+    display: block;
 }
 
 .product-thumbnail {
@@ -50,6 +59,124 @@
     object-fit: contain;
     width: 100%;
     margin-bottom: 20px;
+}
+
+.product-card-actions {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.btn-card-detail {
+    background: #fff;
+    color: #1f2937;
+    border-color: #d1d5db;
+}
+
+.btn-card-detail:hover {
+    border-color: #f9bf29;
+    color: #111827;
+}
+
+.btn-card-cart {
+    background: var(--brand-yellow, #f9bf29);
+    color: #1f2937;
+    border-color: var(--brand-yellow, #f9bf29);
+}
+
+.btn-card-cart:hover {
+    background: #e0a922;
+    border-color: #e0a922;
+}
+
+/* Product detail gallery */
+.gemlock-product-detail-page .product-detail-gallery {
+    background: #fff;
+    border: 1px solid rgba(212, 168, 0, 0.22);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 14px 38px rgba(15, 23, 42, 0.08);
+}
+
+.gemlock-product-detail-page .product-main-image-wrap {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fafafa;
+    border: 1px solid #f1f1f1;
+    margin-bottom: 14px;
+}
+
+.gemlock-product-detail-page .product-main-image {
+    width: 100%;
+    height: 625px;
+    object-fit: contain;
+    background: #fff;
+    transition: transform 0.25s ease;
+}
+
+.gemlock-product-detail-page .product-main-image-wrap:hover .product-main-image {
+    transform: scale(1.02);
+}
+
+.gemlock-product-detail-page .product-thumbs-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    gap: 10px;
+}
+
+.gemlock-product-detail-page .product-thumb-btn {
+    border: 1px solid #ececec;
+    background: #fff;
+    border-radius: 10px;
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gemlock-product-detail-page .product-thumb-btn:hover {
+    border-color: #d4a800;
+    transform: translateY(-2px);
+}
+
+.gemlock-product-detail-page .product-thumb-btn.is-active {
+    border-color: #d4a800;
+    box-shadow: 0 0 0 2px rgba(212, 168, 0, 0.18);
+}
+
+.gemlock-product-detail-page .product-thumb-image {
+    width: 100%;
+    height: 78px;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;
+}
+
+@media (max-width: 991px) {
+    .gemlock-product-detail-page .product-main-image {
+        height: 460px;
+    }
+}
+
+@media (max-width: 575px) {
+    .gemlock-product-detail-page .product-main-image {
+        height: 340px;
+    }
 }
 
 /* Filter / sidebar block */
@@ -208,7 +335,7 @@
 }
 
 .gemlock-product-detail-page .before-footer-section {
-    padding: 0 !important;
+    padding: 40px 0 0 !important;
     margin-bottom: 0;
 }
 
@@ -241,6 +368,93 @@
 @media (max-width: 991px) {
     .sidebar-column {
         display: none !important; 
+    }
+}
+
+/* Related carousel */
+.gemlock-product-detail-page .related-carousel-section {
+    overflow: hidden;
+    margin-bottom: 36px;
+}
+
+.gemlock-product-detail-page .related-carousel-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.gemlock-product-detail-page .related-carousel-nav button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e7e7e7;
+    border-radius: 999px;
+    background: #fff;
+    color: #1f2937;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.gemlock-product-detail-page .related-carousel-nav button:hover {
+    border-color: #d4a800;
+    color: #d4a800;
+}
+
+.gemlock-product-detail-page .related-carousel {
+    overflow: hidden;
+}
+
+.gemlock-product-detail-page .related-track {
+    display: flex;
+    gap: 18px;
+    transition: transform 0.35s ease;
+    will-change: transform;
+}
+
+.gemlock-product-detail-page .related-slide {
+    flex: 0 0 calc(25% - 13.5px);
+    min-width: 0;
+}
+
+.gemlock-product-detail-page .related-slide .product-item {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #f0f0f0;
+    padding: 14px;
+    height: 100%;
+}
+
+.gemlock-product-detail-page .related-slide .product-thumbnail {
+    height: 220px;
+    margin-bottom: 12px;
+}
+
+.gemlock-product-detail-page .related-slide .product-title {
+    font-size: 22px;
+    text-transform: none;
+    line-height: 1.35;
+    min-height: 3.2em;
+}
+
+.gemlock-product-detail-page .related-slide .product-price {
+    color: #0f172a;
+}
+
+@media (max-width: 1199px) {
+    .gemlock-product-detail-page .related-slide {
+        flex: 0 0 calc(33.333% - 12px);
+    }
+}
+
+@media (max-width: 767px) {
+    .gemlock-product-detail-page .related-slide {
+        flex: 0 0 calc(50% - 9px);
+    }
+}
+
+@media (max-width: 480px) {
+    .gemlock-product-detail-page .related-slide {
+        flex: 0 0 100%;
     }
 }
 
