@@ -34,9 +34,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 mb-5">
-                    <div class="product-detail-gallery text-center">
-                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid product-thumbnail"
-                             onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                    @php
+                        $galleryImages = collect($product['images'] ?? [])->filter()->values();
+                        if ($galleryImages->isEmpty() && !empty($product['image'])) {
+                            $galleryImages = collect([$product['image']]);
+                        }
+                    @endphp
+
+                    <div class="product-detail-gallery">
+                        <div class="product-main-image-wrap text-center">
+                            <img
+                                id="product-main-image"
+                                src="{{ $galleryImages->first() ?? asset('furni/images/product-1.png') }}"
+                                alt="{{ $product['name'] }}"
+                                class="img-fluid product-main-image"
+                                onerror="this.src='{{ asset('furni/images/product-1.png') }}'"
+                            >
+                        </div>
+
+                        @if($galleryImages->count() > 1)
+                            <div class="product-thumbs-wrap">
+                                @foreach($galleryImages as $index => $img)
+                                    <button
+                                        type="button"
+                                        class="product-thumb-btn {{ $index === 0 ? 'is-active' : '' }}"
+                                        data-image="{{ $img }}"
+                                        aria-label="Ảnh sản phẩm {{ $index + 1 }}"
+                                    >
+                                        <img
+                                            src="{{ $img }}"
+                                            alt="{{ $product['name'] }} - {{ $index + 1 }}"
+                                            class="product-thumb-image"
+                                            onerror="this.src='{{ asset('furni/images/product-1.png') }}'"
+                                        >
+                                    </button>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 mb-5">

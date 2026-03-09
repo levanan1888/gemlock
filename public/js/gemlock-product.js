@@ -11,6 +11,32 @@
             ? document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             : '');
 
+    function initProductGallery() {
+        var mainImage = document.getElementById('product-main-image');
+        if (!mainImage) return;
+
+        var thumbs = document.querySelectorAll('.product-thumb-btn[data-image]');
+        if (!thumbs.length) return;
+
+        thumbs.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var nextSrc = btn.getAttribute('data-image');
+                if (!nextSrc) return;
+
+                mainImage.src = nextSrc;
+
+                thumbs.forEach(function (item) {
+                    item.classList.remove('is-active');
+                });
+                btn.classList.add('is-active');
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initProductGallery();
+    });
+
     // Cart helpers (called from HTML)
     window.addToCart = function (element) {
         var name = element.getAttribute('data-name');
