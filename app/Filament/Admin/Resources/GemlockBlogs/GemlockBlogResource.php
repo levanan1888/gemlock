@@ -11,8 +11,10 @@ use App\Models\User;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -88,11 +90,22 @@ class GemlockBlogResource extends Resource
                 ->buttonLabel('Chọn hoặc tải ảnh')
                 ->constrained()
                 ->directory('blogs'),
-            Textarea::make('content')
+            RichEditor::make('content')
                 ->label('Nội dung')
-                ->rows(14)
                 ->required()
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->toolbarButtons([
+                    'bold',
+                    'italic',
+                    'underline',
+                    'strike',
+                    'bulletList',
+                    'orderedList',
+                    'link',
+                    'h2',
+                    'h3',
+                    'blockquote',
+                ])
         ]);
     }
 
@@ -109,6 +122,7 @@ class GemlockBlogResource extends Resource
             ->defaultSort('published_at', 'desc')
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
