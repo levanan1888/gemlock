@@ -142,6 +142,10 @@
                         <div class="related-carousel" id="related-carousel">
                             <div class="related-track">
                                 @foreach ($filteredRelated as $related)
+                                    @php
+                                        $relatedRawPrice = $related['price'] ?? null;
+                                        $relatedDisplayPrice = is_numeric($relatedRawPrice) ? number_format($relatedRawPrice, 0, ',', '.') . ' VNĐ' : ($relatedRawPrice ?? 'Liên hệ');
+                                    @endphp
                                     <div class="related-slide">
                                         <div class="product-item">
                                             <a href="{{ route('product.detail', $related['slug'] ?? '#') }}" class="product-card-image-link">
@@ -149,7 +153,7 @@
                                                      onerror="this.src='{{ asset('image/no-image.jpg') }}'">
                                             </a>
                                             <h3 class="product-title">{{ $related['name'] ?? 'Sản phẩm' }}</h3>
-                                            <strong class="product-price">{{ $related['price'] ?? 'Liên hệ' }}</strong>
+                                            <strong class="product-price">{{ $relatedDisplayPrice }}</strong>
 
                                             <div class="product-card-actions">
                                                 <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $related['slug'] ?? '#') }}">
@@ -158,7 +162,7 @@
                                                 <button type="button"
                                                         class="btn-card-action btn-card-cart"
                                                         data-name="{{ $related['name'] ?? 'Sản phẩm' }}"
-                                                        data-price="{{ $related['price'] ?? 'Liên hệ' }}"
+                                                        data-price="{{ $relatedRawPrice ?? 'Liên hệ' }}"
                                                         data-image="{{ $related['image'] ?? asset('image/no-image.jpg') }}"
                                                         onclick="addToCart(this);">
                                                     Thêm giỏ hàng
