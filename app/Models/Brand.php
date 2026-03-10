@@ -23,7 +23,7 @@ class Brand extends Model
 
     protected static function booted(): void
     {
-        static::saving(function (Brand $brand) {
+        static::creating(function (Brand $brand) {
             if (blank($brand->slug) && filled($brand->name)) {
                 $brand->slug = Str::slug($brand->name);
             }
