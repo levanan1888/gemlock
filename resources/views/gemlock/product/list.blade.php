@@ -141,40 +141,47 @@
                 <div class="col-lg-9">
                     <div class="row">
                         @php
+                            $products = $products ?? [];
                             $perPage = 9;
                             $currentPage = request()->get('page', 1);
                             $totalProducts = count($products);
-                            $totalPages = ceil($totalProducts / $perPage);
+                            $totalPages = $totalProducts > 0 ? ceil($totalProducts / $perPage) : 0;
                             $offset = ($currentPage - 1) * $perPage;
                             $paginatedProducts = array_slice($products, $offset, $perPage);
                         @endphp
 
-                        @foreach($paginatedProducts as $product)
-                            <div class="col-12 col-md-6 col-lg-4 mb-5">
-                                <div class="product-item">
-                                    <a href="{{ route('product.detail', $product['slug']) }}" class="product-card-image-link">
-                                        <img src="{{ $product['image'] }}" class="img-fluid product-thumbnail"
-                                             onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
-                                    </a>
-                                    <h3 class="product-title">{{ $product['name'] }}</h3>
-                                    <strong class="product-price">{{ $product['price'] }}</strong>
-
-                                    <div class="product-card-actions">
-                                        <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $product['slug']) }}">
-                                            Chi tiết
+                        @if(count($paginatedProducts) > 0)
+                            @foreach($paginatedProducts as $product)
+                                <div class="col-12 col-md-6 col-lg-4 mb-5">
+                                    <div class="product-item">
+                                        <a href="{{ route('product.detail', $product['slug'] ?? '#') }}" class="product-card-image-link">
+                                            <img src="{{ $product['image'] ?? asset('furni/images/product-1.png') }}" class="img-fluid product-thumbnail"
+                                                 onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
                                         </a>
-                                        <button type="button"
-                                                class="btn-card-action btn-card-cart"
-                                                data-name="{{ $product['name'] }}"
-                                                data-price="{{ $product['price'] }}"
-                                                data-image="{{ $product['image'] }}"
-                                                onclick="addToCart(this);">
-                                            Thêm giỏ hàng
-                                        </button>
+                                        <h3 class="product-title">{{ $product['name'] ?? 'Sản phẩm' }}</h3>
+                                        <strong class="product-price">{{ $product['price'] ?? 'Liên hệ' }}</strong>
+
+                                        <div class="product-card-actions">
+                                            <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $product['slug'] ?? '#') }}">
+                                                Chi tiết
+                                            </a>
+                                            <button type="button"
+                                                    class="btn-card-action btn-card-cart"
+                                                    data-name="{{ $product['name'] ?? 'Sản phẩm' }}"
+                                                    data-price="{{ $product['price'] ?? 'Liên hệ' }}"
+                                                    data-image="{{ $product['image'] ?? asset('furni/images/product-1.png') }}"
+                                                    onclick="addToCart(this);">
+                                                Thêm giỏ hàng
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                            @endforeach
+                        @else
+                            <div class="col-12 text-center py-5">
+                                <p class="text-muted">Chưa có sản phẩm nào.</p>
                             </div>
-                        @endforeach
+                        @endif
                     </div>
 
                     @if($totalPages > 1)
