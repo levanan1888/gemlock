@@ -70,23 +70,30 @@
                 </div>
 
                 <ul class="menu">
+                    @forelse($headerMenus as $menu)
+                        @if(count($menu['children']) > 0)
+                        <li class="has-dropdown">
+                            <a href="{{ $menu['url'] }}"{{ $menu['open_in_new_tab'] ? ' target="_blank"' : '' }}>
+                                {{ $menu['label'] }}
+                                <i class="bi bi-chevron-down"></i>
+                            </a>
+                            <ul class="submenu">
+                                @foreach($menu['children'] as $child)
+                                <li><a href="{{ $child['url'] }}"{{ $child['open_in_new_tab'] ? ' target="_blank"' : '' }}>{{ $child['label'] }}</a></li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        @else
+                        <li><a href="{{ $menu['url'] }}"{{ $menu['open_in_new_tab'] ? ' target="_blank"' : '' }}>{{ $menu['label'] }}</a></li>
+                        @endif
+                    @empty
                     <li><a href="{{ $isGemlock ? url('/gemlock/about') : url('/about') }}">Giới thiệu</a></li>
-                    <li class="has-dropdown">
-                        <a href="{{ url('/gemlock/product') }}">
-                            Sản phẩm
-                            <i class="bi bi-chevron-down"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="{{ url('/gemlock/product?series=face-id-3d') }}">Dòng khoá nhận diện khuôn mặt 3D</a></li>
-                            <li><a href="{{ url('/gemlock/product?series=one-handle') }}">Dòng khoá vân tay một tay cầm</a></li>
-                            <li><a href="{{ url('/gemlock/product?series=aluminium-door') }}">Dòng khoá vân tay cho cửa nhôm</a></li>
-                            <li><a href="{{ url('/gemlock/product?series=others') }}">Dòng khoá khác</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ url('/gemlock/product') }}">Sản phẩm</a></li>
                     <li><a href="https://jwlock.com.vn/chinh-sach-bao-hanh.html" target="_blank">Chính sách</a></li>
                     <li><a href="{{ url('/documents') }}">Tài liệu</a></li>
                     <li><a href="{{ $isGemlock ? url('/gemlock/blog') : url('/blog') }}">Bài viết</a></li>
                     <li><a href="{{ $isGemlock ? url('/gemlock/contact') : url('/contact') }}">Liên hệ</a></li>
+                    @endforelse
                 </ul>
             </div>
         </div>
@@ -97,6 +104,14 @@
         <div class="container banner-wrapper">
             <aside class="sidebar" aria-label="Danh mục">
                 <ul>
+                    @forelse($categoryMenus as $category)
+                        <li>
+                            <i class="bi {{ $category['icon'] ?? 'bi-caret-right-fill' }}"></i>
+                            <a href="{{ url($category['url']) }}">
+                                {{ $category['label'] }}
+                            </a>
+                        </li>
+                    @empty
                     @foreach($headerCategories as $category)
                         <li>
                             <i class="bi {{ $iconMap[$category['slug']] ?? 'bi-caret-right-fill' }}"></i>
@@ -105,6 +120,7 @@
                             </a>
                         </li>
                     @endforeach
+                    @endforelse
                 </ul>
             </aside>
 

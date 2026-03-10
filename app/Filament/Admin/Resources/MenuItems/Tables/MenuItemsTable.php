@@ -55,6 +55,7 @@ class MenuItemsTable
                     ->options([
                         'header' => 'Header',
                         'footer' => 'Footer',
+                        'category' => 'Danh mục sản phẩm',
                     ]),
             ])
             ->defaultSort('order')

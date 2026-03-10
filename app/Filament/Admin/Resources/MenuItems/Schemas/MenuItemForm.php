@@ -22,15 +22,16 @@ class MenuItemForm
                     ])
                     ->required()
                     ->native(false),
-                Select::make('menu_type')
-                    ->label('Loại menu')
-                    ->options([
-                        'header' => 'Header Menu',
-                        'footer' => 'Footer Menu',
-                    ])
-                    ->required()
-                    ->default('header')
-                    ->native(false),
+                // Select::make('menu_type')
+                //     ->label('Loại menu')
+                //     ->options([
+                //         'header' => 'Header Menu',
+                //         'footer' => 'Footer Menu',
+                //         'category' => 'Danh mục sản phẩm',
+                //     ])
+                //     ->required()
+                //     ->default('header')
+                //     ->native(false),
                 TextInput::make('label')
                     ->label('Tên menu')
                     ->required()

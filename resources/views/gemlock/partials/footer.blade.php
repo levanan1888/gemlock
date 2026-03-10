@@ -1,4 +1,5 @@
 @php
+    use App\Models\MenuItem;
     $pageType = 'gemlock';
 
     $footerDescription = \App\Helpers\ContentHelper::text('footer_description_'.$pageType, 'Perfect House Việt Nam - Kết nối tương lai. Chuyên cung cấp giải pháp Smart Home và Năng lượng sạch.', $pageType);
@@ -13,21 +14,8 @@
     $footerMoreTitle = \App\Helpers\ContentHelper::text('footer_more_title_'.$pageType, 'Thêm', $pageType);
     $footerPolicyTitle = \App\Helpers\ContentHelper::text('footer_policy_title_'.$pageType, 'Chính sách & Pháp lý', $pageType);
 
-    $decode = function (string $key) use ($pageType): array {
-        $data = json_decode(\App\Helpers\ContentHelper::text($key.'_'.$pageType, '[]', $pageType), true);
-
-        return is_array($data) ? $data : [];
-    };
-
-    $companyItems = $decode('footer_company_items');
-    $moreItems = $decode('footer_more_items');
-    $policyItems = $decode('footer_policy_items');
-
-    $footerLinks = [
-        ['group_title' => $footerCompanyTitle, 'links' => $companyItems],
-        ['group_title' => $footerMoreTitle, 'links' => $moreItems],
-        ['group_title' => $footerPolicyTitle, 'links' => $policyItems],
-    ];
+    // Get footer menu from database
+    $footerMenus = MenuItem::getMenu($pageType, 'footer');
 @endphp
 <section class="footer">
     <div class="w-layout-blockcontainer container w-container">
@@ -56,18 +44,44 @@
                 </div>
             </div>
             <div class="footer-links">
-                @foreach($footerLinks as $group)
+                @if(count($footerMenus) > 0)
+                    @foreach($footerMenus as $menu)
+                        <div class="footer-link-column">
+                            <p class="text-18-bold">{{ $menu['label'] }}</p>
+                            <div class="footer-link-wrapper">
+                                @foreach($menu['children'] as $child)
+                                    <a href="{{ $child['url'] }}" class="footer-link w-inline-block" {{ $child['open_in_new_tab'] ? 'target="_blank"' : '' }}>
+                                        <p>{{ $child['label'] }}</p>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                @else
                     <div class="footer-link-column">
-                        <p class="text-18-bold">{{ $group['group_title'] ?? '' }}</p>
+                        <p class="text-18-bold">{{ $footerCompanyTitle }}</p>
                         <div class="footer-link-wrapper">
-                            @foreach(($group['links'] ?? []) as $link)
-                                <a href="{{ $link['url'] ?? '#' }}" class="footer-link w-inline-block" {{ !empty($link['open_in_new_tab']) ? 'target="_blank"' : '' }}>
-                                    <p>{{ $link['label'] ?? '' }}</p>
-                                </a>
-                            @endforeach
+                            <a href="/" class="footer-link w-inline-block"><p>Trang chủ</p></a>
+                            <a href="/gemlock/about" class="footer-link w-inline-block"><p>Giới thiệu</p></a>
+                            <a href="/gemlock/blog" class="footer-link w-inline-block"><p>Tin tức</p></a>
                         </div>
                     </div>
-                @endforeach
+                    <div class="footer-link-column">
+                        <p class="text-18-bold">{{ $footerMoreTitle }}</p>
+                        <div class="footer-link-wrapper">
+                            <a href="/testimonial" class="footer-link w-inline-block"><p>Cảm nhận</p></a>
+                            <a href="/gemlock/contact" class="footer-link w-inline-block"><p>Liên hệ</p></a>
+                            <a href="/license" class="footer-link w-inline-block"><p>Giấy phép</p></a>
+                        </div>
+                    </div>
+                    <div class="footer-link-column">
+                        <p class="text-18-bold">{{ $footerPolicyTitle }}</p>
+                        <div class="footer-link-wrapper">
+                            <a href="/privacy-policy" class="footer-link w-inline-block"><p>Chính sách bảo mật</p></a>
+                            <a href="/terms-conditions" class="footer-link w-inline-block"><p>Điều khoản sử dụng</p></a>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
         <div data-w-id="57013a19-828b-8803-241e-4822ac873860" class="footer-bottom">

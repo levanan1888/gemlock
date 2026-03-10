@@ -23,6 +23,7 @@ class PerfectHouseMenuForm
                     ->options([
                         'header' => 'Header Menu',
                         'footer' => 'Footer Menu',
+                        'category' => 'Danh mục sản phẩm',
                     ])
                     ->required()
                     ->default('header')
