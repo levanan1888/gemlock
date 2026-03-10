@@ -30,12 +30,9 @@
     }
 
     $showMainBanner = request()->is('gemlock') || request()->is('gemsolar') || request()->is('home-gemlock');
-    $iconMap = [
-        'face-id-3d' => 'bi-person-bounding-box',
-        'one-handle' => 'bi-hand-index-thumb',
-        'aluminium-door' => 'bi-door-open',
-        'others' => 'bi-shield-lock',
-    ];
+
+    $headerMenus = MenuItem::getMenu('gemlock', 'header');
+    $categoryMenus = MenuItem::getMenu('gemlock', 'category');
 @endphp
 <div class="jw">
     <header class="header">
