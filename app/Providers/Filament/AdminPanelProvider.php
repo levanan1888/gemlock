@@ -49,7 +49,7 @@ class AdminPanelProvider extends PanelProvider
                 ->pluralLabel('Media')
                 // ->navigationIcon(Heroicon::OutlinedPhoto)
                 ->navigationGroup('Gemlock')
-                ->navigationSort(3)
+                ->navigationSort(11)
                 ->showBadge(true) 
                 ->registerNavigation(true)
                 ->curations(true)

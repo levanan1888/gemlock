@@ -34,6 +34,8 @@ class GemlockPageResource extends Resource
 
     protected static ?string $slug = 'gemlock-pages';
 
+    protected static ?int $navigationSort = 6;
+
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';

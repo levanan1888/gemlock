@@ -22,6 +22,8 @@ class BlogCategoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Danh mục bài viết';
 
+    protected static ?int $navigationSort = 4;
+
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';

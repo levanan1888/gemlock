@@ -18,12 +18,12 @@ class GemlockFooterResource extends Resource
 
     protected static ?string $navigationLabel = 'Cấu hình Footer';
 
+    protected static ?int $navigationSort = 9;
+
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';
     }
-
-    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {

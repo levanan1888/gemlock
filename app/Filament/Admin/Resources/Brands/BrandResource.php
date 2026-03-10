@@ -29,7 +29,7 @@ class BrandResource extends Resource
 
     protected static ?string $slug = 'gemlock-brands';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 3;
 
     public static function getNavigationGroup(): ?string
     {

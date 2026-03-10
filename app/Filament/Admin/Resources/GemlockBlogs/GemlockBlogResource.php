@@ -35,6 +35,8 @@ class GemlockBlogResource extends Resource
 
     protected static ?string $slug = 'gemlock-blogs';
 
+    protected static ?int $navigationSort = 5;
+
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';

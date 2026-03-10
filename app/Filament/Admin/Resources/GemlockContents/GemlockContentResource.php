@@ -22,6 +22,8 @@ class GemlockContentResource extends Resource
 
     protected static ?string $navigationLabel = 'Nội dung Gemlock';
 
+    protected static ?int $navigationSort = 7;
+
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';

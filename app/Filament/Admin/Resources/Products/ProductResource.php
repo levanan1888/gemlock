@@ -39,7 +39,7 @@ class ProductResource extends Resource
 
     protected static ?string $slug = 'gemlock-products';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function getNavigationGroup(): ?string
     {

@@ -22,11 +22,16 @@ class MenuItemResource extends Resource
 
     protected static ?string $navigationLabel = 'Cấu hình Menu';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 8;
 
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return true;
     }
 
     public static function form(Schema $schema): Schema

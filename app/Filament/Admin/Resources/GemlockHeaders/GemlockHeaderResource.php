@@ -20,11 +20,9 @@ class GemlockHeaderResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $navigationLabel = 'Header';
+    protected static ?string $navigationLabel = 'Cấu hình Header';
 
-    protected static bool $shouldRegisterNavigation = false;
-
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 10;
 
     public static function getNavigationGroup(): ?string
     {
@@ -33,7 +31,7 @@ class GemlockHeaderResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return false;
+        return true;
     }
 
     public static function canAccess(): bool
