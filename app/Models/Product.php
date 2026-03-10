@@ -32,18 +32,50 @@ class Product extends Model
         ];
     }
 
-    public static function getActiveProducts()
+    public static function getActiveProducts(): array
     {
         return self::where('is_active', true)
             ->orderBy('order')
             ->get()
+            ->map(function ($product) {
+                return [
+                    'slug' => $product->slug,
+                    'name' => $product->name,
+                    'brand' => $product->brand,
+                    'category' => $product->category,
+                    'price' => $product->price,
+                    'description' => $product->description,
+                    'image' => $product->image,
+                    'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
+                    'features' => is_array($product->features) ? $product->features : json_decode($product->features, true),
+                    'specs' => is_array($product->specs) ? $product->specs : json_decode($product->specs, true),
+                    'is_active' => $product->is_active,
+                    'order' => $product->order,
+                ];
+            })
             ->toArray();
     }
 
     public static function getProductBySlug(string $slug): ?array
     {
         $product = self::where('slug', $slug)->first();
-        return $product?->toArray();
+        if (!$product) {
+            return null;
+        }
+        return [
+            'slug' => $product->slug,
+            'name' => $product->name,
+            'brand' => $product->brand,
+            'category' => $product->category,
+            'price' => $product->price,
+            'description' => $product->description,
+            'image' => $product->image,
+            'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
+            'features' => is_array($product->features) ? $product->features : json_decode($product->features, true),
+            'specs' => is_array($product->specs) ? $product->specs : json_decode($product->specs, true),
+            'is_active' => $product->is_active,
+            'order' => $product->order,
+        ];
     }
 
     public static function getProductsByCategory(string $categorySlug): array
@@ -52,6 +84,22 @@ class Product extends Model
             ->where('is_active', true)
             ->orderBy('order')
             ->get()
+            ->map(function ($product) {
+                return [
+                    'slug' => $product->slug,
+                    'name' => $product->name,
+                    'brand' => $product->brand,
+                    'category' => $product->category,
+                    'price' => $product->price,
+                    'description' => $product->description,
+                    'image' => $product->image,
+                    'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
+                    'features' => is_array($product->features) ? $product->features : json_decode($product->features, true),
+                    'specs' => is_array($product->specs) ? $product->specs : json_decode($product->specs, true),
+                    'is_active' => $product->is_active,
+                    'order' => $product->order,
+                ];
+            })
             ->toArray();
     }
 }
