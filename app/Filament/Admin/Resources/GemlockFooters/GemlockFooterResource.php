@@ -8,17 +8,13 @@ use App\Filament\Admin\Resources\GemlockFooters\Pages\ListGemlockFooters;
 use App\Filament\Admin\Resources\GemlockFooters\Schemas\GemlockFooterForm;
 use App\Filament\Admin\Resources\GemlockFooters\Tables\GemlockFootersTable;
 use App\Models\ContentItem;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class GemlockFooterResource extends Resource
 {
     protected static ?string $model = ContentItem::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $navigationLabel = 'Cấu hình Footer';
 
@@ -26,6 +22,8 @@ class GemlockFooterResource extends Resource
     {
         return 'Gemlock';
     }
+
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {

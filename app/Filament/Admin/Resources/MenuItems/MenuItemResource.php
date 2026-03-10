@@ -20,11 +20,13 @@ class MenuItemResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBars3;
 
-    protected static ?string $navigationLabel = 'Menu';
+    protected static ?string $navigationLabel = 'Cấu hình Menu';
+
+    protected static ?int $navigationSort = 1;
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Quản lý nội dung';
+        return 'Gemlock';
     }
 
     public static function form(Schema $schema): Schema

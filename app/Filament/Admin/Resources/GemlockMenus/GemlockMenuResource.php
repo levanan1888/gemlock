@@ -22,6 +22,13 @@ class GemlockMenuResource extends Resource
 
     protected static ?string $navigationLabel = 'Menu';
 
+    protected static ?int $navigationSort = 1;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';

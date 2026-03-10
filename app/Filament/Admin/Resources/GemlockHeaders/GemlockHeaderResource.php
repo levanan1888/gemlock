@@ -20,16 +20,18 @@ class GemlockHeaderResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $navigationLabel = 'Header (Cũ)';
+    protected static ?string $navigationLabel = 'Header';
 
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }
+    protected static ?int $navigationSort = 2;
 
     public static function getNavigationGroup(): ?string
     {
         return 'Gemlock';
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return true;
     }
 
     public static function canAccess(): bool
