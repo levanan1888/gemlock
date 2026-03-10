@@ -24,7 +24,8 @@
                     @php
                         $productName = $product['name'] ?? 'Sản phẩm';
                         $productBrand = $product['brand'] ?? 'Gem Smart Lock';
-                        $productPrice = $product['price'] ?? 'Liên hệ';
+                        $rawPrice = $product['price'] ?? null;
+                        $productPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ');
                         $productImage = $product['image'] ?? asset('image/no-image.jpg');
                         $galleryImages = collect($product['images'] ?? [])->filter()->values();
                         if ($galleryImages->isEmpty() && !empty($product['image'])) {

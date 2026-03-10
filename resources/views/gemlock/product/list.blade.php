@@ -152,6 +152,10 @@
 
                         @if(count($paginatedProducts) > 0)
                             @foreach($paginatedProducts as $product)
+                                @php
+                                    $rawPrice = $product['price'] ?? null;
+                                    $displayPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ');
+                                @endphp
                                 <div class="col-12 col-md-6 col-lg-4 mb-5">
                                     <div class="product-item">
                                         <a href="{{ route('product.detail', $product['slug'] ?? '#') }}" class="product-card-image-link">
@@ -159,7 +163,7 @@
                                                  onerror="this.src='{{ asset('image/no-image.jpg') }}'">
                                         </a>
                                         <h3 class="product-title">{{ $product['name'] ?? 'Sản phẩm' }}</h3>
-                                        <strong class="product-price">{{ $product['price'] ?? 'Liên hệ' }}</strong>
+                                        <strong class="product-price">{{ $displayPrice }}</strong>
 
                                         <div class="product-card-actions">
                                             <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $product['slug'] ?? '#') }}">
