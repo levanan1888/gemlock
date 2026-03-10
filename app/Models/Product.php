@@ -38,6 +38,25 @@ class Product extends Model
             ->orderBy('order')
             ->get()
             ->map(function ($product) {
+                $featuresRaw = is_array($product->features) ? $product->features : json_decode($product->features, true);
+                $features = [];
+                if (is_array($featuresRaw)) {
+                    foreach ($featuresRaw as $title => $desc) {
+                        $features[] = [
+                            'title' => $title,
+                            'desc' => $desc,
+                        ];
+                    }
+                }
+
+                $specsRaw = is_array($product->specs) ? $product->specs : json_decode($product->specs, true);
+                $specs = [];
+                if (is_array($specsRaw)) {
+                    foreach ($specsRaw as $label => $value) {
+                        $specs[$label] = $value;
+                    }
+                }
+
                 return [
                     'slug' => $product->slug,
                     'name' => $product->name,
@@ -47,8 +66,8 @@ class Product extends Model
                     'description' => $product->description,
                     'image' => $product->image,
                     'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
-                    'features' => is_array($product->features) ? $product->features : json_decode($product->features, true),
-                    'specs' => is_array($product->specs) ? $product->specs : json_decode($product->specs, true),
+                    'features' => $features,
+                    'specs' => $specs,
                     'is_active' => $product->is_active,
                     'order' => $product->order,
                 ];
@@ -62,6 +81,26 @@ class Product extends Model
         if (!$product) {
             return null;
         }
+
+        $featuresRaw = is_array($product->features) ? $product->features : json_decode($product->features, true);
+        $features = [];
+        if (is_array($featuresRaw)) {
+            foreach ($featuresRaw as $title => $desc) {
+                $features[] = [
+                    'title' => $title,
+                    'desc' => $desc,
+                ];
+            }
+        }
+
+        $specsRaw = is_array($product->specs) ? $product->specs : json_decode($product->specs, true);
+        $specs = [];
+        if (is_array($specsRaw)) {
+            foreach ($specsRaw as $label => $value) {
+                $specs[$label] = $value;
+            }
+        }
+
         return [
             'slug' => $product->slug,
             'name' => $product->name,
@@ -71,8 +110,8 @@ class Product extends Model
             'description' => $product->description,
             'image' => $product->image,
             'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
-            'features' => is_array($product->features) ? $product->features : json_decode($product->features, true),
-            'specs' => is_array($product->specs) ? $product->specs : json_decode($product->specs, true),
+            'features' => $features,
+            'specs' => $specs,
             'is_active' => $product->is_active,
             'order' => $product->order,
         ];
