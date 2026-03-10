@@ -542,6 +542,10 @@
 }
 
 /* Gallery Slider */
+.gallery-content-wrapper {
+    margin-top: 20px;
+}
+
 .gallery-slider {
     overflow: hidden;
     padding: 40px 0;
