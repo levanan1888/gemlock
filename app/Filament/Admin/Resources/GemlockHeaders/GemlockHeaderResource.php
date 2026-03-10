@@ -22,6 +22,8 @@ class GemlockHeaderResource extends Resource
 
     protected static ?string $navigationLabel = 'Header';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?int $navigationSort = 2;
 
     public static function getNavigationGroup(): ?string
@@ -31,7 +33,7 @@ class GemlockHeaderResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return true;
+        return false;
     }
 
     public static function canAccess(): bool
