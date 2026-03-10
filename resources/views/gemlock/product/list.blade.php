@@ -155,8 +155,8 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-5">
                                     <div class="product-item">
                                         <a href="{{ route('product.detail', $product['slug'] ?? '#') }}" class="product-card-image-link">
-                                            <img src="{{ $product['image'] ?? asset('furni/images/product-1.png') }}" class="img-fluid product-thumbnail"
-                                                 onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                            <img src="{{ $product['image'] ?? asset('image/no-image.jpg') }}" class="img-fluid product-thumbnail"
+                                                 onerror="this.src='{{ asset('image/no-image.jpg') }}'">
                                         </a>
                                         <h3 class="product-title">{{ $product['name'] ?? 'Sản phẩm' }}</h3>
                                         <strong class="product-price">{{ $product['price'] ?? 'Liên hệ' }}</strong>

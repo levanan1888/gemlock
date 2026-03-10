@@ -371,7 +371,7 @@
     }
 }
 
-/* Related carousel */
+/* Related products - same as main product listing */
 .gemlock-product-detail-page .related-carousel-section {
     overflow: hidden;
     margin-bottom: 36px;
@@ -416,28 +416,138 @@
     min-width: 0;
 }
 
+/* Related products - match main product listing style */
 .gemlock-product-detail-page .related-slide .product-item {
+    text-decoration: none;
+    display: block;
+    transition: .3s all ease;
     background: #fff;
     border-radius: 14px;
-    border: 1px solid #f0f0f0;
+    border: 1px solid #f1f1f1;
     padding: 14px;
     height: 100%;
 }
 
+.gemlock-product-detail-page .related-slide .product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+}
+
+.gemlock-product-detail-page .related-slide .product-card-image-link {
+    display: block;
+}
+
 .gemlock-product-detail-page .related-slide .product-thumbnail {
-    height: 220px;
-    margin-bottom: 12px;
+    height: 250px;
+    object-fit: contain;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.gemlock-product-detail-page .related-slide .product-card-actions {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.gemlock-product-detail-page .related-slide .btn-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.gemlock-product-detail-page .related-slide .btn-card-detail {
+    background: #fff;
+    color: #1f2937;
+    border-color: #d1d5db;
+}
+
+.gemlock-product-detail-page .related-slide .btn-card-detail:hover {
+    border-color: #f9bf29;
+    color: #111827;
+}
+
+.gemlock-product-detail-page .related-slide .btn-card-cart {
+    background: var(--brand-yellow, #f9bf29);
+    color: #1f2937;
+    border-color: var(--brand-yellow, #f9bf29);
+}
+
+.gemlock-product-detail-page .related-slide .btn-card-cart:hover {
+    background: #e0a922;
+    border-color: #e0a922;
 }
 
 .gemlock-product-detail-page .related-slide .product-title {
-    font-size: 22px;
+    font-size: 18px;
     text-transform: none;
     line-height: 1.35;
-    min-height: 3.2em;
+    color: #333;
+    margin-bottom: 8px;
+    min-height: auto;
 }
 
 .gemlock-product-detail-page .related-slide .product-price {
     color: #0f172a;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Product detail page buttons */
+.gemlock-product-detail-page .d-flex.gap-3 {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.gemlock-product-detail-page .btn-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.gemlock-product-detail-page .btn-card-cart {
+    background: var(--brand-yellow, #f9bf29);
+    color: #1f2937;
+    border-color: var(--brand-yellow, #f9bf29);
+}
+
+.gemlock-product-detail-page .btn-card-cart:hover {
+    background: #e0a922;
+    border-color: #e0a922;
+}
+
+.gemlock-product-detail-page .btn-card-detail {
+    background: #fff;
+    color: #1f2937;
+    border-color: #d1d5db;
+}
+
+.gemlock-product-detail-page .btn-card-detail:hover {
+    border-color: #f9bf29;
+    color: #111827;
 }
 
 @media (max-width: 1199px) {

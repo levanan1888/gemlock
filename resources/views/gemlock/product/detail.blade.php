@@ -25,13 +25,13 @@
                         $productName = $product['name'] ?? 'Sản phẩm';
                         $productBrand = $product['brand'] ?? 'Gem Smart Lock';
                         $productPrice = $product['price'] ?? 'Liên hệ';
-                        $productImage = $product['image'] ?? asset('furni/images/product-1.png');
+                        $productImage = $product['image'] ?? asset('image/no-image.jpg');
                         $galleryImages = collect($product['images'] ?? [])->filter()->values();
                         if ($galleryImages->isEmpty() && !empty($product['image'])) {
                             $galleryImages = collect([$product['image']]);
                         }
                         if ($galleryImages->isEmpty()) {
-                            $galleryImages = collect([asset('furni/images/product-1.png')]);
+                            $galleryImages = collect([asset('image/no-image.jpg')]);
                         }
                         $productFeatures = is_array($product['features'] ?? null) ? $product['features'] : [];
                         $productSpecs = is_array($product['specs'] ?? null) ? $product['specs'] : [];
@@ -44,7 +44,7 @@
                                 src="{{ $galleryImages->first() }}"
                                 alt="{{ $productName }}"
                                 class="img-fluid product-main-image"
-                                onerror="this.src='{{ asset('furni/images/product-1.png') }}'"
+                                onerror="this.src='{{ asset('image/no-image.jpg') }}'"
                             >
                         </div>
 
@@ -103,14 +103,14 @@
                     @endif
 
                     <div class="d-flex gap-3 mt-4">
-                        <button class="btn btn-primary"
+                        <button class="btn-card-action btn-card-cart"
                                 data-name="{{ $productName }}"
                                 data-price="{{ $productPrice }}"
                                 data-image="{{ $productImage }}"
                                 onclick="event.preventDefault(); addToCart(this);">
                             Thêm vào giỏ
                         </button>
-                        <a href="https://zalo.me/0967263944" target="_blank" class="btn btn-outline-primary">
+                        <a href="https://zalo.me/0967263944" target="_blank" class="btn-card-action btn-card-detail">
                             Tư vấn Zalo
                         </a>
                     </div>
@@ -144,8 +144,8 @@
                                     <div class="related-slide">
                                         <div class="product-item">
                                             <a href="{{ route('product.detail', $related['slug'] ?? '#') }}" class="product-card-image-link">
-                                                <img src="{{ $related['image'] ?? asset('furni/images/product-1.png') }}" class="img-fluid product-thumbnail"
-                                                     onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
+                                                <img src="{{ $related['image'] ?? asset('image/no-image.jpg') }}" class="img-fluid product-thumbnail"
+                                                     onerror="this.src='{{ asset('image/no-image.jpg') }}'">
                                             </a>
                                             <h3 class="product-title">{{ $related['name'] ?? 'Sản phẩm' }}</h3>
                                             <strong class="product-price">{{ $related['price'] ?? 'Liên hệ' }}</strong>
@@ -158,7 +158,7 @@
                                                         class="btn-card-action btn-card-cart"
                                                         data-name="{{ $related['name'] ?? 'Sản phẩm' }}"
                                                         data-price="{{ $related['price'] ?? 'Liên hệ' }}"
-                                                        data-image="{{ $related['image'] ?? asset('furni/images/product-1.png') }}"
+                                                        data-image="{{ $related['image'] ?? asset('image/no-image.jpg') }}"
                                                         onclick="addToCart(this);">
                                                     Thêm giỏ hàng
                                                 </button>
