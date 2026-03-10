@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('brand')->default('Gem Smart Lock');
             $table->string('category');
-            $table->string('price');
+            $table->integer('price');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->json('images')->nullable();
