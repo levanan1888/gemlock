@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\ContentItem;
+use Illuminate\Support\Facades\File;
 
 class ContentHelper
 {
@@ -37,7 +38,23 @@ class ContentHelper
             return asset($value);
         }
 
-        return asset('storage/' . ltrim($value, '/'));
+        $normalized = ltrim($value, '/');
+
+        if (File::exists(storage_path('app/public/' . $normalized))) {
+            return asset('storage/' . $normalized);
+        }
+
+        $privatePath = storage_path('app/private/' . $normalized);
+
+        if (File::exists($privatePath)) {
+            $publicPath = storage_path('app/public/' . $normalized);
+            File::ensureDirectoryExists(dirname($publicPath));
+            File::copy($privatePath, $publicPath);
+
+            return asset('storage/' . $normalized);
+        }
+
+        return asset('storage/' . $normalized);
     }
 
     public static function text(string $key, string $default = '', string $pageType = 'perfect_house', ?string $section = null): string

@@ -57,13 +57,16 @@ class ManageGemlockHeader extends Page implements HasForms
             ->get();
 
         $formattedData = [];
-        
+
         // 1. Logo & Hotline
         $formattedData['general'] = [
             'logo' => $items->where('key', 'header_logo_gemlock')->first()?->value ?? '',
             'logo_active' => (bool) ($items->where('key', 'header_logo_gemlock')->first()?->is_active ?? true),
             'phone' => $items->where('key', 'header_phone_gemlock')->first()?->value ?? '',
             'phone_active' => (bool) ($items->where('key', 'header_phone_gemlock')->first()?->is_active ?? true),
+            'topbar_text' => $items->where('key', 'header_topbar_text_gemlock')->first()?->value ?? '',
+            'topbar_link' => $items->where('key', 'header_topbar_link_gemlock')->first()?->value ?? url('/'),
+            'topbar_active' => (bool) ($items->where('key', 'header_topbar_text_gemlock')->first()?->is_active ?? true),
         ];
 
         // 2. Banner Slides
@@ -88,6 +91,7 @@ class ManageGemlockHeader extends Page implements HasForms
                                             FileUpload::make('general.logo')
                                                 ->label('Logo Header')
                                                 ->image()
+                                                ->disk('public')
                                                 ->directory('content'),
                                             Toggle::make('general.logo_active')->label('Bật')->inline(false),
                                         ]),
@@ -96,6 +100,16 @@ class ManageGemlockHeader extends Page implements HasForms
                                                 ->label('Hotline hiển thị'),
                                             Toggle::make('general.phone_active')->label('Bật')->inline(false),
                                         ]),
+                                        Grid::make(2)->schema([
+                                            TextInput::make('general.topbar_text')
+                                                ->label('Nội dung thanh trên cùng')
+                                                ->maxLength(255),
+                                            Toggle::make('general.topbar_active')->label('Hiển thị thanh trên cùng')->inline(false),
+                                        ]),
+                                        TextInput::make('general.topbar_link')
+                                            ->label('Link thanh trên cùng')
+                                            ->placeholder('https://... hoặc /')
+                                            ->maxLength(255),
                                     ]),
                             ]),
                         Tab::make('banners_tab')
@@ -110,6 +124,7 @@ class ManageGemlockHeader extends Page implements HasForms
                                                     ->label('Ảnh banner')
                                                     ->image()
                                                     ->required()
+                                                    ->disk('public')
                                                     ->directory('content'),
                                                 TextInput::make('url')
                                                     ->label('Link liên kết (nếu có)')
@@ -134,14 +149,17 @@ class ManageGemlockHeader extends Page implements HasForms
 
         // Lưu Logo & Phone
         $mappings = [
-            'header_logo_gemlock' => ['value' => $data['general']['logo'], 'is_active' => $data['general']['logo_active'], 'type' => 'image'],
-            'header_phone_gemlock' => ['value' => $data['general']['phone'], 'is_active' => $data['general']['phone_active'], 'type' => 'text'],
+            'header_logo_gemlock' => ['value' => $data['general']['logo'] ?? '', 'is_active' => (bool) ($data['general']['logo_active'] ?? true), 'type' => 'image'],
+            'header_phone_gemlock' => ['value' => $data['general']['phone'] ?? '', 'is_active' => (bool) ($data['general']['phone_active'] ?? true), 'type' => 'text'],
+            'header_topbar_text_gemlock' => ['value' => $data['general']['topbar_text'] ?? '', 'is_active' => (bool) ($data['general']['topbar_active'] ?? true), 'type' => 'text'],
+            'header_topbar_link_gemlock' => ['value' => $data['general']['topbar_link'] ?? url('/'), 'is_active' => (bool) ($data['general']['topbar_active'] ?? true), 'type' => 'link'],
         ];
 
         foreach ($mappings as $key => $values) {
             ContentItem::updateOrCreate(
-                ['page_type' => 'gemlock', 'key' => $key],
+                ['key' => $key],
                 [
+                    'page_type' => 'gemlock',
                     'section' => 'header',
                     'type' => $values['type'],
                     'label' => ucfirst(str_replace(['header_', '_'], ['', ' '], $key)),
@@ -153,8 +171,9 @@ class ManageGemlockHeader extends Page implements HasForms
 
         // Lưu Slides (JSON)
         ContentItem::updateOrCreate(
-            ['page_type' => 'gemlock', 'key' => 'header_banner_slides'],
+            ['key' => 'header_banner_slides'],
             [
+                'page_type' => 'gemlock',
                 'section' => 'header',
                 'type' => 'json',
                 'label' => 'Banner Slides',

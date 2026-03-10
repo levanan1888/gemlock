@@ -9,14 +9,25 @@
     $pageType = $isGemlock ? 'gemlock' : 'perfect_house';
     $homeUrl = $isGemlock ? '/gemlock' : '/';
 
-    $headerLogo = ContentHelper::image('header_logo_'.$pageType, 'image/Logo Tách Nền.png');
-    $headerPhone = ContentHelper::text('header_phone_'.$pageType, '0967 263 944');
+    $headerLogo = ContentHelper::image('header_logo_'.$pageType, 'image/Logo Tách Nền.png', $pageType, 'header');
+    $headerPhone = ContentHelper::text('header_phone_'.$pageType, '0967 263 944', $pageType, 'header');
 
-    $bannerSlides = [
-        ContentHelper::image('home_banner_1_'.$pageType, 'image/banner.jpg'),
-        ContentHelper::image('home_banner_2_'.$pageType, 'image/banner2.jpg'),
-        ContentHelper::image('home_banner_3_'.$pageType, 'image/Banner Solar 1.png'),
-    ];
+    $rawHeaderSlides = ContentHelper::get('header_banner_slides', '[]', $pageType, 'header');
+    $decodedHeaderSlides = json_decode($rawHeaderSlides, true);
+
+    $bannerSlides = collect(is_array($decodedHeaderSlides) ? $decodedHeaderSlides : [])
+        ->filter(fn ($slide) => (bool) ($slide['is_active'] ?? true) && ! empty($slide['image']))
+        ->map(fn ($slide) => ContentHelper::image('unused', (string) $slide['image'], $pageType, 'header'))
+        ->values()
+        ->all();
+
+    if (empty($bannerSlides)) {
+        $bannerSlides = [
+            asset('image/banner.jpg'),
+            asset('image/banner2.jpg'),
+            asset('image/Banner Solar 1.png'),
+        ];
+    }
 
     $showMainBanner = request()->is('gemlock') || request()->is('gemsolar') || request()->is('home-gemlock');
     $iconMap = [
