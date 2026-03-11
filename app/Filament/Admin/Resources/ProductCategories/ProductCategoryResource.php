@@ -6,11 +6,13 @@ use App\Filament\Admin\Resources\ProductCategories\Pages\CreateProductCategory;
 use App\Filament\Admin\Resources\ProductCategories\Pages\EditProductCategory;
 use App\Filament\Admin\Resources\ProductCategories\Pages\ListProductCategories;
 use App\Models\ProductCategory;
+use App\Models\Curator;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -75,6 +77,41 @@ class ProductCategoryResource extends Resource
                         ->label('Ảnh đại diện')
                         ->buttonLabel('Chọn ảnh')
                         ->size('sm'),
+                    KeyValue::make('features')
+                        ->label('Features')
+                        ->keyLabel('Key')
+                        ->valueLabel('Value')
+                        ->addButtonLabel('Thêm dòng')
+                        ->reorderable()
+                        ->formatStateUsing(function ($state) {
+                            if ($state instanceof \Illuminate\Support\Collection) {
+                                $state = $state->toArray();
+                            }
+
+                            if (is_string($state)) {
+                                $decoded = json_decode($state, true);
+                                if (json_last_error() === JSON_ERROR_NONE) {
+                                    $state = $decoded;
+                                }
+                            }
+
+                            if (is_array($state) && $state !== [] && array_keys($state) !== range(0, count($state) - 1)) {
+                                return $state;
+                            }
+
+                            $result = [];
+
+                            if (is_array($state)) {
+                                foreach ($state as $item) {
+                                    if (is_array($item) && isset($item['icon'], $item['text'])) {
+                                        $result[$item['icon']] = $item['text'];
+                                    }
+                                }
+                            }
+
+                            return $result;
+                        })
+                        ->columnSpanFull(),
                     TextInput::make('order')
                         ->label('Thứ tự hiển thị')
                         ->numeric()
@@ -94,8 +131,23 @@ class ProductCategoryResource extends Resource
                 TextColumn::make('no')
                     ->label('STT')
                     ->rowIndex(),
-                ImageColumn::make('image')
+                ImageColumn::make('thumbnail')
                     ->label('Ảnh')
+                    ->getStateUsing(function (ProductCategory $record) {
+                        if (! $record->image) {
+                            return asset('image/no-image.jpg');
+                        }
+
+                        // Nếu lưu id Curator, lấy URL từ Curator
+                        if (is_numeric($record->image)) {
+                            $media = Curator::find($record->image);
+
+                            return $media?->url ?? asset('image/no-image.jpg');
+                        }
+
+                        // Nếu lưu sẵn URL, dùng trực tiếp
+                        return $record->image;
+                    })
                     ->square()
                     ->size(60),
                 TextColumn::make('name')

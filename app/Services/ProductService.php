@@ -15,6 +15,31 @@ class ProductService
 
         if ($dbCategories->isNotEmpty()) {
             return $dbCategories->map(function ($category) {
+                $rawFeatures = is_array($category->features) ? $category->features : json_decode($category->features, true);
+
+                // Chuẩn hóa về dạng mảng ['icon' => ..., 'text' => ...]
+                $features = [];
+                if (is_array($rawFeatures)) {
+                    // Trường hợp lưu dạng key => value từ KeyValue (icon => text)
+                    $isAssoc = array_keys($rawFeatures) !== range(0, count($rawFeatures) - 1);
+
+                    if ($isAssoc) {
+                        foreach ($rawFeatures as $icon => $text) {
+                            $features[] = [
+                                'icon' => $icon,
+                                'text' => $text,
+                            ];
+                        }
+                    } else {
+                        // Trường hợp cũ: mảng các object ['icon' => ..., 'text' => ...]
+                        foreach ($rawFeatures as $item) {
+                            if (is_array($item) && isset($item['icon'], $item['text'])) {
+                                $features[] = $item;
+                            }
+                        }
+                    }
+                }
+
                 return [
                     'slug' => $category->slug,
                     'name' => $category->name,
@@ -22,7 +47,7 @@ class ProductService
                     'image' => $category->image,
                     'series' => $category->series,
                     'title' => $category->title,
-                    'features' => is_array($category->features) ? $category->features : json_decode($category->features, true),
+                    'features' => $features,
                 ];
             })->toArray();
         }
