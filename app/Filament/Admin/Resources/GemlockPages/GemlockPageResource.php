@@ -65,11 +65,6 @@ class GemlockPageResource extends Resource
                 ->maxLength(255)
                 ->unique(ignoreRecord: true),
 
-            Toggle::make('noindex')
-                ->label('Bật "noindex"')
-                ->helperText('Bật để chặn Google index trang này (thêm meta noindex)')
-                ->default(false),
-
             Textarea::make('excerpt')
                 ->label('Mô tả ngắn')
                 ->rows(3)
@@ -79,10 +74,6 @@ class GemlockPageResource extends Resource
                 ->label('Nội dung')
                 ->required()
                 ->columnSpanFull(),
-
-            Textarea::make('custom_js')
-                ->label('Script custom JS')
-                ->rows(4),
 
             FileUpload::make('banner')
                 ->label('Ảnh banner')
@@ -106,7 +97,6 @@ class GemlockPageResource extends Resource
                     ->rowIndex(),
                 TextColumn::make('title')->label('Tiêu đề')->searchable()->sortable()->limit(50),
                 TextColumn::make('slug')->label('URL')->searchable()->copyable(),
-                IconColumn::make('noindex')->label('Noindex')->boolean(),
                 IconColumn::make('is_active')->label('Hiển thị')->boolean(),
                 TextColumn::make('updated_at')->label('Cập nhật')->dateTime('d/m/Y H:i')->sortable(),
             ])

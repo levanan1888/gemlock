@@ -157,8 +157,14 @@ class ProductResource extends Resource
                 TextColumn::make('name')->label('Tên sản phẩm')->searchable()->sortable(),
                 TextColumn::make('brand.name')->label('Thương hiệu')->badge(),
                 TextColumn::make('category.name')->label('Danh mục')->badge(),
-                TextColumn::make('price')->label('Giá')->money('VND')->sortable(),
-                TextColumn::make('sale_price')->label('Giá giảm')->money('VND')->sortable(),
+                TextColumn::make('price')
+                    ->label('Giá')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => $state !== null ? number_format((float) $state, 0, ',', '.') . ' VNĐ' : null),
+                TextColumn::make('sale_price')
+                    ->label('Giá giảm')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => $state !== null ? number_format((float) $state, 0, ',', '.') . ' VNĐ' : null),
                 IconColumn::make('is_active')->label('Hiển thị')->boolean(),
                 TextColumn::make('order')->label('Thứ tự')->sortable(),
             ])
