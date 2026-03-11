@@ -14,7 +14,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
@@ -110,9 +109,7 @@ class ProductResource extends Resource
                 ->columnSpanFull(),
 
             Section::make('Bộ sưu tập ảnh')
-                ->schema([
-                    // Gallery images handled via relationship
-                ])
+                ->schema([])
                 ->columnSpanFull(),
 
             Section::make('Thông tin bổ sung')
