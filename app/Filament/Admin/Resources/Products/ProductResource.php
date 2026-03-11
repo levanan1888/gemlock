@@ -14,6 +14,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
@@ -85,16 +86,16 @@ class ProductResource extends Resource
                         ->label('Giá')
                         ->numeric()
                         ->prefix('₫'),
+                    TextInput::make('order')
+                        ->label('Thứ tự')
+                        ->numeric()
+                        ->default(0),
                     MarkdownEditor::make('description')
                         ->label('Mô tả')
                         ->columnSpanFull(),
                     Toggle::make('is_active')
                         ->label('Hiển thị')
                         ->default(true),
-                    TextInput::make('order')
-                        ->label('Thứ tự')
-                        ->numeric()
-                        ->default(0),
                 ])->columns(2)
                 ->columnSpanFull(),
 
