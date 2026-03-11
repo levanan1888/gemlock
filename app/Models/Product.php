@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -36,38 +35,12 @@ class Product extends Model
         ];
     }
 
-    protected static function booted(): void
-    {
-        static::saved(function (self $product) {
-            if (request()->has('images')) {
-                $images = request()->input('images', []);
-                if (is_array($images)) {
-                    $syncData = [];
-                    foreach ($images as $index => $mediaId) {
-                        $syncData[$mediaId] = ['order' => $index];
-                    }
-                    $product->images()->sync($syncData);
-                }
-            }
-        });
-    }
-
     /**
      * Ảnh đại diện của sản phẩm
      */
     public function image(): BelongsTo
     {
-        return $this->belongsTo(Media::class, 'image_id');
-    }
-
-    /**
-     * Gallery ảnh của sản phẩm
-     */
-    public function images(): BelongsToMany
-    {
-        return $this->belongsToMany(Media::class, 'media_product')
-            ->withPivot('order')
-            ->orderBy('media_product.order');
+        return $this->belongsTo(\App\Models\Curator::class, 'image_id');
     }
 
     /**
@@ -89,7 +62,7 @@ class Product extends Model
     public static function getActiveProducts(): array
     {
         return self::where('is_active', true)
-            ->with(['image', 'images', 'brand', 'category'])
+            ->with(['image', 'brand', 'category'])
             ->orderBy('order')
             ->get()
             ->map(function ($product) {
@@ -112,6 +85,13 @@ class Product extends Model
                     }
                 }
 
+                $galleryIds = is_array($product->gallery_image) ? $product->gallery_image : json_decode($product->gallery_image, true);
+                $gallery = [];
+                if (is_array($galleryIds)) {
+                    $galleryImages = \App\Models\Curator::whereIn('id', $galleryIds)->get();
+                    $gallery = $galleryImages->pluck('url')->toArray();
+                }
+
                 return [
                     'slug' => $product->slug,
                     'name' => $product->name,
@@ -123,7 +103,7 @@ class Product extends Model
                     'sale_price' => $product->sale_price,
                     'description' => $product->description,
                     'image' => $product->image?->url,
-                    'images' => $product->images->pluck('url')->toArray(),
+                    'images' => $gallery,
                     'features' => $features,
                     'specs' => $specs,
                     'is_active' => $product->is_active,
@@ -136,7 +116,7 @@ class Product extends Model
     public static function getProductBySlug(string $slug): ?array
     {
         $product = self::where('slug', $slug)
-            ->with(['image', 'images', 'brand', 'category'])
+            ->with(['image', 'brand', 'category'])
             ->first();
 
         if (!$product) {
@@ -162,6 +142,14 @@ class Product extends Model
             }
         }
 
+        // Lấy gallery từ curator IDs
+        $galleryIds = is_array($product->gallery_image) ? $product->gallery_image : json_decode($product->gallery_image, true);
+        $gallery = [];
+        if (is_array($galleryIds)) {
+            $galleryImages = \App\Models\Curator::whereIn('id', $galleryIds)->get();
+            $gallery = $galleryImages->pluck('url')->toArray();
+        }
+
         return [
             'slug' => $product->slug,
             'name' => $product->name,
@@ -173,7 +161,7 @@ class Product extends Model
             'sale_price' => $product->sale_price,
             'description' => $product->description,
             'image' => $product->image?->url,
-            'images' => $product->images->pluck('url')->toArray(),
+            'images' => $gallery,
             'features' => $features,
             'specs' => $specs,
             'is_active' => $product->is_active,
@@ -187,10 +175,18 @@ class Product extends Model
                 $query->where('slug', $categorySlug);
             })
             ->where('is_active', true)
-            ->with(['image', 'images', 'brand', 'category'])
+            ->with(['image', 'brand', 'category'])
             ->orderBy('order')
             ->get()
             ->map(function ($product) {
+                // Lấy gallery từ curator IDs
+                $galleryIds = is_array($product->gallery_image) ? $product->gallery_image : json_decode($product->gallery_image, true);
+                $gallery = [];
+                if (is_array($galleryIds)) {
+                    $galleryImages = \App\Models\Curator::whereIn('id', $galleryIds)->get();
+                    $gallery = $galleryImages->pluck('url')->toArray();
+                }
+
                 return [
                     'slug' => $product->slug,
                     'name' => $product->name,
@@ -201,7 +197,7 @@ class Product extends Model
                     'price' => $product->price,
                     'description' => $product->description,
                     'image' => $product->image?->url,
-                    'images' => $product->images->pluck('url')->toArray(),
+                    'images' => $gallery,
                     'features' => is_array($product->features) ? $product->features : json_decode($product->features, true),
                     'specs' => is_array($product->specs) ? $product->specs : json_decode($product->specs, true),
                     'is_active' => $product->is_active,
