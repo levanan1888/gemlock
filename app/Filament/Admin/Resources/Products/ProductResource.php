@@ -147,8 +147,11 @@ class ProductResource extends Resource
                 TextColumn::make('no')
                     ->label('STT')
                     ->rowIndex(),
-                ImageColumn::make('image.url')
+                ImageColumn::make('thumbnail')
                     ->label('Ảnh')
+                    ->getStateUsing(function (Product $record) {
+                        return $record->image?->url ?? asset('image/no-image.jpg');
+                    })
                     ->square()
                     ->size(60),
                 TextColumn::make('name')->label('Tên sản phẩm')->searchable()->sortable(),
