@@ -113,6 +113,13 @@
 @endpush
 
 @section('page_content')
+    @php
+        $pageType = 'gemlock';
+        $contactAddress = \App\Helpers\ContentHelper::text('contact_address_'.$pageType, 'Trụ sở: Đông Hòa, TP. Thái Bình, Tỉnh Thái Bình', $pageType, 'contact');
+        $contactEmail = \App\Helpers\ContentHelper::text('contact_email_'.$pageType, 'info@gemlock.vn', $pageType, 'contact');
+        $contactPhone = \App\Helpers\ContentHelper::text('contact_phone_'.$pageType, '0967 263 944', $pageType, 'contact');
+    @endphp
+
     <div class="hero">
         <div class="container">
             <div class="row justify-content-between align-items-center">
@@ -146,7 +153,7 @@
                                         <i class="fa fa-map-marker-alt"></i>
                                     </div>
                                     <div class="service-contents">
-                                        <p>Trụ sở: Đông Hòa, TP. Thái Bình, Tỉnh Thái Bình</p>
+                                        <p>{{ $contactAddress }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +163,7 @@
                                         <i class="fa fa-envelope"></i>
                                     </div>
                                     <div class="service-contents">
-                                        <p>info@gemlock.vn</p>
+                                        <p>{{ $contactEmail }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +173,7 @@
                                         <i class="fa fa-phone"></i>
                                     </div>
                                     <div class="service-contents">
-                                        <p>0967 263 944</p>
+                                        <p>{{ $contactPhone }}</p>
                                     </div>
                                 </div>
                             </div>
