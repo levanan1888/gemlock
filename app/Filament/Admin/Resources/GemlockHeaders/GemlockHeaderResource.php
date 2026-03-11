@@ -31,7 +31,7 @@ class GemlockHeaderResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return true;
+        return false;
     }
 
     public static function canAccess(): bool
