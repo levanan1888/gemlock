@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Gemlock;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Services\ProductService;
 
 class HomeController extends Controller
@@ -12,7 +13,15 @@ class HomeController extends Controller
         $products = ProductService::getAllProducts();
         $groupedProducts = ProductService::getProductsGroupedByCategory();
 
-        return view('gemlock.home', compact('products', 'groupedProducts'));
+        // Lấy 3 tin tức mới nhất
+        $latestNews = Blog::query()
+            ->published()
+            ->with(['thumbnailMedia', 'category'])
+            ->orderByDesc('published_at')
+            ->limit(3)
+            ->get();
+
+        return view('gemlock.home', compact('products', 'groupedProducts', 'latestNews'));
     }
 }
 

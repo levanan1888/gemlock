@@ -28,8 +28,8 @@ Route::prefix('gemlock')->group(function () {
 
     Route::get('/about', [AboutController::class, 'index']);
 
-    Route::get('/blog', [BlogController::class, 'index']);
-    Route::get('/blog/{slug}', [BlogController::class, 'show']);
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/product-detail/{slug?}', [ProductController::class, 'show'])->name('product.detail');
