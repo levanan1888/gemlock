@@ -18,7 +18,7 @@ return [
         ],
     ],
     'glide_token' => env('CURATOR_GLIDE_TOKEN', 'gemlock-curator-token'),
-    'model' => App\Models\Curator::class,
+    'model' => Awcodes\Curator\Models\Media::class,
     'path_generator' => null,
     'resource' => [
         'label' => 'Media',
