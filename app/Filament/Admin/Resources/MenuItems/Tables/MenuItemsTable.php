@@ -15,6 +15,11 @@ class MenuItemsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function ($query) {
+                return $query
+                    ->where('page_type', 'gemlock')
+                    ->where('menu_type', 'header');
+            })
             ->columns([
                 TextColumn::make('label')
                     ->label('Tên menu')
@@ -23,14 +28,6 @@ class MenuItemsTable
                 TextColumn::make('url')
                     ->label('URL')
                     ->searchable(),
-                TextColumn::make('page_type')
-                    ->label('Trang')
-                    ->badge()
-                    ->sortable(),
-                TextColumn::make('menu_type')
-                    ->label('Loại')
-                    ->badge()
-                    ->sortable(),
                 TextColumn::make('parent.label')
                     ->label('Menu cha')
                     ->sortable(),
@@ -41,22 +38,6 @@ class MenuItemsTable
                 TextColumn::make('order')
                     ->label('Thứ tự')
                     ->sortable(),
-            ])
-            ->filters([
-                SelectFilter::make('page_type')
-                    ->label('Trang')
-                    ->options([
-                        'perfect_house' => 'Perfect House',
-                        'gemlock' => 'Gemlock',
-                        'gemsolar' => 'Gemsolar',
-                    ]),
-                SelectFilter::make('menu_type')
-                    ->label('Loại menu')
-                    ->options([
-                        'header' => 'Header',
-                        'footer' => 'Footer',
-                        'category' => 'Danh mục sản phẩm',
-                    ]),
             ])
             ->defaultSort('order')
             ->recordActions([

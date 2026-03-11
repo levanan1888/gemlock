@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\MenuItems\Schemas;
 
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -13,25 +14,12 @@ class MenuItemForm
     {
         return $schema
             ->components([
-                Select::make('page_type')
-                    ->label('Trang')
-                    ->options([
-                        'perfect_house' => 'Perfect House',
-                        'gemlock' => 'Gemlock',
-                        'gemsolar' => 'Gemsolar',
-                    ])
-                    ->required()
-                    ->native(false),
-                // Select::make('menu_type')
-                //     ->label('Loại menu')
-                //     ->options([
-                //         'header' => 'Header Menu',
-                //         'footer' => 'Footer Menu',
-                //         'category' => 'Danh mục sản phẩm',
-                //     ])
-                //     ->required()
-                //     ->default('header')
-                //     ->native(false),
+                Hidden::make('page_type')
+                    ->default('gemlock')
+                    ->required(),
+                Hidden::make('menu_type')
+                    ->default('header')
+                    ->required(),
                 TextInput::make('label')
                     ->label('Tên menu')
                     ->required()
@@ -41,13 +29,12 @@ class MenuItemForm
                     ->required()
                     ->maxLength(255)
                     ->helperText('Ví dụ: /, /about, /contact, #section'),
-                TextInput::make('icon')
-                    ->label('Icon (Material Icons)')
-                    ->maxLength(50)
-                    ->helperText('Ví dụ: home, menu, contact'),
                 Select::make('parent_id')
                     ->label('Menu cha')
-                    ->relationship('parent', 'label', fn ($query) => $query->where('page_type', request()->get('page_type', 'perfect_house')))
+                    ->relationship('parent', 'label', fn ($query) => $query
+                        ->where('page_type', 'gemlock')
+                        ->where('menu_type', 'header')
+                    )
                     ->searchable()
                     ->preload()
                     ->native(false),
