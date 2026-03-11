@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('curator', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
 
             $table->string('disk');
             $table->string('directory')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('pretty_name')->nullable();
             $table->text('exif')->nullable();
             $table->longText('curations')->nullable();
-            $table->unsignedBigInteger('yes_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
 
             $table->timestamps();
         });
