@@ -12,10 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            // Đổi tên product_category_id thành category_id
-            $table->renameColumn('product_category_id', 'category_id');
+            // Thêm brand_id
+            $table->foreignId('brand_id')
+                ->nullable()
+                ->constrained('brands')
+                ->onDelete('set null')
+                ->after('name');
 
-            // Xóa các cột string cũ (nếu tồn tại)
+            // Thêm category_id
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained('product_categories')
+                ->onDelete('set null')
+                ->after('brand_id');
+
+            // Xóa các cột string cũ
             if (Schema::hasColumn('products', 'brand')) {
                 $table->dropColumn('brand');
             }
@@ -31,8 +42,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            // Đổi tên ngược lại
-            $table->renameColumn('category_id', 'product_category_id');
+            // Xóa foreign keys
+            $table->dropForeign(['brand_id']);
+            $table->dropForeign(['category_id']);
+            $table->dropColumn('brand_id');
+            $table->dropColumn('category_id');
 
             // Khôi phục cột cũ
             $table->string('brand')->default('Gem Smart Lock');
