@@ -73,6 +73,9 @@ class GemlockPageResource extends Resource
             RichEditor::make('content')
                 ->label('Nội dung')
                 ->required()
+                ->extraAttributes([
+                    'class' => 'min-h-[450px]',
+                ])
                 ->columnSpanFull(),
 
             FileUpload::make('banner')
