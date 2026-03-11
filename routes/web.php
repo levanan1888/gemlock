@@ -34,7 +34,8 @@ Route::prefix('gemlock')->group(function () {
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/product-detail/{slug?}', [ProductController::class, 'show'])->name('product.detail');
 
-    Route::get('/contact', [ContactController::class, 'index']);
+    Route::get('/contact', [ContactController::class, 'index'])->name('gemlock.contact');
+    Route::post('/contact', [ContactController::class, 'submit'])->name('gemlock.contact.submit');
 });
 
 Route::get('/gemsolar', function () {

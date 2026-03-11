@@ -172,28 +172,28 @@
                             </div>
                         </div>
 
-                        <form>
+                        <form id="gemlock-contact-form">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group mb-3">
                                         <label class="text-black" for="fname">Họ và tên</label>
-                                        <input type="text" class="form-control" id="fname" placeholder="Nhập họ tên">
+                                        <input type="text" class="form-control" id="fname" name="name" placeholder="Nhập họ tên" required>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group mb-3">
                                         <label class="text-black" for="phone">Số điện thoại</label>
-                                        <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại">
+                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="text-black" for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Nhập email (nếu có)">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email (nếu có)">
                             </div>
                             <div class="form-group mb-4">
                                 <label class="text-black" for="message">Nội dung cần tư vấn</label>
-                                <textarea class="form-control" id="message" cols="30" rows="5"
+                                <textarea class="form-control" id="message" name="message" cols="30" rows="5"
                                           placeholder="Mô tả ngắn nhu cầu của bạn..."></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary-hover-outline">Gửi yêu cầu</button>
@@ -209,5 +209,59 @@
     <script src="{{ asset('furni/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('furni/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('furni/js/custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('gemlock-contact-form');
+            if (!form) {
+                return;
+            }
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    name: form.name.value.trim(),
+                    phone: form.phone.value.trim(),
+                    email: form.email.value.trim(),
+                    message: form.message.value.trim(),
+                };
+
+                try {
+                    const response = await fetch('{{ route('gemlock.contact.submit') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok || !data.success) {
+                        throw new Error(data.message || 'Đã có lỗi xảy ra, vui lòng thử lại.');
+                    }
+
+                    form.reset();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Gửi yêu cầu thành công',
+                        text: data.message || 'Gemlock sẽ liên hệ lại với bạn trong thời gian sớm nhất.',
+                        confirmButtonText: 'Đóng',
+                    });
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gửi yêu cầu thất bại',
+                        text: error.message || 'Đã có lỗi xảy ra, vui lòng thử lại sau.',
+                        confirmButtonText: 'Đóng',
+                    });
+                }
+            });
+        });
+    </script>
 @endpush
 
