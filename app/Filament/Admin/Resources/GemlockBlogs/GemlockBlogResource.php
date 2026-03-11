@@ -94,6 +94,9 @@ class GemlockBlogResource extends Resource
             RichEditor::make('content')
                 ->label('Nội dung')
                 ->required()
+                ->extraAttributes([
+                    'class' => 'min-h-[450px]',
+                ])
                 ->columnSpanFull()
                 ->toolbarButtons([
                     'bold',
