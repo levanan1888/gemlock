@@ -8,12 +8,16 @@ use App\Services\ProductService;
 
 class ProductController extends Controller
 {
+    public function __construct(private readonly ProductService $productService)
+    {
+    }
+
     public function index()
     {
         $categories = ProductCategory::where('is_active', true)
             ->withCount('products')
             ->get();
-        $allProducts = ProductService::getAllProducts();
+        $allProducts = $this->productService->getAllProducts();
 
         // Get filter params
         $filters = [
@@ -26,7 +30,7 @@ class ProductController extends Controller
 
         // Filter products
         if (!empty($filters['categories']) || !empty($filters['price_range']) || !empty($filters['search'])) {
-            $products = ProductService::filterProducts($filters);
+            $products = $this->productService->filterProducts($filters);
         } else {
             $products = $allProducts;
         }
@@ -36,8 +40,8 @@ class ProductController extends Controller
 
     public function show(string $slug = 'n81b')
     {
-        $product = ProductService::getProductBySlug($slug);
-        $relatedProducts = ProductService::getAllProducts();
+        $product = $this->productService->getProductBySlug($slug);
+        $relatedProducts = $this->productService->getAllProducts();
 
         return view('gemlock.product.detail', compact('product', 'relatedProducts'));
     }

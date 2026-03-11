@@ -6,7 +6,7 @@ use App\Models\Product;
 
 class ProductService
 {
-    public static function getCategories()
+    public function getCategories()
     {
         // Lấy categories từ database
         $dbCategories = \App\Models\ProductCategory::where('is_active', true)
@@ -16,11 +16,8 @@ class ProductService
         if ($dbCategories->isNotEmpty()) {
             return $dbCategories->map(function ($category) {
                 $rawFeatures = is_array($category->features) ? $category->features : json_decode($category->features, true);
-
-                // Chuẩn hóa về dạng mảng ['icon' => ..., 'text' => ...]
                 $features = [];
                 if (is_array($rawFeatures)) {
-                    // Trường hợp lưu dạng key => value từ KeyValue (icon => text)
                     $isAssoc = array_keys($rawFeatures) !== range(0, count($rawFeatures) - 1);
 
                     if ($isAssoc) {
@@ -31,7 +28,6 @@ class ProductService
                             ];
                         }
                     } else {
-                        // Trường hợp cũ: mảng các object ['icon' => ..., 'text' => ...]
                         foreach ($rawFeatures as $item) {
                             if (is_array($item) && isset($item['icon'], $item['text'])) {
                                 $features[] = $item;
@@ -96,12 +92,12 @@ class ProductService
         ];
     }
 
-    public static function getAllProducts()
+    public function getAllProducts()
     {
         return Product::getActiveProducts();
     }
 
-    public static function getProductBySlug($slug)
+    public function getProductBySlug($slug)
     {
         $product = Product::getProductBySlug($slug);
         if (!$product) {
@@ -111,14 +107,14 @@ class ProductService
         return $product;
     }
 
-    public static function getProductsByCategory($categorySlug)
+    public function getProductsByCategory($categorySlug)
     {
         return Product::getProductsByCategory($categorySlug);
     }
 
-    public static function getProductsGroupedByCategory()
+    public function getProductsGroupedByCategory()
     {
-        $categories = self::getCategories();
+        $categories = $this->getCategories();
         $grouped = [];
 
         foreach ($categories as $category) {
@@ -135,7 +131,7 @@ class ProductService
     /**
      * Lọc sản phẩm theo các tiêu chí
      */
-    public static function filterProducts(array $filters = []): array
+    public function filterProducts(array $filters = []): array
     {
         $query = Product::query()->where('is_active', true)
             ->with(['image', 'brand', 'category']);
@@ -186,14 +182,14 @@ class ProductService
         $products = $query->get();
 
         return $products->map(function ($product) {
-            return self::formatProduct($product);
+            return $this->formatProduct($product);
         })->toArray();
     }
 
     /**
      * Format product data từ model
      */
-    private static function formatProduct($product): array
+    private function formatProduct($product): array
     {
         $featuresRaw = is_array($product->features) ? $product->features : json_decode($product->features, true);
         $features = [];

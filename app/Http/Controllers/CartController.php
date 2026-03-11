@@ -10,11 +10,15 @@ use Illuminate\View\View;
 
 class CartController extends Controller
 {
+    public function __construct(private readonly ProductService $productService)
+    {
+    }
+
     public function index(): View
     {
         $cart = session()->get('cart', []);
         $total = $this->calculateTotal($cart);
-        $relatedProducts = ProductService::getAllProducts();
+        $relatedProducts = $this->productService->getAllProducts();
 
         return view('cart', compact('cart', 'total', 'relatedProducts'));
     }
