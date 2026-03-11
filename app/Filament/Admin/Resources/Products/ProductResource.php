@@ -85,6 +85,10 @@ class ProductResource extends Resource
                         ->label('Giá')
                         ->numeric()
                         ->prefix('₫'),
+                    TextInput::make('sale_price')
+                        ->label('Giá giảm')
+                        ->numeric()
+                        ->prefix('₫'),
                     TextInput::make('order')
                         ->label('Thứ tự')
                         ->numeric()
@@ -109,7 +113,14 @@ class ProductResource extends Resource
                 ->columnSpanFull(),
 
             Section::make('Bộ sưu tập ảnh')
-                ->schema([])
+                ->schema([
+                    CuratorPicker::make('gallery_image')
+                        ->label('Gallery ảnh')
+                        ->buttonLabel('Chọn ảnh')
+                        ->multiple()
+                        ->maxItems(10)
+                        ->size('sm'),
+                ])
                 ->columnSpanFull(),
 
             Section::make('Thông tin bổ sung')
@@ -144,6 +155,7 @@ class ProductResource extends Resource
                 TextColumn::make('brand.name')->label('Thương hiệu')->badge(),
                 TextColumn::make('category.name')->label('Danh mục')->badge(),
                 TextColumn::make('price')->label('Giá')->money('VND')->sortable(),
+                TextColumn::make('sale_price')->label('Giá giảm')->money('VND')->sortable(),
                 IconColumn::make('is_active')->label('Hiển thị')->boolean(),
                 TextColumn::make('order')->label('Thứ tự')->sortable(),
             ])
