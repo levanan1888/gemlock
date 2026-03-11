@@ -11,13 +11,21 @@ class ProductCategory extends Model
     protected $fillable = [
         'name',
         'slug',
+        'icon',
+        'image',
+        'series',
+        'title',
+        'features',
         'is_active',
+        'order',
     ];
 
     protected function casts(): array
     {
         return [
+            'features' => 'array',
             'is_active' => 'boolean',
+            'order' => 'integer',
         ];
     }
 

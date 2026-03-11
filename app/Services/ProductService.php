@@ -8,6 +8,26 @@ class ProductService
 {
     public static function getCategories()
     {
+        // Lấy categories từ database
+        $dbCategories = \App\Models\ProductCategory::where('is_active', true)
+            ->orderBy('order')
+            ->get();
+
+        if ($dbCategories->isNotEmpty()) {
+            return $dbCategories->map(function ($category) {
+                return [
+                    'slug' => $category->slug,
+                    'name' => $category->name,
+                    'icon' => $category->icon ?? 'bi-caret-right-fill',
+                    'image' => $category->image,
+                    'series' => $category->series,
+                    'title' => $category->title,
+                    'features' => is_array($category->features) ? $category->features : json_decode($category->features, true),
+                ];
+            })->toArray();
+        }
+
+        // Fallback data nếu không có trong database
         return [
             [
                 'slug' => 'biet-thu',
@@ -107,7 +127,6 @@ class ProductService
             $query->where(function ($q) use ($filters) {
                 foreach ($filters['price_range'] as $range) {
                     $q->orWhere(function ($sub) use ($range) {
-                        // Sử dụng COALESCE để ưu tiên sale_price, nếu không có thì dùng price
                         $sub->whereRaw('COALESCE(sale_price, price) ' . match ($range) {
                             'under_2' => '< 2000000',
                             '2_5' => 'BETWEEN 2000000 AND 5000000',
