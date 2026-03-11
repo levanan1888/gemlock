@@ -7,7 +7,7 @@ use App\Filament\Admin\Resources\Media\Pages\EditMedia;
 use App\Filament\Admin\Resources\Media\Pages\ListMedia;
 use App\Filament\Admin\Resources\Media\Schemas\MediaForm;
 use App\Filament\Admin\Resources\Media\Tables\MediaTable;
-use App\Models\Media;
+use App\Models\Curator;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -16,7 +16,7 @@ use Filament\Tables\Table;
 
 class MediaResource extends Resource
 {
-    protected static ?string $model = Media::class;
+    protected static ?string $model = Curator::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
 

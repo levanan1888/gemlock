@@ -7,7 +7,6 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class MediaTable
@@ -16,7 +15,7 @@ class MediaTable
     {
         return $table
             ->columns([
-                ImageColumn::make('file_path')
+                ImageColumn::make('path')
                     ->label('Ảnh')
                     ->circular()
                     ->size(50),
@@ -24,39 +23,22 @@ class MediaTable
                     ->label('Tên file')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('page_type')
-                    ->label('Trang')
-                    ->badge()
-                    ->default('Chung')
-                    ->sortable(),
-                TextColumn::make('file_type')
-                    ->label('Loại')
+                TextColumn::make('ext')
+                    ->label('Định dạng')
                     ->badge()
                     ->sortable(),
-                TextColumn::make('alt_text')
+                TextColumn::make('alt')
                     ->label('Alt text')
                     ->searchable()
                     ->limit(30),
+                TextColumn::make('size')
+                    ->label('Kích thước')
+                    ->formatStateUsing(fn ($state) => $state ? round($state / 1024, 2) . ' KB' : '-')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Ngày tạo')
                     ->dateTime()
                     ->sortable(),
-            ])
-            ->filters([
-                SelectFilter::make('page_type')
-                    ->label('Trang')
-                    ->options([
-                        'perfect_house' => 'Perfect House',
-                        'gemlock' => 'Gemlock',
-                        'gemsolar' => 'Gemsolar',
-                    ]),
-                SelectFilter::make('file_type')
-                    ->label('Loại file')
-                    ->options([
-                        'image' => 'Hình ảnh',
-                        'video' => 'Video',
-                        'document' => 'Tài liệu',
-                    ]),
             ])
             ->defaultSort('created_at', 'desc')
             ->recordActions([
