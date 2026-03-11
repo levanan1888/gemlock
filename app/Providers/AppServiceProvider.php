@@ -20,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Force HTTPS for ngrok and production
-        if (request()->isSecure() || str_contains(request()->getHost(), 'ngrok')) {
+        if (request()->header('X-Forwarded-Proto') === 'https') {
             URL::forceScheme('https');
         }
     }

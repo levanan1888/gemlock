@@ -80,12 +80,16 @@
                         <ul class="list-unstyled mb-4">
                             @foreach ($productFeatures as $feature)
                                 <li class="mb-2">
-                                    @if (!empty($feature['icon']))
-                                        <i class="{{ $feature['icon'] }} me-2"></i>
-                                    @endif
-                                    <strong>{{ $feature['title'] ?? '' }}</strong>
-                                    @if (!empty($feature['desc']))
-                                        – {{ $feature['desc'] }}
+                                    @if (is_array($feature))
+                                        @if (!empty($feature['icon']))
+                                            <i class="{{ $feature['icon'] }} me-2"></i>
+                                        @endif
+                                        <strong>{{ $feature['title'] ?? '' }}</strong>
+                                        @if (!empty($feature['desc']) && is_string($feature['desc']))
+                                            – {{ $feature['desc'] }}
+                                        @endif
+                                    @else
+                                        {{ $feature }}
                                     @endif
                                 </li>
                             @endforeach
