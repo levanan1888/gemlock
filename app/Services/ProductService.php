@@ -86,4 +86,113 @@ class ProductService
 
         return $grouped;
     }
+
+    /**
+     * Lọc sản phẩm theo các tiêu chí
+     */
+    public static function filterProducts(array $filters = []): array
+    {
+        $query = Product::query()->where('is_active', true)
+            ->with(['image', 'brand', 'category']);
+
+        // Lọc theo danh mục (category)
+        if (!empty($filters['categories'])) {
+            $query->whereHas('category', function ($q) use ($filters) {
+                $q->whereIn('slug', $filters['categories']);
+            });
+        }
+
+        // Lọc theo khoảng giá
+        if (!empty($filters['price_range'])) {
+            $query->where(function ($q) use ($filters) {
+                foreach ($filters['price_range'] as $range) {
+                    $q->orWhere(function ($sub) use ($range) {
+                        // Sử dụng COALESCE để ưu tiên sale_price, nếu không có thì dùng price
+                        $sub->whereRaw('COALESCE(sale_price, price) ' . match ($range) {
+                            'under_2' => '< 2000000',
+                            '2_5' => 'BETWEEN 2000000 AND 5000000',
+                            '5_10' => 'BETWEEN 5000000 AND 10000000',
+                            'over_10' => '> 10000000',
+                        });
+                    });
+                }
+            });
+        }
+
+        // Tìm kiếm theo tên
+        if (!empty($filters['search'])) {
+            $search = $filters['search'];
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Sắp xếp
+        $sortBy = $filters['sort'] ?? 'order';
+        $sortDir = $filters['direction'] ?? 'asc';
+
+        $validSorts = ['price', 'sale_price', 'name', 'order', 'created_at'];
+        if (in_array($sortBy, $validSorts)) {
+            $query->orderBy($sortBy, $sortDir);
+        } else {
+            $query->orderBy('order');
+        }
+
+        $products = $query->get();
+
+        return $products->map(function ($product) {
+            return self::formatProduct($product);
+        })->toArray();
+    }
+
+    /**
+     * Format product data từ model
+     */
+    private static function formatProduct($product): array
+    {
+        $featuresRaw = is_array($product->features) ? $product->features : json_decode($product->features, true);
+        $features = [];
+        if (is_array($featuresRaw)) {
+            foreach ($featuresRaw as $title => $desc) {
+                $features[] = [
+                    'title' => $title,
+                    'desc' => $desc,
+                ];
+            }
+        }
+
+        $specsRaw = is_array($product->specs) ? $product->specs : json_decode($product->specs, true);
+        $specs = [];
+        if (is_array($specsRaw)) {
+            foreach ($specsRaw as $label => $value) {
+                $specs[$label] = $value;
+            }
+        }
+
+        $galleryIds = is_array($product->gallery_image) ? $product->gallery_image : json_decode($product->gallery_image, true);
+        $gallery = [];
+        if (is_array($galleryIds)) {
+            $galleryImages = \App\Models\Curator::whereIn('id', $galleryIds)->get();
+            $gallery = $galleryImages->pluck('url')->toArray();
+        }
+
+        return [
+            'slug' => $product->slug,
+            'name' => $product->name,
+            'brand' => $product->brand?->name,
+            'brand_id' => $product->brand_id,
+            'category' => $product->category?->slug,
+            'category_id' => $product->category_id,
+            'price' => $product->price,
+            'sale_price' => $product->sale_price,
+            'description' => $product->description,
+            'image' => $product->image?->url,
+            'images' => $gallery,
+            'features' => $features,
+            'specs' => $specs,
+            'is_active' => $product->is_active,
+            'order' => $product->order,
+        ];
+    }
 }

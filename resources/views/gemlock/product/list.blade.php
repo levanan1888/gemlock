@@ -32,206 +32,225 @@
 
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3 mb-5 sidebar-column">
-                    <div class="sidebar-search">
-                        <input type="text" placeholder="Tìm kiếm sản phẩm...">
-                        <i class="fas fa-search"></i>
-                    </div>
+            <form id="filter-form" method="GET" action="{{ route('product.index') }}">
+                <div class="row">
+                    <div class="col-lg-3 mb-5 sidebar-column">
+                        <div class="sidebar-search">
+                            <input type="text"
+                                   name="search"
+                                   placeholder="Tìm kiếm sản phẩm..."
+                                   value="{{ request()->input('search', '') }}"
+                                   class="filter-search">
+                            <i class="fas fa-search"></i>
+                        </div>
 
-                    <div class="sidebar-widget">
-                        <h4 class="sidebar-title">Danh mục sản phẩm</h4>
-                        <ul class="category-list">
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Khóa vân tay</span>
-                                    </span>
-                                    <span class="filter-count">(12)</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Khóa thẻ từ</span>
-                                    </span>
-                                    <span class="filter-count">(8)</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Khóa mã số</span>
-                                    </span>
-                                    <span class="filter-count">(5)</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Khóa cửa kính</span>
-                                    </span>
-                                    <span class="filter-count">(4)</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Phụ kiện khóa</span>
-                                    </span>
-                                    <span class="filter-count">(3)</span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="sidebar-widget">
-                        <h4 class="sidebar-title">Khoảng giá</h4>
-                        <ul class="category-list">
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Dưới 2 triệu</span>
-                                    </span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Từ 2 - 5 triệu</span>
-                                    </span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Từ 5 - 10 triệu</span>
-                                    </span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="filter-option">
-                                    <span class="filter-left">
-                                        <input type="checkbox" class="filter-checkbox">
-                                        <span>Trên 10 triệu</span>
-                                    </span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="sidebar-actions">
-                        <button type="button" class="btn-filter btn-filter-primary">
-                            Tìm kiếm
-                        </button>
-                        <button type="button" class="btn-filter btn-filter-outline" id="btn-clear-filters">
-                            Xóa lọc
-                        </button>
-                    </div>
-                </div>
-
-                <div class="col-lg-9">
-                    <div class="row">
-                        @php
-                            $products = $products ?? [];
-                            $perPage = 9;
-                            $currentPage = request()->get('page', 1);
-                            $totalProducts = count($products);
-                            $totalPages = $totalProducts > 0 ? ceil($totalProducts / $perPage) : 0;
-                            $offset = ($currentPage - 1) * $perPage;
-                            $paginatedProducts = array_slice($products, $offset, $perPage);
-                        @endphp
-
-                        @if(count($paginatedProducts) > 0)
-                            @foreach($paginatedProducts as $product)
-                                @php
-                                    $rawPrice = $product['price'] ?? null;
-                                    $rawSalePrice = $product['sale_price'] ?? null;
-                                    $hasDiscount = is_numeric($rawSalePrice) && $rawSalePrice > 0 && $rawSalePrice < $rawPrice;
-                                    $displayPrice = $hasDiscount
-                                        ? number_format($rawSalePrice, 0, ',', '.') . ' VNĐ'
-                                        : (is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ'));
-                                    $originalPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : $rawPrice;
-                                @endphp
-                                <div class="col-12 col-md-6 col-lg-4 mb-5">
-                                    <div class="product-item">
-                                        <a href="{{ route('product.detail', $product['slug'] ?? '#') }}" class="product-card-image-link">
-                                            <img src="{{ $product['image'] ?? asset('image/no-image.jpg') }}" class="img-fluid product-thumbnail"
-                                                 onerror="this.src='{{ asset('image/no-image.jpg') }}'">
-                                        </a>
-                                        <h3 class="product-title">{{ $product['name'] ?? 'Sản phẩm' }}</h3>
-                                        <strong class="product-price">
-                                            @if($hasDiscount)
-                                                <span class="text-danger">{{ $displayPrice }}</span>
-                                                <span class="text-muted text-decoration-line-through ms-2">{{ $originalPrice }}</span>
-                                            @else
-                                                {{ $displayPrice }}
-                                            @endif
-                                        </strong>
-
-                                        <div class="product-card-actions">
-                                            <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $product['slug'] ?? '#') }}">
-                                                Chi tiết
-                                            </a>
-                                            <button type="button"
-                                                    class="btn-card-action btn-card-cart"
-                                                    data-name="{{ $product['name'] ?? 'Sản phẩm' }}"
-                                                    data-price="{{ $hasDiscount ? $rawSalePrice : ($rawPrice ?? 'Liên hệ') }}"
-                                                    data-image="{{ $product['image'] ?? asset('image/no-image.jpg') }}"
-                                                    onclick="addToCart(this);">
-                                                Thêm giỏ hàng
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="col-12 text-center py-5">
-                                <p class="text-muted">Chưa có sản phẩm nào.</p>
-                            </div>
-                        @endif
-                    </div>
-
-                    @if($totalPages > 1)
-                        <nav class="pagination-wrapper mt-4">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
-                                    <a class="page-link" href="?page={{ $currentPage - 1 }}" aria-label="Previous">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </a>
-                                </li>
-                                @for($i = 1; $i <= $totalPages; $i++)
-                                    @if($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 2)
-                                        <li class="page-item {{ $currentPage == $i ? 'active' : '' }}">
-                                            <a class="page-link" href="?page={{ $i }}">{{ $i }}</a>
+                        <div class="sidebar-widget">
+                            <h4 class="sidebar-title">Danh mục sản phẩm</h4>
+                            <ul class="category-list">
+                                @if(!empty($categories))
+                                    @foreach($categories as $category)
+                                        <li>
+                                            <label class="filter-option">
+                                                <span class="filter-left">
+                                                    <input type="checkbox"
+                                                           name="categories[]"
+                                                           value="{{ $category->slug }}"
+                                                           class="filter-checkbox"
+                                                           {{ is_array(request()->input('categories')) && in_array($category->slug, request()->input('categories')) ? 'checked' : '' }}>
+                                                    <span>{{ $category->name }}</span>
+                                                </span>
+                                                <span class="filter-count">({{ $category->products_count }})</span>
+                                            </label>
                                         </li>
-                                    @elseif(abs($i - $currentPage) == 3)
-                                        <li class="page-item disabled"><span class="page-link">...</span></li>
-                                    @endif
-                                @endfor
-                                <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
-                                    <a class="page-link" href="?page={{ $currentPage + 1 }}" aria-label="Next">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </a>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h4 class="sidebar-title">Khoảng giá</h4>
+                            <ul class="category-list">
+                                <li>
+                                    <label class="filter-option">
+                                        <span class="filter-left">
+                                            <input type="checkbox"
+                                                   name="price_range[]"
+                                                   value="under_2"
+                                                   class="filter-checkbox"
+                                                   {{ is_array(request()->input('price_range')) && in_array('under_2', request()->input('price_range')) ? 'checked' : '' }}>
+                                            <span>Dưới 2 triệu</span>
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="filter-option">
+                                        <span class="filter-left">
+                                            <input type="checkbox"
+                                                   name="price_range[]"
+                                                   value="2_5"
+                                                   class="filter-checkbox"
+                                                   {{ is_array(request()->input('price_range')) && in_array('2_5', request()->input('price_range')) ? 'checked' : '' }}>
+                                            <span>Từ 2 - 5 triệu</span>
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="filter-option">
+                                        <span class="filter-left">
+                                            <input type="checkbox"
+                                                   name="price_range[]"
+                                                   value="5_10"
+                                                   class="filter-checkbox"
+                                                   {{ is_array(request()->input('price_range')) && in_array('5_10', request()->input('price_range')) ? 'checked' : '' }}>
+                                            <span>Từ 5 - 10 triệu</span>
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="filter-option">
+                                        <span class="filter-left">
+                                            <input type="checkbox"
+                                                   name="price_range[]"
+                                                   value="over_10"
+                                                   class="filter-checkbox"
+                                                   {{ is_array(request()->input('price_range')) && in_array('over_10', request()->input('price_range')) ? 'checked' : '' }}>
+                                            <span>Trên 10 triệu</span>
+                                        </span>
+                                    </label>
                                 </li>
                             </ul>
-                        </nav>
-                    @endif
+                        </div>
+
+                        <div class="sidebar-actions">
+                            <button type="submit" class="btn-filter btn-filter-primary">
+                                Tìm kiếm
+                            </button>
+                            <button type="button" class="btn-filter btn-filter-outline" id="btn-clear-filters">
+                                Xóa lọc
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="row">
+                            @php
+                                $products = $products ?? [];
+                                $perPage = 9;
+                                $currentPage = request()->get('page', 1);
+                                $totalProducts = count($products);
+                                $totalPages = $totalProducts > 0 ? ceil($totalProducts / $perPage) : 0;
+                                $offset = ($currentPage - 1) * $perPage;
+                                $paginatedProducts = array_slice($products, $offset, $perPage);
+                            @endphp
+
+                            @if(count($paginatedProducts) > 0)
+                                @foreach($paginatedProducts as $product)
+                                    @php
+                                        $rawPrice = $product['price'] ?? null;
+                                        $rawSalePrice = $product['sale_price'] ?? null;
+                                        $hasDiscount = is_numeric($rawSalePrice) && $rawSalePrice > 0 && $rawSalePrice < $rawPrice;
+                                        $displayPrice = $hasDiscount
+                                            ? number_format($rawSalePrice, 0, ',', '.') . ' VNĐ'
+                                            : (is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ'));
+                                        $originalPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : $rawPrice;
+                                    @endphp
+                                    <div class="col-12 col-md-6 col-lg-4 mb-5">
+                                        <div class="product-item">
+                                            <a href="{{ route('product.detail', $product['slug'] ?? '#') }}" class="product-card-image-link">
+                                                <img src="{{ $product['image'] ?? asset('image/no-image.jpg') }}" class="img-fluid product-thumbnail"
+                                                     onerror="this.src='{{ asset('image/no-image.jpg') }}'">
+                                            </a>
+                                            <h3 class="product-title">{{ $product['name'] ?? 'Sản phẩm' }}</h3>
+                                            <strong class="product-price">
+                                                @if($hasDiscount)
+                                                    <span class="text-danger">{{ $displayPrice }}</span>
+                                                    <span class="text-muted text-decoration-line-through ms-2">{{ $originalPrice }}</span>
+                                                @else
+                                                    {{ $displayPrice }}
+                                                @endif
+                                            </strong>
+
+                                            <div class="product-card-actions">
+                                                <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $product['slug'] ?? '#') }}">
+                                                    Chi tiết
+                                                </a>
+                                                <button type="button"
+                                                        class="btn-card-action btn-card-cart"
+                                                        data-name="{{ $product['name'] ?? 'Sản phẩm' }}"
+                                                        data-price="{{ $hasDiscount ? $rawSalePrice : ($rawPrice ?? 'Liên hệ') }}"
+                                                        data-image="{{ $product['image'] ?? asset('image/no-image.jpg') }}"
+                                                        onclick="addToCart(this);">
+                                                    Thêm giỏ hàng
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="col-12 text-center py-5">
+                                    <p class="text-muted">Không tìm thấy sản phẩm nào phù hợp.</p>
+                                </div>
+                            @endif
+                        </div>
+
+                        @if($totalPages > 1)
+                            <nav class="pagination-wrapper mt-4">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item {{ $currentPage == 1 ? 'disabled' : '' }}">
+                                        <a class="page-link" href="?{{ http_build_query(array_merge(request()->except('page'), ['page' => $currentPage - 1])) }}" aria-label="Previous">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    @for($i = 1; $i <= $totalPages; $i++)
+                                        @if($i == 1 || $i == $totalPages || abs($i - $currentPage) <= 2)
+                                            <li class="page-item {{ $currentPage == $i ? 'active' : '' }}">
+                                                <a class="page-link" href="?{{ http_build_query(array_merge(request()->except('page'), ['page' => $i])) }}">{{ $i }}</a>
+                                            </li>
+                                        @elseif(abs($i - $currentPage) == 3)
+                                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                                        @endif
+                                    @endfor
+                                    <li class="page-item {{ $currentPage == $totalPages ? 'disabled' : '' }}">
+                                        <a class="page-link" href="?{{ http_build_query(array_merge(request()->except('page'), ['page' => $currentPage + 1])) }}" aria-label="Next">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        @endif
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 @endsection
 
 @push('gemlock_scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterForm = document.getElementById('filter-form');
+            const clearBtn = document.getElementById('btn-clear-filters');
+
+            // Xử lý nút xóa lọc
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    // Reset form
+                    filterForm.reset();
+
+                    // Redirect về trang không có query params
+                    window.location.href = '{{ route('product.index') }}';
+                });
+            }
+
+            // Optional: Auto submit khi thay đổi checkbox
+            const checkboxes = filterForm.querySelectorAll('.filter-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // Không auto submit, đợi user click Tìm kiếm
+                });
+            });
+        });
+    </script>
     <script>
         window.gemlockProductConfig = {
             cartAddUrl: '{{ route('cart.add') }}',
@@ -240,4 +259,3 @@
     </script>
     <script src="{{ asset('js/gemlock-product.js') }}"></script>
 @endpush
-
