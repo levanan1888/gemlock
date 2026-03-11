@@ -154,7 +154,12 @@
                             @foreach($paginatedProducts as $product)
                                 @php
                                     $rawPrice = $product['price'] ?? null;
-                                    $displayPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ');
+                                    $rawSalePrice = $product['sale_price'] ?? null;
+                                    $hasDiscount = is_numeric($rawSalePrice) && $rawSalePrice > 0 && $rawSalePrice < $rawPrice;
+                                    $displayPrice = $hasDiscount
+                                        ? number_format($rawSalePrice, 0, ',', '.') . ' VNĐ'
+                                        : (is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ'));
+                                    $originalPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : $rawPrice;
                                 @endphp
                                 <div class="col-12 col-md-6 col-lg-4 mb-5">
                                     <div class="product-item">
@@ -163,7 +168,14 @@
                                                  onerror="this.src='{{ asset('image/no-image.jpg') }}'">
                                         </a>
                                         <h3 class="product-title">{{ $product['name'] ?? 'Sản phẩm' }}</h3>
-                                        <strong class="product-price">{{ $displayPrice }}</strong>
+                                        <strong class="product-price">
+                                            @if($hasDiscount)
+                                                <span class="text-danger">{{ $displayPrice }}</span>
+                                                <span class="text-muted text-decoration-line-through ms-2">{{ $originalPrice }}</span>
+                                            @else
+                                                {{ $displayPrice }}
+                                            @endif
+                                        </strong>
 
                                         <div class="product-card-actions">
                                             <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $product['slug'] ?? '#') }}">
@@ -172,8 +184,8 @@
                                             <button type="button"
                                                     class="btn-card-action btn-card-cart"
                                                     data-name="{{ $product['name'] ?? 'Sản phẩm' }}"
-                                                    data-price="{{ $product['price'] ?? 'Liên hệ' }}"
-                                                    data-image="{{ $product['image'] ?? asset('furni/images/product-1.png') }}"
+                                                    data-price="{{ $hasDiscount ? $rawSalePrice : ($rawPrice ?? 'Liên hệ') }}"
+                                                    data-image="{{ $product['image'] ?? asset('image/no-image.jpg') }}"
                                                     onclick="addToCart(this);">
                                                 Thêm giỏ hàng
                                             </button>
