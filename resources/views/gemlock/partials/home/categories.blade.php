@@ -45,9 +45,26 @@
                         <h3>{{ $group['category']['title'] }}</h3>
                         <ul>
                             @foreach($group['category']['features'] as $feature)
+                                @php
+                                    $featureTitle = $feature['title'] ?? '';
+                                    $featureText = $feature['text'] ?? '';
+                                    $featureIcon = $feature['icon'] ?? null;
+                                    $isMaterialIcon = $featureIcon && !str_contains($featureIcon, ' ');
+                                @endphp
                                 <li>
-                                    <span class="material-icons">{{ $feature['icon'] }}</span>
-                                    {{ $feature['text'] }}
+                                    @if($featureIcon)
+                                        @if($isMaterialIcon)
+                                            <span class="material-icons">{{ $featureIcon }}</span>
+                                        @else
+                                            <i class="{{ $featureIcon }}"></i>
+                                        @endif
+                                    @endif
+                                    @if($featureTitle)
+                                        <strong>{{ $featureTitle }}</strong>
+                                    @endif
+                                    @if($featureText)
+                                        <span>{{ $featureTitle ? ' - ' : '' }}{{ $featureText }}</span>
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>

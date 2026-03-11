@@ -21,9 +21,9 @@ class ProductService
                     $isAssoc = array_keys($rawFeatures) !== range(0, count($rawFeatures) - 1);
 
                     if ($isAssoc) {
-                        foreach ($rawFeatures as $icon => $text) {
+                        foreach ($rawFeatures as $title => $text) {
                             $features[] = [
-                                'icon' => $icon,
+                                'title' => $title,
                                 'text' => $text,
                             ];
                         }

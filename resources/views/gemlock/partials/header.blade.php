@@ -3,7 +3,7 @@
     use App\Helpers\ContentHelper;
     use App\Models\MenuItem;
 
-    $headerCategories = \App\Services\ProductService::getCategories();
+    $headerCategories = app(\App\Services\ProductService::class)->getCategories();
     $cartCount = collect(session('cart', []))->sum('quantity');
     $isGemlock = request()->is('gemlock') || request()->is('gemlock/*') || request()->is('product') || request()->is('product/*') || request()->is('product-detail/*');
     $pageType = $isGemlock ? 'gemlock' : 'perfect_house';
