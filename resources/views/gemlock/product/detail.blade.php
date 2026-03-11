@@ -79,17 +79,24 @@
                         <h5 class="mb-3">Tính năng nổi bật</h5>
                         <ul class="list-unstyled mb-4">
                             @foreach ($productFeatures as $feature)
+                                @php
+                                    // Handle both formats: ['title' => ..., 'desc' => ...] and key-value pairs
+                                    $featureTitle = is_array($feature) ? ($feature['title'] ?? ($feature[0] ?? '')) : '';
+                                    $featureDesc = is_array($feature) ? ($feature['desc'] ?? ($feature[1] ?? '')) : (is_string($feature) ? '' : '');
+                                    // If it's a key-value pair from JSON: ["title" => "desc"]
+                                    if (is_array($feature) && empty($featureTitle) && empty($featureDesc)) {
+                                        $firstKey = array_key_first($feature);
+                                        $featureTitle = $firstKey;
+                                        $featureDesc = is_array($feature[$firstKey] ?? null) ? json_encode($feature[$firstKey]) : ($feature[$firstKey] ?? '');
+                                    }
+                                @endphp
                                 <li class="mb-2">
-                                    @if (is_array($feature))
-                                        @if (!empty($feature['icon']))
-                                            <i class="{{ $feature['icon'] }} me-2"></i>
-                                        @endif
-                                        <strong>{{ $feature['title'] ?? '' }}</strong>
-                                        @if (!empty($feature['desc']) && is_string($feature['desc']))
-                                            – {{ $feature['desc'] }}
-                                        @endif
-                                    @else
-                                        {{ $feature }}
+                                    @if (!empty($feature['icon']))
+                                        <i class="{{ $feature['icon'] }} me-2"></i>
+                                    @endif
+                                    <strong>{{ $featureTitle }}</strong>
+                                    @if (!empty($featureDesc) && is_string($featureDesc))
+                                        – {{ $featureDesc }}
                                     @endif
                                 </li>
                             @endforeach
@@ -100,13 +107,12 @@
                         <h5 class="mb-3">Thông số kỹ thuật</h5>
                         <ul class="list-unstyled mb-4">
                             @foreach ($productSpecs as $label => $value)
+                                @php
+                                    // Ensure value is a string
+                                    $specValue = is_array($value) ? json_encode($value) : (is_string($value) ? $value : '');
+                                @endphp
                                 <li class="mb-1">
-                                    <strong>{{ $label }}:</strong>
-                                    @if (is_array($value))
-                                        {{ implode(', ', $value) }}
-                                    @else
-                                        {{ $value }}
-                                    @endif
+                                    <strong>{{ $label }}:</strong> {{ $specValue }}
                                 </li>
                             @endforeach
                         </ul>

@@ -100,17 +100,17 @@ class ProductResource extends Resource
 
             Section::make('Hình ảnh')
                 ->schema([
-                    CuratorPicker::make('image')
+                    CuratorPicker::make('image_id')
                         ->label('Ảnh đại diện')
                         ->buttonLabel('Chọn ảnh')
                         ->size('sm')
                         ->required(false),
-                    CuratorPicker::make('images')
-                        ->label('Bộ sưu tập ảnh')
-                        ->buttonLabel('Chọn ảnh')
-                        ->multiple()
-                        ->size('sm')
-                        ->required(false),
+                ])
+                ->columnSpanFull(),
+
+            Section::make('Bộ sưu tập ảnh')
+                ->schema([
+                    // Gallery images handled via relationship
                 ])
                 ->columnSpanFull(),
 
@@ -138,13 +138,13 @@ class ProductResource extends Resource
                 TextColumn::make('no')
                     ->label('STT')
                     ->rowIndex(),
-                ImageColumn::make('image')
+                ImageColumn::make('image.url')
                     ->label('Ảnh')
                     ->square()
                     ->size(60),
                 TextColumn::make('name')->label('Tên sản phẩm')->searchable()->sortable(),
-                TextColumn::make('brand')->label('Thương hiệu')->badge(),
-                TextColumn::make('category')->label('Danh mục')->badge(),
+                TextColumn::make('brand.name')->label('Thương hiệu')->badge(),
+                TextColumn::make('category.name')->label('Danh mục')->badge(),
                 TextColumn::make('price')->label('Giá')->money('VND')->sortable(),
                 IconColumn::make('is_active')->label('Hiển thị')->boolean(),
                 TextColumn::make('order')->label('Thứ tự')->sortable(),

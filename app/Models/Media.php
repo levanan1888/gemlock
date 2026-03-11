@@ -2,14 +2,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Awcodes\Curator\Models\Media as CuratorMedia;
 
 class Media extends CuratorMedia
 {
     use HasUuids;
-    public function yes(): BelongsTo
+
+    /**
+     * Sản phẩm sử dụng ảnh này làm ảnh đại diện
+     */
+    public function products(): BelongsToMany
     {
-        return $this->belongsTo(yes::class);
+        return $this->belongsToMany(Product::class, 'media_product')
+            ->withPivot('order');
     }
 }

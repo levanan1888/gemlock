@@ -2,19 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
+    use HasUuids;
+
     protected $fillable = [
         'slug',
         'name',
-        'brand',
-        'category',
+        'brand_id',
+        'category_id',
         'price',
         'description',
-        'image',
-        'images',
+        'image_id',
         'features',
         'specs',
         'is_active',
@@ -24,7 +28,6 @@ class Product extends Model
     protected function casts(): array
     {
         return [
-            'images' => 'array',
             'features' => 'array',
             'specs' => 'array',
             'is_active' => 'boolean',
@@ -32,9 +35,60 @@ class Product extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saved(function (self $product) {
+            if (request()->has('images')) {
+                $images = request()->input('images', []);
+                if (is_array($images)) {
+                    $syncData = [];
+                    foreach ($images as $index => $mediaId) {
+                        $syncData[$mediaId] = ['order' => $index];
+                    }
+                    $product->images()->sync($syncData);
+                }
+            }
+        });
+    }
+
+    /**
+     * Ảnh đại diện của sản phẩm
+     */
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'image_id');
+    }
+
+    /**
+     * Gallery ảnh của sản phẩm
+     */
+    public function images(): BelongsToMany
+    {
+        return $this->belongsToMany(Media::class, 'media_product')
+            ->withPivot('order')
+            ->orderBy('media_product.order');
+    }
+
+    /**
+     * Thương hiệu
+     */
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    /**
+     * Danh mục sản phẩm
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
     public static function getActiveProducts(): array
     {
         return self::where('is_active', true)
+            ->with(['image', 'images', 'brand', 'category'])
             ->orderBy('order')
             ->get()
             ->map(function ($product) {
@@ -60,12 +114,14 @@ class Product extends Model
                 return [
                     'slug' => $product->slug,
                     'name' => $product->name,
-                    'brand' => $product->brand,
-                    'category' => $product->category,
+                    'brand' => $product->brand?->name,
+                    'brand_id' => $product->brand_id,
+                    'category' => $product->category?->slug,
+                    'category_id' => $product->category_id,
                     'price' => $product->price,
                     'description' => $product->description,
-                    'image' => $product->image,
-                    'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
+                    'image' => $product->image?->url,
+                    'images' => $product->images->pluck('url')->toArray(),
                     'features' => $features,
                     'specs' => $specs,
                     'is_active' => $product->is_active,
@@ -77,7 +133,10 @@ class Product extends Model
 
     public static function getProductBySlug(string $slug): ?array
     {
-        $product = self::where('slug', $slug)->first();
+        $product = self::where('slug', $slug)
+            ->with(['image', 'images', 'brand', 'category'])
+            ->first();
+
         if (!$product) {
             return null;
         }
@@ -104,12 +163,14 @@ class Product extends Model
         return [
             'slug' => $product->slug,
             'name' => $product->name,
-            'brand' => $product->brand,
-            'category' => $product->category,
+            'brand' => $product->brand?->name,
+            'brand_id' => $product->brand_id,
+            'category' => $product->category?->slug,
+            'category_id' => $product->category_id,
             'price' => $product->price,
             'description' => $product->description,
-            'image' => $product->image,
-            'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
+            'image' => $product->image?->url,
+            'images' => $product->images->pluck('url')->toArray(),
             'features' => $features,
             'specs' => $specs,
             'is_active' => $product->is_active,
@@ -119,20 +180,25 @@ class Product extends Model
 
     public static function getProductsByCategory(string $categorySlug): array
     {
-        return self::where('category', $categorySlug)
+        return self::whereHas('category', function ($query) use ($categorySlug) {
+                $query->where('slug', $categorySlug);
+            })
             ->where('is_active', true)
+            ->with(['image', 'images', 'brand', 'category'])
             ->orderBy('order')
             ->get()
             ->map(function ($product) {
                 return [
                     'slug' => $product->slug,
                     'name' => $product->name,
-                    'brand' => $product->brand,
-                    'category' => $product->category,
+                    'brand' => $product->brand?->name,
+                    'brand_id' => $product->brand_id,
+                    'category' => $product->category?->slug,
+                    'category_id' => $product->category_id,
                     'price' => $product->price,
                     'description' => $product->description,
-                    'image' => $product->image,
-                    'images' => is_array($product->images) ? $product->images : json_decode($product->images, true),
+                    'image' => $product->image?->url,
+                    'images' => $product->images->pluck('url')->toArray(),
                     'features' => is_array($product->features) ? $product->features : json_decode($product->features, true),
                     'specs' => is_array($product->specs) ? $product->specs : json_decode($product->specs, true),
                     'is_active' => $product->is_active,
