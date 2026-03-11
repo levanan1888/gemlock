@@ -101,7 +101,12 @@
                         <ul class="list-unstyled mb-4">
                             @foreach ($productSpecs as $label => $value)
                                 <li class="mb-1">
-                                    <strong>{{ $label }}:</strong> {{ $value }}
+                                    <strong>{{ $label }}:</strong>
+                                    @if (is_array($value))
+                                        {{ implode(', ', $value) }}
+                                    @else
+                                        {{ $value }}
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>
