@@ -16,6 +16,9 @@ class BlogCategoriesTable
     {
         return $table
             ->columns([
+                TextColumn::make('no')
+                    ->label('STT')
+                    ->rowIndex(),
                 TextColumn::make('name')
                     ->label('Tên danh mục')
                     ->searchable()

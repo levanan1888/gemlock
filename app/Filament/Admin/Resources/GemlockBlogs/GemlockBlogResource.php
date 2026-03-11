@@ -114,6 +114,9 @@ class GemlockBlogResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('no')
+                    ->label('STT')
+                    ->rowIndex(),
                 TextColumn::make('title')->label('Tiêu đề')->searchable()->sortable()->limit(50),
                 TextColumn::make('category')->label('Chuyên mục')->badge(),
                 TextColumn::make('published_at')->label('Ngày đăng')->dateTime('d/m/Y H:i')->sortable(),

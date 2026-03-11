@@ -101,6 +101,9 @@ class GemlockPageResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('no')
+                    ->label('STT')
+                    ->rowIndex(),
                 TextColumn::make('title')->label('Tiêu đề')->searchable()->sortable()->limit(50),
                 TextColumn::make('slug')->label('URL')->searchable()->copyable(),
                 IconColumn::make('noindex')->label('Noindex')->boolean(),

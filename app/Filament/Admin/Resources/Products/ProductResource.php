@@ -135,6 +135,9 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('no')
+                    ->label('STT')
+                    ->rowIndex(),
                 ImageColumn::make('image')
                     ->label('Ảnh')
                     ->square()

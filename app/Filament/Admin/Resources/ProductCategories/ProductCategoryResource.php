@@ -8,6 +8,7 @@ use App\Filament\Admin\Resources\ProductCategories\Pages\ListProductCategories;
 use App\Models\ProductCategory;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -69,6 +70,9 @@ class ProductCategoryResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('no')
+                    ->label('STT')
+                    ->rowIndex(),
                 TextColumn::make('name')->label('Tên danh mục')->searchable()->sortable(),
                 TextColumn::make('slug')->label('Slug')->searchable(),
                 IconColumn::make('is_active')->label('Hiển thị')->boolean(),
@@ -77,6 +81,9 @@ class ProductCategoryResource extends Resource
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
+            ])
+            ->bulkActions([
+                DeleteBulkAction::make(),
             ]);
     }
 
