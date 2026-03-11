@@ -59,6 +59,15 @@
                 <div class="category-slider-container" data-category="{{ $group['category']['slug'] }}">
                     <div class="category-slider-track" data-category="{{ $group['category']['slug'] }}">
                         @foreach($group['products'] as $product)
+                            @php
+                                $rawPrice = $product['price'] ?? null;
+                                $rawSalePrice = $product['sale_price'] ?? null;
+                                $hasDiscount = is_numeric($rawSalePrice) && $rawSalePrice > 0 && $rawSalePrice < $rawPrice;
+                                $displayPrice = $hasDiscount
+                                    ? number_format($rawSalePrice, 0, ',', '.') . ' VNĐ'
+                                    : (is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : $rawPrice);
+                                $originalPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : $rawPrice;
+                            @endphp
                             <div class="product-slide">
                                 <a href="{{ route('product.detail', $product['slug']) }}"
                                    class="product-item home-product-item">
@@ -66,10 +75,17 @@
                                          class="product-thumbnail"
                                          onerror="this.src='{{ asset('furni/images/product-1.png') }}'">
                                     <h3 class="product-title">{{ $product['name'] }}</h3>
-                                    <strong class="product-price">{{ $product['price'] }}</strong>
+                                    <strong class="product-price">
+                                        @if($hasDiscount)
+                                            <span class="text-danger">{{ $displayPrice }}</span>
+                                            <span class="text-muted text-decoration-line-through small d-block">{{ $originalPrice }}</span>
+                                        @else
+                                            {{ $displayPrice }}
+                                        @endif
+                                    </strong>
                                     <span class="icon-cross home-add-to-cart"
                                           data-name="{{ $product['name'] }}"
-                                          data-price="{{ $product['price'] }}"
+                                          data-price="{{ $rawSalePrice ?? $rawPrice }}"
                                           data-image="{{ $product['image'] }}"
                                           onclick="event.preventDefault(); event.stopPropagation(); addToCart(this);">
                                         <img src="{{ asset('furni/images/cross.svg') }}" class="img-fluid"

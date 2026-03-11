@@ -25,7 +25,13 @@
                         $productName = $product['name'] ?? 'Sản phẩm';
                         $productBrand = $product['brand'] ?? 'Gem Smart Lock';
                         $rawPrice = $product['price'] ?? null;
-                        $productPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ');
+                        $rawSalePrice = $product['sale_price'] ?? null;
+                        $hasDiscount = is_numeric($rawSalePrice) && $rawSalePrice > 0 && $rawSalePrice < $rawPrice;
+                        $productPrice = $hasDiscount ? $rawSalePrice : $rawPrice;
+                        $displayPrice = $hasDiscount
+                            ? number_format($rawSalePrice, 0, ',', '.') . ' VNĐ'
+                            : (is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : ($rawPrice ?? 'Liên hệ'));
+                        $originalPrice = is_numeric($rawPrice) ? number_format($rawPrice, 0, ',', '.') . ' VNĐ' : $rawPrice;
                         $productImage = $product['image'] ?? asset('image/no-image.jpg');
                         $galleryImages = collect($product['images'] ?? [])->filter()->values();
                         if ($galleryImages->isEmpty() && !empty($product['image'])) {
@@ -73,7 +79,14 @@
                 <div class="col-lg-6 mb-5">
                     <h2 class="mb-3">{{ $productName }}</h2>
                     <p class="mb-2 text-muted">{{ $productBrand }}</p>
-                    <p class="h4 text-primary mb-4">{{ $productPrice }}</p>
+                    <p class="h4 text-primary mb-4">
+                        @if($hasDiscount)
+                            <span class="text-danger">{{ $displayPrice }}</span>
+                            <span class="text-muted text-decoration-line-through ms-2">{{ $originalPrice }}</span>
+                        @else
+                            {{ $displayPrice }}
+                        @endif
+                    </p>
 
                     @if (!empty($productFeatures) && is_array($productFeatures))
                         <h5 class="mb-3">Tính năng nổi bật</h5>
@@ -159,7 +172,12 @@
                                 @foreach ($filteredRelated as $related)
                                     @php
                                         $relatedRawPrice = $related['price'] ?? null;
-                                        $relatedDisplayPrice = is_numeric($relatedRawPrice) ? number_format($relatedRawPrice, 0, ',', '.') . ' VNĐ' : ($relatedRawPrice ?? 'Liên hệ');
+                                        $relatedRawSalePrice = $related['sale_price'] ?? null;
+                                        $relatedHasDiscount = is_numeric($relatedRawSalePrice) && $relatedRawSalePrice > 0 && $relatedRawSalePrice < $relatedRawPrice;
+                                        $relatedDisplayPrice = $relatedHasDiscount
+                                            ? number_format($relatedRawSalePrice, 0, ',', '.') . ' VNĐ'
+                                            : (is_numeric($relatedRawPrice) ? number_format($relatedRawPrice, 0, ',', '.') . ' VNĐ' : ($relatedRawPrice ?? 'Liên hệ'));
+                                        $relatedOriginalPrice = is_numeric($relatedRawPrice) ? number_format($relatedRawPrice, 0, ',', '.') . ' VNĐ' : $relatedRawPrice;
                                     @endphp
                                     <div class="related-slide">
                                         <div class="product-item">
@@ -168,7 +186,14 @@
                                                      onerror="this.src='{{ asset('image/no-image.jpg') }}'">
                                             </a>
                                             <h3 class="product-title">{{ $related['name'] ?? 'Sản phẩm' }}</h3>
-                                            <strong class="product-price">{{ $relatedDisplayPrice }}</strong>
+                                            <strong class="product-price">
+                                                @if($relatedHasDiscount)
+                                                    <span class="text-danger">{{ $relatedDisplayPrice }}</span>
+                                                    <span class="text-muted text-decoration-line-through small">{{ $relatedOriginalPrice }}</span>
+                                                @else
+                                                    {{ $relatedDisplayPrice }}
+                                                @endif
+                                            </strong>
 
                                             <div class="product-card-actions">
                                                 <a class="btn-card-action btn-card-detail" href="{{ route('product.detail', $related['slug'] ?? '#') }}">

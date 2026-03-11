@@ -195,6 +195,7 @@ class Product extends Model
                     'category' => $product->category?->slug,
                     'category_id' => $product->category_id,
                     'price' => $product->price,
+                    'sale_price' => $product->sale_price,
                     'description' => $product->description,
                     'image' => $product->image?->url,
                     'images' => $gallery,
