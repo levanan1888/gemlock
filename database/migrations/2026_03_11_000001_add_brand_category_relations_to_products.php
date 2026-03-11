@@ -12,19 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            // Thêm brand_id
-            $table->foreignId('brand_id')
-                ->nullable()
-                ->constrained('brands')
-                ->onDelete('set null')
-                ->after('name');
+            // Thêm brand_id nếu chưa tồn tại (tránh lỗi khi cột đã được tạo trước đó)
+            if (! Schema::hasColumn('products', 'brand_id')) {
+                $table->foreignId('brand_id')
+                    ->nullable()
+                    ->constrained('brands')
+                    ->onDelete('set null')
+                    ->after('name');
+            }
 
-            // Thêm category_id
-            $table->foreignId('category_id')
-                ->nullable()
-                ->constrained('product_categories')
-                ->onDelete('set null')
-                ->after('brand_id');
+            // Thêm category_id nếu chưa tồn tại
+            if (! Schema::hasColumn('products', 'category_id')) {
+                $table->foreignId('category_id')
+                    ->nullable()
+                    ->constrained('product_categories')
+                    ->onDelete('set null')
+                    ->after('brand_id');
+            }
 
             // Xóa các cột string cũ
             if (Schema::hasColumn('products', 'brand')) {

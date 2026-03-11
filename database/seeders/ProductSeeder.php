@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -379,8 +381,23 @@ class ProductSeeder extends Seeder
             ],
         ];
 
+        $brand = Brand::where('name', 'Gem Smart Lock')->first();
+
         foreach ($products as $product) {
-            Product::create($product);
+            $category = ProductCategory::where('slug', $product['category'])->first();
+
+            Product::create([
+                'slug' => $product['slug'],
+                'name' => $product['name'],
+                'brand_id' => $brand?->id,
+                'category_id' => $category?->id,
+                'price' => $product['price'],
+                'description' => $product['description'],
+                'features' => $product['features'],
+                'specs' => $product['specs'],
+                'is_active' => $product['is_active'],
+                'order' => $product['order'],
+            ]);
         }
     }
 }
